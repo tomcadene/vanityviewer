@@ -3,18 +3,18 @@ import { OrbitControls } from '/three.js-master/examples/jsm/controls/OrbitContr
 import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js';
 import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
 
-// Reference to the .mv div
-const mvElement = document.querySelector('.mv');
+// Reference to the .vv div
+const vvElement = document.querySelector('.vv');
 
-// Calculate aspect ratio of the .mv div
-const aspectRatio = mvElement.clientWidth / mvElement.clientHeight;
+// Calculate aspect ratio of the .vv div
+const aspectRatio = vvElement.clientWidth / vvElement.clientHeight;
 
 // Set up the scene, camera, and renderer
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
 camera.position.set(2, 2, 5);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(mvElement.clientWidth, mvElement.clientHeight); // Set size to match .mv div
+renderer.setSize(vvElement.clientWidth, vvElement.clientHeight); // Set size to match .vv div
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -22,13 +22,13 @@ renderer.toneMappingExposure = 1.25;
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.physicallyCorrectLights = true;
 
-mvElement.appendChild(renderer.domElement); // Append renderer to the .mv div instead of body
+vvElement.appendChild(renderer.domElement); // Append renderer to the .vv div instead of body
 
 // Resize handler to ensure the scene adjusts with the viewport/window size
 function onWindowResize() {
   // Update camera aspect ratio and renderer size when window resizes
-  const width = mvElement.clientWidth;
-  const height = mvElement.clientHeight;
+  const width = vvElement.clientWidth;
+  const height = vvElement.clientHeight;
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
   renderer.setSize(width, height);
