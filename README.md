@@ -6,17 +6,18 @@ A versatile 3D model viewer designed for seamless integration into any website. 
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
 const ADD_PLANE_TO_THE_SCENE = false; // Set this to true to add a plane to the scene
 ```
-- Reference to the .vv div
-```javascript
-const mvElement = document.querySelector('.vv');
-```
-###
+
 - Seamless integration into any website, reference your div and you're all set
 ```javascript
-const mvElement = document.querySelector('.vv');
+const vvElement = document.querySelector('.vv');
 ```
 
-### Automated support for your model (scene, camera, renderer, window resize, light, reflections)
+- Control what your user can control
+```javascript
+const ENABLE_INTERFACE = true; // Set this to true to enable the user interface
+```
+
+- Automated support for your models (scene, camera, renderer, window resize, light, reflections)
 ```javascript
 yourModel.castShadow = true;
 yourModel.receiveShadow = true;
