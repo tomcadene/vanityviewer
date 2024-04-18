@@ -3,6 +3,10 @@ import { OrbitControls } from '/three.js-master/examples/jsm/controls/OrbitContr
 import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js';
 import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
 
+// Conditional parameters
+const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
+const ADD_PLANE_TO_THE_SCENE = false; // Set this to true to add a plane to the scene
+
 // Reference to the .vv div
 const vvElement = document.querySelector('.vv');
 
@@ -13,7 +17,7 @@ const aspectRatio = vvElement.clientWidth / vvElement.clientHeight;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
 camera.position.set(2, 2, 5);
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(vvElement.clientWidth, vvElement.clientHeight); // Set size to match .vv div
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -46,7 +50,7 @@ const geometry = new THREE.BoxGeometry();
 // Adjust the material properties for the cube
 const material = new THREE.MeshStandardMaterial({
   color: 0x00ff00, // Green color
-  metalness: 1,    // Make it fully metallic
+  metalness: 0.5,    // Make it fully metallic
   roughness: 0   // Adjust roughness to control how shiny the surface is
 });
 
@@ -68,8 +72,9 @@ const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 plane.rotation.x = - Math.PI / 2; // Rotate to lay flat
 plane.position.y = -1; // Position slightly below the cube
 plane.receiveShadow = true; // Ensure it can receive shadows
-scene.add(plane); // Add plane to the scene
-
+if (ADD_PLANE_TO_THE_SCENE) {
+  scene.add(plane); // Add plane to the scene
+}
 // Add a light source
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(2, 2, 5);
@@ -82,10 +87,12 @@ scene.add(ambientLight);
 
 // Loading HDR Environment for Reflections
 const rgbeLoader = new RGBELoader();
-rgbeLoader.load('hdr_file.hdr', function(texture) {
-    texture.mapping = THREE.EquirectangularReflectionMapping;
+rgbeLoader.load('hdr_file.hdr', function (texture) {
+  texture.mapping = THREE.EquirectangularReflectionMapping;
+  if (USE_BACKGROUND_TEXTURE) {
     scene.background = texture;
-    scene.environment = texture;
+  }
+  scene.environment = texture;
 });
 
 // Animation loop
