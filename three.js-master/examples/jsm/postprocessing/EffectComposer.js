@@ -5,7 +5,7 @@ import {
 	Vector2,
 	WebGLRenderTarget
 } from '/three.js-master/build/three.module.js';
-import { CopyShader } from '/three.js-master/examples/jsm/postprocessing/shaders/CopyShader.js';
+import { CopyShader } from '/three.js-master/examples/jsm/shaders/CopyShader.js';
 import { ShaderPass } from '/three.js-master/examples/jsm/postprocessing/ShaderPass.js';
 import { MaskPass } from '/three.js-master/examples/jsm/postprocessing/MaskPass.js';
 import { ClearMaskPass } from '/three.js-master/examples/jsm/postprocessing/MaskPass.js';
