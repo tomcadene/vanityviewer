@@ -27,12 +27,15 @@ const camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
 camera.position.set(2, 2, 5);
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(vvElement.clientWidth, vvElement.clientHeight); // Set size to match .vv div
+renderer.setPixelRatio(window.devicePixelRatio);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.25;
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.physicallyCorrectLights = true;
+renderer.autoClear = true;
+
 
 vvElement.appendChild(renderer.domElement); // Append renderer to the .vv div instead of body
 
@@ -42,6 +45,8 @@ function onWindowResize() {
   const width = vvElement.clientWidth;
   const height = vvElement.clientHeight;
   camera.aspect = width / height;
+  camera.near = 0.1;
+camera.far = 100;
   camera.updateProjectionMatrix();
   renderer.setSize(width, height);
 }
@@ -112,14 +117,15 @@ rgbeLoader.load('safari_sunset_4k.hdr', function (texture) {
 // Effect Composer
 const composer = new EffectComposer(renderer);
 const renderPass = new RenderPass(scene, camera);
+renderPass.clear = true;  // This should be true by default
 composer.addPass(renderPass)
 
 const bokehPass = new BokehPass(scene, camera, {
   focus: 1.0,
   aperture: 0.025,
   maxblur: 0.01,
-  width: window.innerWidth,
-  height: window.innerHeight
+  width: vvElement.clientWidth,
+  height: vvElement.clientHeight
 });
 composer.addPass(bokehPass);
 
@@ -132,7 +138,6 @@ function animate() {
 
   controls.update();
   composer.render();
-  renderer.render(scene, camera);
 }
 
 animate();
