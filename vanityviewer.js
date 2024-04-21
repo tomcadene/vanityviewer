@@ -50,8 +50,10 @@ const geometry = new THREE.BoxGeometry();
 // Adjust the material properties for the cube
 const material = new THREE.MeshStandardMaterial({
   color: 0x00ff00, // Green color
-  metalness: 0.5,    // Make it fully metallic
-  roughness: 0   // Adjust roughness to control how shiny the surface is
+  metalness: 0,    // Make it fully metallic
+  roughness: 0,   // Adjust roughness to control how shiny the surface is
+  transparent: true, // Enable transparency
+  opacity: 0.85      // Adjust opacity here, 0 is fully transparent, 1 is fully opaque
 });
 
 const cube = new THREE.Mesh(geometry, material);
@@ -108,16 +110,8 @@ function animate() {
 
 animate();
 
-document.addEventListener('DOMContentLoaded', function() {
-  // This function is called once the document is fully loaded
-  const button = document.getElementById('myButton'); // Access the button by its ID
-
-  button.addEventListener('click', function() {
-    changeBehavior(); // Call the changeBehavior function when button is clicked
-  });
+// Button functionality to change the opacity
+document.getElementById('opacityButton').addEventListener('click', function() {
+  cube.material.opacity = cube.material.opacity === 0.85 ? 0.5 : 0.85; // Toggle between 0.5 and 0.85
+  console.log('Opacity changed to: ' + cube.material.opacity); // Log the change for verification
 });
-
-function changeBehavior() {
-  console.log('Button clicked!'); // Example action: log message to console
-  // Here you can add other JavaScript code to change the behavior of your app
-}
