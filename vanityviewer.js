@@ -2,6 +2,14 @@ import * as THREE from '/three.js-master/build/three.module.js';
 import { OrbitControls } from '/three.js-master/examples/jsm/controls/OrbitControls.js'
 import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js';
 import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
+import { BokehPass } from '/three.js-master/examples/jsm/postprocessing/BokehPass.js';
+import { EffectComposer } from '/three.js-master/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from '/three.js-master/examples/jsm/postprocessing/RenderPass.js';
+import { ShaderPass } from '/three.js-master/examples/jsm/postprocessing/ShaderPass.js';
+import { Pass } from '/three.js-master/examples/jsm/postprocessing/Pass.js';
+import { MaskPass } from '/three.js-master/examples/jsm/postprocessing/MaskPass.js';
+import { BokehShader } from '/three.js-master/examples/jsm/postprocessing/shaders/BokehShader.js';
+import { CopyShader } from '/three.js-master/examples/jsm/postprocessing/shaders/CopyShader.js';
 
 // Conditional parameters
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
