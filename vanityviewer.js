@@ -49,6 +49,7 @@ function onWindowResize() {
 camera.far = 100;
   camera.updateProjectionMatrix();
   renderer.setSize(width, height);
+  console.log('Window resized and renderer updated');
 }
 
 // Listen for window resize events
@@ -103,6 +104,7 @@ scene.add(light);
 // Add an ambient light
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // soft white light
 scene.add(ambientLight);
+console.log('Ambient light added to the scene');
 
 // Loading HDR Environment for Reflections
 const rgbeLoader = new RGBELoader();
@@ -122,12 +124,14 @@ composer.addPass(renderPass)
 
 const bokehPass = new BokehPass(scene, camera, {
   focus: 1.0,
-  aperture: 0.025,
-  maxblur: 0.01,
+  aperture: 0.0005,
+  maxblur: 0.005,
   width: vvElement.clientWidth,
   height: vvElement.clientHeight
 });
 composer.addPass(bokehPass);
+// Add logging to see if the BokehPass is affecting the rendering
+console.log('BokehPass added with focus:', bokehPass.uniforms.focus.value, 'and aperture:', bokehPass.uniforms.aperture.value);
 
 // Animation loop
 function animate() {
