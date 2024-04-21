@@ -69,6 +69,10 @@ cube.castShadow = true; // The cube will cast shadows
 cube.receiveShadow = true;
 scene.add(cube);
 
+const cube2 = new THREE.Mesh(geometry, material);
+cube2.position.z = -10; // Further away
+scene.add(cube2);
+
 // Ground Plane
 const planeGeometry = new THREE.PlaneGeometry(50, 50);
 const planeMaterial = new THREE.MeshStandardMaterial({
@@ -97,7 +101,7 @@ scene.add(ambientLight);
 
 // Loading HDR Environment for Reflections
 const rgbeLoader = new RGBELoader();
-rgbeLoader.load('safari_sunset_2k.hdr', function (texture) {
+rgbeLoader.load('safari_sunset_4k.hdr', function (texture) {
   texture.mapping = THREE.EquirectangularReflectionMapping;
   if (USE_BACKGROUND_TEXTURE) {
     scene.background = texture;
