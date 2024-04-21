@@ -105,6 +105,20 @@ rgbeLoader.load('safari_sunset_2k.hdr', function (texture) {
   scene.environment = texture;
 });
 
+// Effect Composer
+const composer = new EffectComposer(renderer);
+const renderPass = new RenderPass(scene, camera);
+composer.addPass(renderPass)
+
+const bokehPass = new BokehPass(scene, camera, {
+  focus: 1.0,
+  aperture: 0.025,
+  maxblur: 0.01,
+  width: window.innerWidth,
+  height: window.innerHeight
+});
+composer.addPass(bokehPass);
+
 // Animation loop
 function animate() {
   requestAnimationFrame(animate);
@@ -113,6 +127,7 @@ function animate() {
   // cube.rotation.y += 0.01;
 
   controls.update();
+  composer.render();
   renderer.render(scene, camera);
 }
 
