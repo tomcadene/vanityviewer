@@ -39,7 +39,7 @@ body, button, h1, h2, h3, h4, h5, html, p {
 
 main {
     height: 100%;
-    width: 100%;
+    width: 50vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,4 +54,10 @@ main {
     border: 0.1rem solid rgba(0, 0, 0, 0.1);
     border-radius: 1rem;
     box-shadow: 0rem 0.1rem 1rem 0rem rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (orientation: portrait) {
+    main {
+        width: 90vw;
+    }
 }
