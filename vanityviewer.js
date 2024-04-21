@@ -53,7 +53,7 @@ const material = new THREE.MeshStandardMaterial({
   metalness: 0,    // Make it fully metallic
   roughness: 0,   // Adjust roughness to control how shiny the surface is
   transparent: true, // Enable transparency
-  opacity: 0.85      // Adjust opacity here, 0 is fully transparent, 1 is fully opaque
+  opacity: 1      // Adjust opacity here, 0 is fully transparent, 1 is fully opaque
 });
 
 const cube = new THREE.Mesh(geometry, material);
@@ -112,6 +112,6 @@ animate();
 
 // Button functionality to change the opacity
 document.getElementById('opacityButton').addEventListener('click', function() {
-  cube.material.opacity = cube.material.opacity === 0.85 ? 0.5 : 0.85; // Toggle between 0.5 and 0.85
+  cube.material.opacity = cube.material.opacity === 1 ? 0.5 : 1; // Toggle between 0.5 and 0.85
   console.log('Opacity changed to: ' + cube.material.opacity); // Log the change for verification
 });
