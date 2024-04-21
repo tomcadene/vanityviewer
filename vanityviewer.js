@@ -87,7 +87,7 @@ scene.add(ambientLight);
 
 // Loading HDR Environment for Reflections
 const rgbeLoader = new RGBELoader();
-rgbeLoader.load('hdr_file.hdr', function (texture) {
+rgbeLoader.load('safari_sunset_2k.hdr', function (texture) {
   texture.mapping = THREE.EquirectangularReflectionMapping;
   if (USE_BACKGROUND_TEXTURE) {
     scene.background = texture;
@@ -108,3 +108,16 @@ function animate() {
 
 animate();
 
+document.addEventListener('DOMContentLoaded', function() {
+  // This function is called once the document is fully loaded
+  const button = document.getElementById('myButton'); // Access the button by its ID
+
+  button.addEventListener('click', function() {
+    changeBehavior(); // Call the changeBehavior function when button is clicked
+  });
+});
+
+function changeBehavior() {
+  console.log('Button clicked!'); // Example action: log message to console
+  // Here you can add other JavaScript code to change the behavior of your app
+}
