@@ -7,6 +7,7 @@ import { EffectComposer } from '/three.js-master/examples/jsm/postprocessing/Eff
 import { RenderPass } from '/three.js-master/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from '/three.js-master/examples/jsm/postprocessing/ShaderPass.js';
 import { Pass } from '/three.js-master/examples/jsm/postprocessing/Pass.js';
+import { SMAAPass } from '/three.js-master/examples/jsm/postprocessing/SMAAPass.js';
 import { MaskPass } from '/three.js-master/examples/jsm/postprocessing/MaskPass.js';
 import { BokehShader } from '/three.js-master/examples/jsm/shaders/BokehShader.js';
 import { CopyShader } from '/three.js-master/examples/jsm/shaders/CopyShader.js';
@@ -151,6 +152,10 @@ composer.addPass(bokehPass);
 console.log('Distance to the closest cube:', distanceToCube);
 // Add logging to see if the BokehPass is affecting the rendering
 console.log('BokehPass added with focus:', bokehPass.uniforms.focus.value, 'and aperture:', bokehPass.uniforms.aperture.value);
+
+// Add SMAA Antialiasing Pass
+const smaaPass = new SMAAPass(window.innerWidth, window.innerHeight);
+composer.addPass(smaaPass);
 
 // Animation loop
 function animate() {
