@@ -8,8 +8,8 @@ import { RenderPass } from '/three.js-master/examples/jsm/postprocessing/RenderP
 import { ShaderPass } from '/three.js-master/examples/jsm/postprocessing/ShaderPass.js';
 import { Pass } from '/three.js-master/examples/jsm/postprocessing/Pass.js';
 import { MaskPass } from '/three.js-master/examples/jsm/postprocessing/MaskPass.js';
-import { BokehShader } from '/three.js-master/examples/jsm/postprocessing/shaders/BokehShader.js';
-import { CopyShader } from '/three.js-master/examples/jsm/postprocessing/shaders/CopyShader.js';
+import { BokehShader } from '/three.js-master/examples/jsm/shaders/BokehShader.js';
+import { CopyShader } from '/three.js-master/examples/jsm/shaders/CopyShader.js';
 
 // Conditional parameters
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
@@ -120,16 +120,35 @@ rgbeLoader.load('safari_sunset_4k.hdr', function (texture) {
 const composer = new EffectComposer(renderer);
 const renderPass = new RenderPass(scene, camera);
 renderPass.clear = true;  // This should be true by default
+
 composer.addPass(renderPass)
 
+const toggleRenderingButton = document.getElementById('dofButton');
+
+// A flag to track the current rendering mode
+let useComposer = false;
+
+toggleRenderingButton.addEventListener('click', function () {
+    useComposer = !useComposer;
+    if(useComposer){
+        console.log('Switched to composer rendering');
+    } else {
+        console.log('Switched to standard rendering');
+    }
+});
+
+// Calculate the Euclidean distance between the camera and the cube at the origin
+const distanceToCube = camera.position.length(); // Since the cube is at the origin, the length of the camera position vector is the distance
+
 const bokehPass = new BokehPass(scene, camera, {
-  focus: 1.0,
+  focus: distanceToCube,
   aperture: 0.0005,
   maxblur: 0.005,
   width: vvElement.clientWidth,
   height: vvElement.clientHeight
 });
 composer.addPass(bokehPass);
+console.log('Distance to the closest cube:', distanceToCube);
 // Add logging to see if the BokehPass is affecting the rendering
 console.log('BokehPass added with focus:', bokehPass.uniforms.focus.value, 'and aperture:', bokehPass.uniforms.aperture.value);
 
@@ -141,7 +160,12 @@ function animate() {
   // cube.rotation.y += 0.01;
 
   controls.update();
-  composer.render();
+  // Here's where we decide which rendering method to use
+  if (useComposer) {
+    composer.render(); // Use post-processing rendering
+} else {
+    renderer.render(scene, camera); // Use standard rendering
+}
 }
 
 animate();
