@@ -11,6 +11,7 @@ import { SMAAPass } from '/three.js-master/examples/jsm/postprocessing/SMAAPass.
 import { MaskPass } from '/three.js-master/examples/jsm/postprocessing/MaskPass.js';
 import { BokehShader } from '/three.js-master/examples/jsm/shaders/BokehShader.js';
 import { CopyShader } from '/three.js-master/examples/jsm/shaders/CopyShader.js';
+import { GammaCorrectionShader } from '/three.js-master/examples/jsm/shaders/GammaCorrectionShader.js';
 
 // Conditional parameters
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
@@ -36,7 +37,7 @@ renderer.toneMappingExposure = 1.25;
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.physicallyCorrectLights = true;
 renderer.autoClear = true;
-
+console.log('renderer.toneMappingExposure:', renderer.toneMappingExposure);
 
 vvElement.appendChild(renderer.domElement); // Append renderer to the .vv div instead of body
 
@@ -106,6 +107,11 @@ scene.add(light);
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // soft white light
 scene.add(ambientLight);
 console.log('Ambient light added to the scene');
+// Check and adjust ambient light intensity
+console.log('Ambient light intensity before composer:', ambientLight.intensity);
+ambientLight.intensity = 1; // Adjust as needed
+console.log('Ambient light intensity after composer adjustment:', ambientLight.intensity);
+
 
 // Loading HDR Environment for Reflections
 const rgbeLoader = new RGBELoader();
@@ -153,9 +159,47 @@ console.log('Distance to the closest cube:', distanceToCube);
 // Add logging to see if the BokehPass is affecting the rendering
 console.log('BokehPass added with focus:', bokehPass.uniforms.focus.value, 'and aperture:', bokehPass.uniforms.aperture.value);
 
-// Add SMAA Antialiasing Pass
+// SMAA Antialiasing Pass
 const smaaPass = new SMAAPass(window.innerWidth, window.innerHeight);
 composer.addPass(smaaPass);
+
+// CopyShader as the last pass to ensure the rendered scene is copied onto the screen as is.
+const copyPass = new ShaderPass(CopyShader);
+composer.addPass(copyPass);
+
+// Before the animation loop
+composer.gammaOutput = renderer.gammaOutput;
+
+// Make sure that the encoding of the final output matches the renderer
+composer.outputEncoding = renderer.outputEncoding;
+
+// Confirm that the EffectComposer uses the same tone mapping as the renderer
+composer.toneMapping = renderer.toneMapping;
+
+// Double-Check the Renderer's Clear Color
+renderer.setClearColor(0x000000, 0); // Adjust the color and alpha as needed for your scene
+
+const gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);
+composer.addPass(gammaCorrectionPass);
+
+// Reset the Composer's Render Target
+composer.renderTarget1.stencilBuffer = true;
+composer.renderTarget2.stencilBuffer = true;
+
+// Correctly Set the Composer's Render Target Encoding
+composer.renderTarget1.texture.encoding = renderer.outputEncoding;
+composer.renderTarget2.texture.encoding = renderer.outputEncoding;
+
+// Check for Pass Settings
+renderPass.clearAlpha = renderer.getClearAlpha();
+
+// Revisit Ambient Light
+ambientLight.intensity = 1; // Adjust as needed for your scene
+
+// Logging for Debugging
+console.log('Composer render target settings:', composer.renderTarget1.texture.encoding, composer.renderTarget2.texture.encoding);
+console.log('Clear Alpha:', renderer.getClearAlpha());
+
 
 // Animation loop
 function animate() {
@@ -167,6 +211,7 @@ function animate() {
   controls.update();
   // Here's where we decide which rendering method to use
   if (useComposer) {
+    renderer.toneMappingExposure = 1.25; // Make sure this matches the initial setting
     composer.render(); // Use post-processing rendering
 } else {
     renderer.render(scene, camera); // Use standard rendering
