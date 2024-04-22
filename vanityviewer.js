@@ -15,7 +15,7 @@ import { GammaCorrectionShader } from '/three.js-master/examples/jsm/shaders/Gam
 
 // Conditional parameters
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
-const ADD_PLANE_TO_THE_SCENE = false; // Set this to true to add a plane to the scene
+const ADD_PLANE_TO_THE_SCENE = true; // Set this to true to add a plane to the scene
 
 // Reference to the .vv div
 const vvElement = document.querySelector('.vv');
@@ -97,6 +97,16 @@ plane.receiveShadow = true; // Ensure it can receive shadows
 if (ADD_PLANE_TO_THE_SCENE) {
   scene.add(plane); // Add plane to the scene
 }
+
+// Create a GridHelper
+const size = 10; // Size of the grid
+const divisions = 10; // Number of divisions in the grid
+const gridHelper = new THREE.GridHelper(size, divisions, 0xffffff, 0x00ff00); // White central lines, green grid lines
+// Changing the position of the grid
+gridHelper.position.set(0, -1, 0); // Move the grid to position (5, 0, 5)
+scene.add(gridHelper);
+
+
 // Add a light source
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(2, 2, 5);
@@ -158,6 +168,7 @@ composer.addPass(bokehPass);
 console.log('Distance to the closest cube:', distanceToCube);
 // Add logging to see if the BokehPass is affecting the rendering
 console.log('BokehPass added with focus:', bokehPass.uniforms.focus.value, 'and aperture:', bokehPass.uniforms.aperture.value);
+console.log('Updated BokehPass settings: focus = ' + bokehPass.uniforms.focus.value + ', aperture = ' + bokehPass.uniforms.aperture.value);
 
 // SMAA Antialiasing Pass
 const smaaPass = new SMAAPass(window.innerWidth, window.innerHeight);
