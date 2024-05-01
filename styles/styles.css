@@ -56,6 +56,15 @@ main {
     box-shadow: 0rem 0.1rem 1rem 0rem rgba(0, 0, 0, 0.1);
 }
 
+button {
+    padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 0.5rem;
+    border: 0;
+    box-shadow: 0rem 0.1rem 1rem 0rem rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
 @media screen and (orientation: portrait) {
     main {
         width: 90vw;
