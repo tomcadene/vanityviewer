@@ -83,7 +83,7 @@ controls.enableDamping = true;
 
 // Add a green cube to the scene
 const geometry = new THREE.BoxGeometry();
-// Adjust the material properties for the cube
+// Adjust the material properties of the cube
 const material = new THREE.MeshStandardMaterial({
   color: 0x00ff00, // Green color
   metalness: 0,    // Make it fully metallic
@@ -126,7 +126,6 @@ const gridHelper = new THREE.GridHelper(size, divisions, 0xffffff, 0x00ff00); //
 gridHelper.position.set(0, -1, 0); // Move the grid to position (5, 0, 5)
 scene.add(gridHelper);
 
-
 // Add a light source
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(2, 2, 5);
@@ -142,10 +141,9 @@ console.log('Ambient light intensity before composer:', ambientLight.intensity);
 ambientLight.intensity = 1; // Adjust as needed
 console.log('Ambient light intensity after composer adjustment:', ambientLight.intensity);
 
-
 // Loading HDR Environment for Reflections
 const rgbeLoader = new RGBELoader();
-rgbeLoader.load('safari_sunset_4k.hdr', function (texture) {
+rgbeLoader.load('safari_sunset_2k.hdr', function (texture) {
   texture.mapping = THREE.EquirectangularReflectionMapping;
   if (USE_BACKGROUND_TEXTURE) {
     scene.background = texture;
@@ -186,7 +184,7 @@ const bokehPass = new BokehPass(scene, camera, {
 });
 composer.addPass(bokehPass);
 console.log('Distance to the closest cube:', distanceToCube);
-// Add logging to see if the BokehPass is affecting the rendering
+// Logging to see if the BokehPass is affecting the rendering
 console.log('BokehPass added with focus:', bokehPass.uniforms.focus.value, 'and aperture:', bokehPass.uniforms.aperture.value);
 console.log('Updated BokehPass settings: focus = ' + bokehPass.uniforms.focus.value + ', aperture = ' + bokehPass.uniforms.aperture.value);
 
@@ -194,11 +192,10 @@ console.log('Updated BokehPass settings: focus = ' + bokehPass.uniforms.focus.va
 const smaaPass = new SMAAPass(window.innerWidth, window.innerHeight);
 composer.addPass(smaaPass);
 
-// CopyShader as the last pass to ensure the rendered scene is copied onto the screen as is.
+// CopyShader as the last pass to ensure the rendered scene is copied onto the screen as is
 const copyPass = new ShaderPass(CopyShader);
 composer.addPass(copyPass);
 
-// Before the animation loop
 composer.gammaOutput = renderer.gammaOutput;
 
 // Make sure that the encoding of the final output matches the renderer
@@ -208,7 +205,7 @@ composer.outputEncoding = renderer.outputEncoding;
 composer.toneMapping = renderer.toneMapping;
 
 // Double-Check the Renderer's Clear Color
-renderer.setClearColor(0x000000, 0); // Adjust the color and alpha as needed for your scene
+renderer.setClearColor(0x000000, 0); // Adjust the color and alpha as needed for the scene
 
 const gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);
 composer.addPass(gammaCorrectionPass);
@@ -217,7 +214,7 @@ composer.addPass(gammaCorrectionPass);
 composer.renderTarget1.stencilBuffer = true;
 composer.renderTarget2.stencilBuffer = true;
 
-// Correctly Set the Composer's Render Target Encoding
+// Set the Composer's Render Target Encoding
 composer.renderTarget1.texture.encoding = renderer.outputEncoding;
 composer.renderTarget2.texture.encoding = renderer.outputEncoding;
 
@@ -231,7 +228,6 @@ ambientLight.intensity = 1; // Adjust as needed for your scene
 console.log('Composer render target settings:', composer.renderTarget1.texture.encoding, composer.renderTarget2.texture.encoding);
 console.log('Clear Alpha:', renderer.getClearAlpha());
 
-
 // Animation loop
 function animate() {
   stats.begin(); // Start measuring
@@ -244,7 +240,7 @@ function animate() {
   controls.update();
   // Here's where we decide which rendering method to use
   if (useComposer) {
-    renderer.toneMappingExposure = 1.25; // Make sure this matches the initial setting
+    renderer.toneMappingExposure = 1.25; // Need to matches the initial setting
     composer.render(); // Use post-processing rendering
   } else {
     renderer.render(scene, camera); // Use standard rendering
