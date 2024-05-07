@@ -1,6 +1,17 @@
 import * as THREE from '/three.js-master/build/three.module.js';
 import { OrbitControls } from '/three.js-master/examples/jsm/controls/OrbitControls.js'
 import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js';
+import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
+import { BokehPass } from '/three.js-master/examples/jsm/postprocessing/BokehPass.js';
+import { EffectComposer } from '/three.js-master/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from '/three.js-master/examples/jsm/postprocessing/RenderPass.js';
+import { ShaderPass } from '/three.js-master/examples/jsm/postprocessing/ShaderPass.js';
+import { Pass } from '/three.js-master/examples/jsm/postprocessing/Pass.js';
+import { SMAAPass } from '/three.js-master/examples/jsm/postprocessing/SMAAPass.js';
+import { MaskPass } from '/three.js-master/examples/jsm/postprocessing/MaskPass.js';
+import { BokehShader } from '/three.js-master/examples/jsm/shaders/BokehShader.js';
+import { CopyShader } from '/three.js-master/examples/jsm/shaders/CopyShader.js';
+import { GammaCorrectionShader } from '/three.js-master/examples/jsm/shaders/GammaCorrectionShader.js';
 
 // Conditional parameters
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
@@ -140,13 +151,81 @@ rgbeLoader.load('safari_sunset_2k.hdr', function (texture) {
   scene.environment = texture;
 });
 
+// Effect Composer
+const composer = new EffectComposer(renderer);
+const renderPass = new RenderPass(scene, camera);
+renderPass.clear = true;  // This should be true by default
+
+composer.addPass(renderPass)
+
+const toggleRenderingButton = document.getElementById('dofButton');
+
+// A flag to track the current rendering mode
+let useComposer = false;
+
+toggleRenderingButton.addEventListener('click', function () {
+  useComposer = !useComposer;
+  if (useComposer) {
+    console.log('Switched to composer rendering');
+  } else {
+    console.log('Switched to standard rendering');
+  }
+});
+
+// Calculate the Euclidean distance between the camera and the cube at the origin
+const distanceToCube = camera.position.length(); // Since the cube is at the origin, the length of the camera position vector is the distance
+
+const bokehPass = new BokehPass(scene, camera, {
+  focus: distanceToCube,
+  aperture: 0.0005,
+  maxblur: 0.005,
+  width: vvElement.clientWidth,
+  height: vvElement.clientHeight
+});
+composer.addPass(bokehPass);
+console.log('Distance to the closest cube:', distanceToCube);
+// Logging to see if the BokehPass is affecting the rendering
+console.log('BokehPass added with focus:', bokehPass.uniforms.focus.value, 'and aperture:', bokehPass.uniforms.aperture.value);
+console.log('Updated BokehPass settings: focus = ' + bokehPass.uniforms.focus.value + ', aperture = ' + bokehPass.uniforms.aperture.value);
+
+// SMAA Antialiasing Pass
+const smaaPass = new SMAAPass(window.innerWidth, window.innerHeight);
+composer.addPass(smaaPass);
+
+// CopyShader as the last pass to ensure the rendered scene is copied onto the screen as is
+const copyPass = new ShaderPass(CopyShader);
+composer.addPass(copyPass);
+
+composer.gammaOutput = renderer.gammaOutput;
+
+// Make sure that the encoding of the final output matches the renderer
+composer.outputEncoding = renderer.outputEncoding;
+
+// Confirm that the EffectComposer uses the same tone mapping as the renderer
+composer.toneMapping = renderer.toneMapping;
+
 // Double-Check the Renderer's Clear Color
 renderer.setClearColor(0x000000, 0); // Adjust the color and alpha as needed for the scene
+
+const gammaCorrectionPass = new ShaderPass(GammaCorrectionShader);
+composer.addPass(gammaCorrectionPass);
+
+// Reset the Composer's Render Target
+composer.renderTarget1.stencilBuffer = true;
+composer.renderTarget2.stencilBuffer = true;
+
+// Set the Composer's Render Target Encoding
+composer.renderTarget1.texture.encoding = renderer.outputEncoding;
+composer.renderTarget2.texture.encoding = renderer.outputEncoding;
+
+// Check for Pass Settings
+renderPass.clearAlpha = renderer.getClearAlpha();
 
 // Revisit Ambient Light
 ambientLight.intensity = 1; // Adjust as needed for your scene
 
 // Logging for Debugging
+console.log('Composer render target settings:', composer.renderTarget1.texture.encoding, composer.renderTarget2.texture.encoding);
 console.log('Clear Alpha:', renderer.getClearAlpha());
 
 // Animation loop
@@ -159,8 +238,13 @@ function animate() {
   // cube.rotation.y += 0.01;
 
   controls.update();
-  renderer.render(scene, camera); // Use standard rendering
-  
+  // Here's where we decide which rendering method to use
+  if (useComposer) {
+    renderer.toneMappingExposure = 1.25; // Need to matches the initial setting
+    composer.render(); // Use post-processing rendering
+  } else {
+    renderer.render(scene, camera); // Use standard rendering
+  }
   stats.end(); // Stop measuring
   stats2.end(); // Stop measuring
 }
