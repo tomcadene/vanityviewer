@@ -4,7 +4,7 @@ import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js'
 
 // Conditional parameters
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
-const ADD_PLANE_TO_THE_SCENE = true; // Set this to true to add a plane to the scene
+const ADD_PLANE_TO_THE_SCENE = false; // Set this to true to add a plane to the scene
 
 // Reference to the .vv div
 const vvElement = document.querySelector('.vv');
@@ -86,10 +86,6 @@ cube.castShadow = true; // The cube will cast shadows
 cube.receiveShadow = true;
 scene.add(cube);
 
-const cube2 = new THREE.Mesh(geometry, material);
-cube2.position.z = -10; // Further away
-scene.add(cube2);
-
 // Ground Plane
 const planeGeometry = new THREE.PlaneGeometry(50, 50);
 const planeMaterial = new THREE.MeshStandardMaterial({
@@ -108,12 +104,14 @@ if (ADD_PLANE_TO_THE_SCENE) {
 }
 
 // Create a GridHelper
-const size = 10; // Size of the grid
+const size = 50; // Size of the grid
 const divisions = 10; // Number of divisions in the grid
-const gridHelper = new THREE.GridHelper(size, divisions, 0xffffff, 0x00ff00); // White central lines, green grid lines
+const gridHelper = new THREE.GridHelper(size, divisions, 0xffffff, 0x808080); // White central lines, green grid lines
 // Changing the position of the grid
 gridHelper.position.set(0, -1, 0); // Move the grid to position (5, 0, 5)
-scene.add(gridHelper);
+if (ADD_PLANE_TO_THE_SCENE) {
+  scene.add(gridHelper);
+}
 
 // Add a light source
 const light = new THREE.DirectionalLight(0xffffff, 1);
@@ -159,27 +157,30 @@ function animate() {
   // cube.rotation.y += 0.01;
 
   controls.update();
-    renderer.render(scene, camera); // Use standard rendering
-  
+  renderer.render(scene, camera); // Use standard rendering
+
   stats.end(); // Stop measuring
   stats2.end(); // Stop measuring
 }
 
 animate();
 
+
+let rotateCube = 0;
 // animation
 renderer.setAnimationLoop(animation);
 function animation(time) {
-  cube.rotation.x = time / 2000;
-  cube.rotation.y = time / 1000;
+
+  if (rotateCube) {
+    cube.rotation.x = time / 2000;
+    cube.rotation.y = time / 1000;
+  } else {
+    cube.rotation.x = 0;
+    cube.rotation.y = 0;
+  }
 }
 
-document.getElementById('cubeOpacityButton').addEventListener('click', function () {
-  cube.material.opacity = cube.material.opacity === 1 ? 0 : 1; // if cube opacity === 1 change to 0 else 1
-  console.log('Cube opacity changed to: ' + cube.material.opacity); // Log the change for verification
-});
-
-document.getElementById('planeOpacityButton').addEventListener('click', function () {
-  plane.material.opacity = plane.material.opacity === 1 ? 0 : 1; // if plane opacity === 1 change to 0 else 1
-  console.log('Plane opacity changed to: ' + plane.material.opacity); // Log the change for verification
+document.getElementById('rotateCubeButton').addEventListener('click', function () {
+  rotateCube = rotateCube === 1 ? 0 : 1; // if rotateCube === 1 change to 0 else 1
+  console.log('rotateCube changed to: ' + rotateCube); // Log the change for verification
 });
