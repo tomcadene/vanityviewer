@@ -72,7 +72,7 @@ controls.enableDamping = true;
 
 // Add a green cube to the scene
 const geometry = new THREE.BoxGeometry();
-// Adjust the material properties for the cube
+// Adjust the material properties of the cube
 const material = new THREE.MeshStandardMaterial({
   color: 0x00ff00, // Green color
   metalness: 0,    // Make it fully metallic
@@ -115,7 +115,6 @@ const gridHelper = new THREE.GridHelper(size, divisions, 0xffffff, 0x00ff00); //
 gridHelper.position.set(0, -1, 0); // Move the grid to position (5, 0, 5)
 scene.add(gridHelper);
 
-
 // Add a light source
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(2, 2, 5);
@@ -131,10 +130,9 @@ console.log('Ambient light intensity before composer:', ambientLight.intensity);
 ambientLight.intensity = 1; // Adjust as needed
 console.log('Ambient light intensity after composer adjustment:', ambientLight.intensity);
 
-
 // Loading HDR Environment for Reflections
 const rgbeLoader = new RGBELoader();
-rgbeLoader.load('safari_sunset_4k.hdr', function (texture) {
+rgbeLoader.load('safari_sunset_2k.hdr', function (texture) {
   texture.mapping = THREE.EquirectangularReflectionMapping;
   if (USE_BACKGROUND_TEXTURE) {
     scene.background = texture;
@@ -143,7 +141,7 @@ rgbeLoader.load('safari_sunset_4k.hdr', function (texture) {
 });
 
 // Double-Check the Renderer's Clear Color
-renderer.setClearColor(0x000000, 0); // Adjust the color and alpha as needed for your scene
+renderer.setClearColor(0x000000, 0); // Adjust the color and alpha as needed for the scene
 
 // Revisit Ambient Light
 ambientLight.intensity = 1; // Adjust as needed for your scene
