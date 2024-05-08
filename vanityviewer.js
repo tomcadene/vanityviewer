@@ -210,7 +210,7 @@ renderer.setAnimationLoop(animation);
 function animation(time) {
 
   if (rotateCube) {
-    cube.rotation.x = time / 2000;
+    cube.rotation.x = 0;
     cube.rotation.y = time / 1000;
   } else {
     cube.rotation.x = 0;
