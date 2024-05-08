@@ -21,8 +21,8 @@ var stats2 = new Stats();
 // Position it on the top-left corner
 stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
 stats2.showPanel(2); // 0: fps, 1: ms, 2: mb, 3+: custom
-vvElement.appendChild(stats.dom);
-vvElement.appendChild(stats2.dom);
+// vvElement.appendChild(stats.dom);
+// vvElement.appendChild(stats2.dom);
 // Adjust style of the stats to position it correctly within the div
 stats.dom.style.position = 'absolute';
 stats.dom.style.top = '0px';
@@ -185,6 +185,9 @@ composer.addPass(new RenderPass(scene, camera));
 const pixelPass = new ShaderPass(pixelShader);
 composer.addPass(pixelPass);
 
+let useComposer = 0;
+
+
 // Animation loop
 function animate() {
   stats.begin(); // Start measuring
@@ -196,7 +199,11 @@ function animate() {
 
   controls.update();
   // renderer.render(scene, camera); // Use standard rendering
-  composer.render();
+  if (useComposer) {
+    composer.render();
+  } else {
+    renderer.render(scene, camera);
+  }
   stats.end(); // Stop measuring
   stats2.end(); // Stop measuring
 }
@@ -221,4 +228,9 @@ function animation(time) {
 document.getElementById('rotateCubeButton').addEventListener('click', function () {
   rotateCube = rotateCube === 1 ? 0 : 1; // if rotateCube === 1 change to 0 else 1
   console.log('rotateCube changed to: ' + rotateCube); // Log the change for verification
+});
+
+document.getElementById('pixelatedButton').addEventListener('click', function () {
+  useComposer = useComposer === 1 ? 0 : 1; // if rotateCube === 1 change to 0 else 1
+  console.log('useComposer changed to: ' + useComposer); // Log the change for verification
 });
