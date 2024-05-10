@@ -4,6 +4,7 @@ import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js'
 import { EffectComposer } from '/three.js-master/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from '/three.js-master/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from '/three.js-master/examples/jsm/postprocessing/ShaderPass.js';
+import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
 
 // Conditional parameters
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
@@ -74,6 +75,19 @@ window.addEventListener('resize', onWindowResize);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
+const loader = new GLTFLoader();
+let modelMesh;  // This will hold the model
+
+loader.load('/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf', (gltf) => {
+    modelMesh = gltf.scene;
+    scene.add(modelMesh);
+    console.log("Model added to scene");  // Confirmation message
+    modelMesh.position.set(0, 0, 0);
+    modelMesh.scale.set(2.5, 2.5, 2.5);
+}, undefined, function (error) {
+    console.error('An error happened while loading the model:', error);
+});
+
 // Add a green cube to the scene
 const geometry = new THREE.BoxGeometry();
 // Adjust the material properties of the cube
@@ -88,7 +102,7 @@ const material = new THREE.MeshStandardMaterial({
 const cube = new THREE.Mesh(geometry, material);
 cube.castShadow = true; // The cube will cast shadows
 cube.receiveShadow = true;
-scene.add(cube);
+// scene.add(cube);
 
 // Ground Plane
 const planeGeometry = new THREE.PlaneGeometry(50, 50);
