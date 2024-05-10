@@ -1,4 +1,4 @@
-A versatile 3D model viewer designed for seamless integration into any website. Leveraging the powerful three.js library, this foundation tool enables easy display and interaction with 3D models. The viewer is built to be highly compatible across different devices and browsers, ensuring a smooth user experience.
+A versatile open-source 3D model viewer designed for seamless integration into any website. Leveraging the powerful three.js library, this foundation tool enables easy display and interaction with 3D models. The viewer is built to be highly compatible across different devices and browsers, ensuring a smooth user experience.
 
 ## Use cases
 - **Online Store Product Display:** Online retailers can implement the viewer to enhance product listings with 3D models, giving customers a more immersive understanding of product features, leading to increased engagement and conversion rates.
@@ -12,7 +12,7 @@ A versatile 3D model viewer designed for seamless integration into any website. 
 - **Responsive Design:** Optimized for performance on desktops, tablets, and mobile devices.
 - **Customizable UI:** Adjustable interface to cater to specific user needs and preferences.
 - **Embeddable:** Easily integrate into web applications using simple embedding options.
-- **Accessible conditional parameters**
+- **Accessible customizable Settings:** Allows customization of lighting, background, and other display settings to enhance the viewing experience.
 ```javascript
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
 const ADD_PLANE_TO_THE_SCENE = false; // Set this to true to add a plane to the scene
@@ -41,6 +41,8 @@ Instructions on how to set up and run the model viewer locally, including requir
 
 ## Contributing:
 Guidelines for contributing to the project, including coding standards, pull requests, and issue reporting.
+Contributions are welcome! Please read the CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## License:
 Details about the software license, specifying how it can be used and distributed.
+This project is licensed under the MIT License - see the LICENSE file for details.
