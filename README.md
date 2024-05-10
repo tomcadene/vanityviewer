@@ -8,26 +8,27 @@ A versatile 3D model viewer designed for seamless integration into any website. 
 - Virtual Reality (VR) and Augmented Reality (AR) Development: Game developers and AR/VR designers can preview models in 3D before exporting them to their final applications, ensuring assets are optimized for their projects.
 
 ## Key Features:
-- Interactive Viewing: Tools to rotate, zoom, and pan models to view them from any angle.
-- Responsive Design: Optimized for performance on desktops, tablets, and mobile devices.
-- Customizable UI: Adjustable interface to cater to specific user needs and preferences.
-- Accessible conditional parameters
+- **Interactive Viewing:** Tools to rotate, zoom, and pan models to view them from any angle.
+- **Responsive Design:** Optimized for performance on desktops, tablets, and mobile devices.
+- **Customizable UI:** Adjustable interface to cater to specific user needs and preferences.
+- **Embeddable:** Easily integrate into web applications using simple embedding options.
+- **Accessible conditional parameters**
 ```javascript
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
 const ADD_PLANE_TO_THE_SCENE = false; // Set this to true to add a plane to the scene
 ```
 
-- Seamless integration into any website, reference your div and you're all set
+- **Seamless integration into any website, reference your div and you're all set**
 ```javascript
 const vvElement = document.querySelector('.vv');
 ```
 
-- Control what your user can control
+- **Control what your user can control**
 ```javascript
 const ENABLE_INTERFACE = true; // Set this to true to enable the user interface
 ```
 
-- Automated support for your models (scene, camera, renderer, window resize, light, reflections)
+- **Automated support for your models (scene, camera, renderer, window resize, light, reflections)**
 ```javascript
 yourModel.castShadow = true;
 yourModel.receiveShadow = true;
