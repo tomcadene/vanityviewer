@@ -7,6 +7,7 @@ import { ShaderPass } from '/three.js-master/examples/jsm/postprocessing/ShaderP
 
 // Conditional parameters
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
+const USE_SUN_LIGHT = true; // Set this to true to add a plane to the scene
 const ADD_PLANE_TO_THE_SCENE = false; // Set this to true to add a plane to the scene
 
 // Reference to the .vv div
@@ -120,7 +121,9 @@ if (ADD_PLANE_TO_THE_SCENE) {
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(2, 2, 5);
 light.castShadow = true; // This light will cast shadows
-scene.add(light);
+if (USE_SUN_LIGHT) {
+  scene.add(light);
+}
 
 // Add an ambient light
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // soft white light
@@ -135,10 +138,15 @@ console.log('Ambient light intensity after composer adjustment:', ambientLight.i
 const rgbeLoader = new RGBELoader();
 rgbeLoader.load('safari_sunset_2k.hdr', function (texture) {
   texture.mapping = THREE.EquirectangularReflectionMapping;
+  // Set up your event listener inside the load callback to ensure texture is available
+  document.getElementById('skyboxButton').addEventListener('click', function () {
+    scene.background = scene.background === texture ? null : texture;
+    console.log('Skybox visibility changed to:', scene.background ? 'visible' : 'hidden');
+  });
   if (USE_BACKGROUND_TEXTURE) {
     scene.background = texture;
   }
-  scene.environment = texture;
+  scene.environment = null;
 });
 
 // Double-Check the Renderer's Clear Color
@@ -153,9 +161,9 @@ console.log('Clear Alpha:', renderer.getClearAlpha());
 // Define a pixelation shader
 const pixelShader = {
   uniforms: {
-      "tDiffuse": { value: null },
-      "resolution": { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-      "pixelSize": { value: 5 },
+    "tDiffuse": { value: null },
+    "resolution": { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+    "pixelSize": { value: 5 },
   },
   vertexShader: `
       varying vec2 vUv;
