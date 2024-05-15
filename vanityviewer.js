@@ -145,6 +145,7 @@ console.log('Ambient light intensity after composer adjustment:', ambientLight.i
 const rgbeLoader = new RGBELoader();
 rgbeLoader.load('safari_sunset_2k.hdr', function (texture) {
   texture.mapping = THREE.EquirectangularReflectionMapping;
+  scene.environment = texture;
   // Set up your event listener inside the load callback to ensure texture is available
   document.getElementById('skyboxButton').addEventListener('click', function () {
     scene.background = scene.background === texture ? null : texture;
@@ -153,7 +154,6 @@ rgbeLoader.load('safari_sunset_2k.hdr', function (texture) {
   if (USE_BACKGROUND_TEXTURE) {
     scene.background = texture;
   }
-  scene.environment = null;
 });
 
 // Double-Check the Renderer's Clear Color
