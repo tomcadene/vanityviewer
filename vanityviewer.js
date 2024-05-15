@@ -106,7 +106,7 @@ function initViewer(container, modelPath, hdriPath) {
 }
 
 // Automatically initialize all viewers
-document.querySelectorAll('.vv').forEach(container => {
+document.querySelectorAll('.model-viewer').forEach(container => {
   const modelPath = container.getAttribute('data-model-path');
   const hdriPath = container.getAttribute('data-hdri-path');
   if (modelPath && hdriPath) {
