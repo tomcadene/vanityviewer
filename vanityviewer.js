@@ -72,13 +72,13 @@ const loader = new GLTFLoader();
 let modelMesh;  // This will hold the model
 
 loader.load('/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf', (gltf) => {
-    modelMesh = gltf.scene;
-    scene.add(modelMesh);
-    console.log("Model added to scene");  // Confirmation message
-    modelMesh.position.set(0, 0, 0);
-    modelMesh.scale.set(2.5, 2.5, 2.5);
+  modelMesh = gltf.scene;
+  scene.add(modelMesh);
+  console.log("Model added to scene");  // Confirmation message
+  modelMesh.position.set(0, 0, 0);
+  modelMesh.scale.set(2.5, 2.5, 2.5);
 }, undefined, function (error) {
-    console.error('An error happened while loading the model:', error);
+  console.error('An error happened while loading the model:', error);
 });
 
 // Add a green cube to the scene
@@ -172,7 +172,10 @@ function animate() {
 
   // cube.rotation.x += 0.01;
   // cube.rotation.y += 0.01;
-
+  // Rotate the model horizontally
+  if (modelMesh && rotateModel) {
+    modelMesh.rotation.y += 0.01;  // Adjust the speed of rotation as needed
+  }
   controls.update();
   // renderer.render(scene, camera); // Use standard rendering
   renderer.render(scene, camera);
@@ -184,26 +187,8 @@ function animate() {
 animate();
 
 
-let rotateCube = 0;
-// animation
-renderer.setAnimationLoop(animation);
-function animation(time) {
-
-  if (rotateCube) {
-    cube.rotation.x = 0;
-    cube.rotation.y = time / 1000;
-  } else {
-    cube.rotation.x = 0;
-    cube.rotation.y = 0;
-  }
-}
-
-document.getElementById('rotateCubeButton').addEventListener('click', function () {
-  rotateCube = rotateCube === 1 ? 0 : 1; // if rotateCube === 1 change to 0 else 1
-  console.log('rotateCube changed to: ' + rotateCube); // Log the change for verification
-});
-
-document.getElementById('pixelatedButton').addEventListener('click', function () {
-  useComposer = useComposer === 1 ? 0 : 1; // if rotateCube === 1 change to 0 else 1
-  console.log('useComposer changed to: ' + useComposer); // Log the change for verification
+let rotateModel = 0;
+document.getElementById('rotateModelButton').addEventListener('click', function () {
+  rotateModel = rotateModel === 1 ? 0 : 1; // if rotateModel === 1 change to 0 else 1
+  console.log('rotateModel changed to: ' + rotateModel); // Log the change for verification
 });
