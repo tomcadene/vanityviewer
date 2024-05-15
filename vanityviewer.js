@@ -2,7 +2,7 @@ import * as THREE from '/three.js-master/build/three.module.js';
 import { OrbitControls } from '/three.js-master/examples/jsm/controls/OrbitControls.js'
 import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js';
 import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
-import { vvElement, MODEL_PATH, HDRI_PATH, USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
+import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
 
 function initViewer(container, modelPath, hdriPath) {
   const aspectRatio = container.clientWidth / container.clientHeight;
@@ -106,7 +106,7 @@ function initViewer(container, modelPath, hdriPath) {
 }
 
 // Automatically initialize all viewers
-document.querySelectorAll('.model-viewer').forEach(container => {
+document.querySelectorAll('.vv').forEach(container => {
   const modelPath = container.getAttribute('data-model-path');
   const hdriPath = container.getAttribute('data-hdri-path');
   if (modelPath && hdriPath) {
