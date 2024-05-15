@@ -52,14 +52,21 @@ Instructions on how to set up and run the model viewer locally, including requir
 ```html
 <script id="vanityviewer" type="module" src="vanityviewer-main/vanityviewer.js"></script>
 ```
-- Inside the HTML file of the webpage that will contain the model viewer, add the model viewer container div. This is the actual model viewer.
-```html
-<div class="vv" style="position: relative;"></div>
-```
 - Add your GLTF model(s) in vanityviewer-main/models
 - Add your HDR Environment(s) in vanityviewer-main/hdris
+- Inside the HTML file of the webpage that will contain the model viewer, add the model viewer container div. This is the actual model viewer. make sure to replace the path with the path and name of the model and hdri files.
+```html
+<div class="vv" data-model-path="/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf" data-hdri-path="/hdris/safari_sunset_2k.hdr" style="position: relative;"></div>
+```
+- You can add as many viewer as you want.
+```html
+<div class="vv" data-model-path="/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf" data-hdri-path="/hdris/safari_sunset_2k.hdr" style="position: relative;"></div>
+<div class="vv" data-model-path="/models/another_model.gltf" data-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
+<div class="vv" data-model-path="/models/another_model.gltf" data-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
+<div class="vv" data-model-path="/models/another_model.gltf" data-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
+<div class="vv" data-model-path="/models/another_model.gltf" data-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
+```
 - In the vanityviewer-main folder open the config.js file, this is the configuration file where you will select the viewer functionalities.
-- Replace the path with the path and name of the model(s) and hdri(s) file(s).
 - Select the viewer functionalities by changing their value by either true or false.
 - And you should have a working viewer in your website, good job 😀.
 
