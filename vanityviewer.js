@@ -1,9 +1,6 @@
 import * as THREE from '/three.js-master/build/three.module.js';
 import { OrbitControls } from '/three.js-master/examples/jsm/controls/OrbitControls.js'
 import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js';
-import { EffectComposer } from '/three.js-master/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from '/three.js-master/examples/jsm/postprocessing/RenderPass.js';
-import { ShaderPass } from '/three.js-master/examples/jsm/postprocessing/ShaderPass.js';
 import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
 import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
 
@@ -168,44 +165,6 @@ ambientLight.intensity = 1; // Adjust as needed for your scene
 // Logging for Debugging
 console.log('Clear Alpha:', renderer.getClearAlpha());
 
-// Define a pixelation shader
-const pixelShader = {
-  uniforms: {
-    "tDiffuse": { value: null },
-    "resolution": { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-    "pixelSize": { value: 5 },
-  },
-  vertexShader: `
-      varying vec2 vUv;
-      void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-  `,
-  fragmentShader: `
-      uniform sampler2D tDiffuse;
-      uniform vec2 resolution;
-      uniform float pixelSize;
-      varying vec2 vUv;
-      void main() {
-          vec2 dxy = pixelSize / resolution;
-          vec2 coord = dxy * floor(vUv / dxy);
-          gl_FragColor = texture2D(tDiffuse, coord);
-      }
-  `
-};
-
-// Setup the EffectComposer
-const composer = new EffectComposer(renderer);
-composer.addPass(new RenderPass(scene, camera));
-
-// Add ShaderPass for pixelation
-const pixelPass = new ShaderPass(pixelShader);
-composer.addPass(pixelPass);
-
-let useComposer = 0;
-
-
 // Animation loop
 function animate() {
   stats.begin(); // Start measuring
@@ -217,11 +176,8 @@ function animate() {
 
   controls.update();
   // renderer.render(scene, camera); // Use standard rendering
-  if (useComposer) {
-    composer.render();
-  } else {
-    renderer.render(scene, camera);
-  }
+  renderer.render(scene, camera);
+
   stats.end(); // Stop measuring
   stats2.end(); // Stop measuring
 }
