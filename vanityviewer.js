@@ -2,10 +2,7 @@ import * as THREE from '/three.js-master/build/three.module.js';
 import { OrbitControls } from '/three.js-master/examples/jsm/controls/OrbitControls.js'
 import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js';
 import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
-import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
-
-// Reference to the .vv div
-const vvElement = document.querySelector('.vv');
+import { vvElement, USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
 
 // Calculate aspect ratio of the .vv div
 const aspectRatio = vvElement.clientWidth / vvElement.clientHeight;
