@@ -2,7 +2,7 @@ import * as THREE from '/three.js-master/build/three.module.js';
 import { OrbitControls } from '/three.js-master/examples/jsm/controls/OrbitControls.js'
 import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js';
 import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
-import { vvElement, MODEL_PATH, USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
+import { vvElement, MODEL_PATH, HDRI_PATH, USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
 
 // Calculate aspect ratio of the .vv div
 const aspectRatio = vvElement.clientWidth / vvElement.clientHeight;
@@ -140,7 +140,7 @@ console.log('Ambient light intensity after composer adjustment:', ambientLight.i
 
 // Loading HDR Environment for Reflections
 const rgbeLoader = new RGBELoader();
-rgbeLoader.load('safari_sunset_2k.hdr', function (texture) {
+rgbeLoader.load(HDRI_PATH, function (texture) {
   texture.mapping = THREE.EquirectangularReflectionMapping;
   scene.environment = texture;
   document.getElementById('skyboxButton').addEventListener('click', function () {
