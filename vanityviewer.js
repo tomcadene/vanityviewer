@@ -7,11 +7,6 @@ import { ShaderPass } from '/three.js-master/examples/jsm/postprocessing/ShaderP
 import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
 import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from 'config.js';
 
-// Conditional parameters
-const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
-const USE_SUN_LIGHT = true; // Set this to true to add a plane to the scene
-const ADD_PLANE_TO_THE_SCENE = false; // Set this to true to add a plane to the scene
-
 // Reference to the .vv div
 const vvElement = document.querySelector('.vv');
 
