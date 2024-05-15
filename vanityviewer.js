@@ -5,6 +5,7 @@ import { EffectComposer } from '/three.js-master/examples/jsm/postprocessing/Eff
 import { RenderPass } from '/three.js-master/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from '/three.js-master/examples/jsm/postprocessing/ShaderPass.js';
 import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
+import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from 'config.js';
 
 // Conditional parameters
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
