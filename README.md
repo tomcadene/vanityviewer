@@ -47,6 +47,17 @@ Examples and documentation on how to use the viewer in various scenarios, such a
 ## Installation:
 Instructions on how to set up and run the model viewer locally, including requirements and dependencies.
 
+- Download the repo, extract it, add the vanityviewer-main folder in the root directory of your website.
+- Inside the HTML file of the webpage that will contain the model viewer, add a script tag to include the JavaScript module.
+```html
+<script id="vanityviewer" type="module" src="vanityviewer-main/vanityviewer.js"></script>
+```
+- Inside the HTML file of the webpage that will contain the model viewer, add the model viewer container div. This is the actual model viewer.
+```html
+<div class="vv" style="position: relative;"></div>
+```
+- In the vanityviewer-main folder open the config.js file, this is the configuration file where you will select the viewer functionalities. 
+
 ## Contributing:
 Guidelines for contributing to the project, including coding standards, pull requests, and issue reporting.
 Contributions are welcome! Please read the CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
