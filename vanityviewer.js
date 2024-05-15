@@ -2,7 +2,7 @@ import * as THREE from '/three.js-master/build/three.module.js';
 import { OrbitControls } from '/three.js-master/examples/jsm/controls/OrbitControls.js'
 import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js';
 import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
-import { vvElement, USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
+import { vvElement, MODEL_PATH, USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
 
 // Calculate aspect ratio of the .vv div
 const aspectRatio = vvElement.clientWidth / vvElement.clientHeight;
@@ -68,7 +68,7 @@ controls.enableDamping = true;
 const loader = new GLTFLoader();
 let modelMesh;  // This will hold the model
 
-loader.load('/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf', (gltf) => {
+loader.load(MODEL_PATH, (gltf) => {
   modelMesh = gltf.scene;
   scene.add(modelMesh);
   console.log("Model added to scene");  // Confirmation message
