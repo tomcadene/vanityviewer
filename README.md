@@ -18,25 +18,15 @@ A versatile open-source 3D model viewer designed for seamless integration into a
 - **Customizable UI:** Adjustable interface to cater to specific user needs and preferences.
 - **Embeddable:** Easily integrate into web applications using simple embedding options.
 - **Accessible customizable Settings:** Allows customization of lighting, background, and other display settings to enhance the viewing experience.
+- **Automated support for your models:** scene, camera, renderer, window resize, light, shadows, reflections.
 ```javascript
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
 const ADD_PLANE_TO_THE_SCENE = false; // Set this to true to add a plane to the scene
 ```
 
-- **Seamless integration into any website, reference your div and you're all set**
-```javascript
-const vvElement = document.querySelector('.vv');
-```
-
 - **Control what your user can control**
 ```javascript
 const ENABLE_INTERFACE = true; // Set this to true to enable the user interface
-```
-
-- **Automated support for your models (scene, camera, renderer, window resize, light, reflections)**
-```javascript
-yourModel.castShadow = true;
-yourModel.receiveShadow = true;
 ```
 
 ## Live demo
