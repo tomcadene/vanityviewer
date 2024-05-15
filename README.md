@@ -56,7 +56,12 @@ Instructions on how to set up and run the model viewer locally, including requir
 ```html
 <div class="vv" style="position: relative;"></div>
 ```
-- In the vanityviewer-main folder open the config.js file, this is the configuration file where you will select the viewer functionalities. 
+- Add your GLTF model(s) in vanityviewer-main/models
+- Add your HDR Environment(s) in vanityviewer-main/hdris
+- In the vanityviewer-main folder open the config.js file, this is the configuration file where you will select the viewer functionalities.
+- Replace the path with the path and name of the model(s) and hdri(s) file(s).
+- Select the viewer functionalities by changing their value by either true or false.
+- And you should have a working viewer in your website, good job 😀.
 
 ## Contributing:
 Guidelines for contributing to the project, including coding standards, pull requests, and issue reporting.
