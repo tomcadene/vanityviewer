@@ -38,6 +38,9 @@ const ENABLE_INTERFACE = true; // Set this to true to enable the user interface
 yourModel.castShadow = true;
 yourModel.receiveShadow = true;
 ```
+
+## Live demo
+A live demo is present at https://tomcadene.com/projects/vanityviewer.html.
 ## Usage: 
 Examples and documentation on how to use the viewer in various scenarios, such as in art showcases or online retail environments.
 
