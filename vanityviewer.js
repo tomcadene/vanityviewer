@@ -55,13 +55,36 @@ function initViewer(container, modelPath, hdriPath) {
     scene.add(modelMesh);
     modelMesh.position.set(0, 0, 0);
     modelMesh.scale.set(2.5, 2.5, 2.5);
+    modelMesh.castShadow = true;
+    // Enable shadows for each child mesh in the model
+    modelMesh.traverse(function (node) {
+      if (node.isMesh) {
+        node.castShadow = true; // Make the model cast shadows
+      }
+    });
   }, undefined, function (error) {
     console.error('An error happened while loading the model:', error);
   });
 
+
+  const planeGeometry = new THREE.PlaneGeometry(10000, 10000);
+  const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+  const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+
+  plane.rotation.x = -Math.PI / 2;
+  plane.receiveShadow = true;
+
+  scene.add(plane);
+
   const light = new THREE.DirectionalLight(0xffffff, 1);
   light.position.set(2, 2, 5);
   light.castShadow = true;
+  // Configure shadow properties for better quality
+  light.shadow.mapSize.width = 1024;
+  light.shadow.mapSize.height = 1024;
+  light.shadow.camera.near = 0.5;
+  light.shadow.camera.far = 50;
+
   if (USE_SUN_LIGHT) {
     scene.add(light);
   }
