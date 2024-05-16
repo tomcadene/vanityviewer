@@ -135,7 +135,7 @@ function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath, m
     rgbeLoader.load(skyboxHdriPath, function (texture) {
       texture.mapping = THREE.EquirectangularReflectionMapping;
       skyboxTexture = texture;
-      if (displaySkybox) {
+      if (container.getAttribute('data-display-skybox-enabled') === 'true') {
         scene.background = skyboxTexture;
       }
     });
@@ -164,7 +164,7 @@ function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath, m
     renderer.render(scene, camera);
 
     // Update skybox visibility based on the checkbox
-    if (displaySkybox) {
+    if (container.getAttribute('data-display-skybox-enabled') === 'true') {
       scene.background = skyboxTexture;
     } else {
       scene.background = null;
@@ -180,13 +180,17 @@ function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath, m
     rotateModelCheckbox.addEventListener('change', function () {
       container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
     });
+    // Set initial state
+    container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
   }
 
-  const displaySkyboxCheckbox = document.getElementById('displaySkyboxCheckbox');
+  const displaySkyboxCheckbox = container.querySelector('.displaySkyboxCheckbox');
   if (displaySkyboxCheckbox) {
     displaySkyboxCheckbox.addEventListener('change', function () {
-      displaySkybox = displaySkyboxCheckbox.checked ? 1 : 0;
+      container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
     });
+    // Set initial state
+    container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
   }
 
 
