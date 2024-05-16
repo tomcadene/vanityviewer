@@ -30,6 +30,10 @@ function initViewer(container, modelPath, hdriPath) {
   renderer.physicallyCorrectLights = true;
   renderer.autoClear = true;
 
+  // Optimize shadows
+renderer.shadowMap.autoUpdate = false;
+renderer.shadowMap.needsUpdate = true;
+
   container.appendChild(renderer.domElement);
 
   renderer.domElement.style.borderRadius = '1rem';
@@ -52,7 +56,6 @@ function initViewer(container, modelPath, hdriPath) {
 
   loader.load(modelPath, (gltf) => {
     modelMesh = gltf.scene;
-    scene.add(modelMesh);
     modelMesh.position.set(0, 0, 0);
     modelMesh.scale.set(2.5, 2.5, 2.5);
     modelMesh.castShadow = true;
@@ -60,18 +63,26 @@ function initViewer(container, modelPath, hdriPath) {
     // Enable shadows for each child mesh in the model
     modelMesh.traverse(function (node) {
       if (node.isMesh) {
-        node.castShadow = true; // Make the model cast shadows
-        node.receiveShadow = true; // Make the model receive shadows
+        node.castShadow = true;
+        node.receiveShadow = true;
         node.material.roughness = 0.5; // Adjust material roughness
+        // Optional: Optimize material properties for better performance
+        node.material.precision = 'mediump';
+        // Ensure frustum culling is enabled (default is true)
+        node.frustumCulled = true;
       }
     });
+    scene.add(modelMesh);
+
+    // Optimize shadow map update
+    renderer.shadowMap.needsUpdate = true;
   }, undefined, function (error) {
     console.error('An error happened while loading the model:', error);
   });
 
 
   const planeGeometry = new THREE.PlaneGeometry(10000, 10000);
-  const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+  const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.5, side: THREE.DoubleSide });
   const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 
   plane.rotation.x = -Math.PI / 2;
@@ -82,9 +93,9 @@ function initViewer(container, modelPath, hdriPath) {
   const light = new THREE.DirectionalLight(0xffffff, 10);
   light.position.set(2, 10, 5);
   light.castShadow = true;
-  // Configure shadow properties for better quality
-  light.shadow.mapSize.width = 2048;  // Increase shadow map size for better quality
-  light.shadow.mapSize.height = 2048;
+
+  light.shadow.mapSize.width = 1024;  // Increase shadow map size to 2048 for better quality
+  light.shadow.mapSize.height = 1024;
   light.shadow.camera.near = 0.5;
   light.shadow.camera.far = 50;
 
@@ -115,6 +126,13 @@ function initViewer(container, modelPath, hdriPath) {
   });
 
   renderer.setClearColor(0x000000, 0);
+
+  // Frustum Culling Optimization, Ensure objects outside the camera view are not rendered.
+  scene.traverse(function (object) {
+    if (object.isMesh) {
+      object.frustumCulled = true;
+    }
+  });
 
   function animate() {
     stats.begin();
