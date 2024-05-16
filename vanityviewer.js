@@ -31,8 +31,8 @@ function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath) {
   renderer.autoClear = true;
 
   // Optimize shadows
-renderer.shadowMap.autoUpdate = false;
-renderer.shadowMap.needsUpdate = true;
+  renderer.shadowMap.autoUpdate = false;
+  renderer.shadowMap.needsUpdate = true;
 
   container.appendChild(renderer.domElement);
 
@@ -120,19 +120,19 @@ renderer.shadowMap.needsUpdate = true;
 
   const rgbeLoader = new RGBELoader();
 
-// Load the environment HDR
-rgbeLoader.load(environmentHdriPath, function (environmentTexture) {
-  environmentTexture.mapping = THREE.EquirectangularReflectionMapping;
-  scene.environment = environmentTexture;
-});
-
-// Load the skybox HDR (if needed)
-if (USE_BACKGROUND_TEXTURE) {
-  rgbeLoader.load(skyboxHdriPath, function (skyboxTexture) {
-    skyboxTexture.mapping = THREE.EquirectangularReflectionMapping;
-    scene.background = skyboxTexture;
+  // Load the environment HDR
+  rgbeLoader.load(environmentHdriPath, function (environmentTexture) {
+    environmentTexture.mapping = THREE.EquirectangularReflectionMapping;
+    scene.environment = environmentTexture;
   });
-}
+
+  // Load the skybox HDR (if needed)
+  if (USE_BACKGROUND_TEXTURE) {
+    rgbeLoader.load(skyboxHdriPath, function (skyboxTexture) {
+      skyboxTexture.mapping = THREE.EquirectangularReflectionMapping;
+      scene.background = skyboxTexture;
+    });
+  }
 
 
   renderer.setClearColor(0x000000, 0);
@@ -160,12 +160,15 @@ if (USE_BACKGROUND_TEXTURE) {
   animate();
 
   let rotateModel = 0;
-  const rotateModelButton = document.getElementById('rotateModelButton');
-  if (rotateModelButton) {
-    rotateModelButton.addEventListener('click', function () {
-      rotateModel = rotateModel === 1 ? 0 : 1;
+  const rotateModelCheckbox = document.getElementById('rotateModelCheckbox');
+  if (rotateModelCheckbox) {
+    rotateModelCheckbox.addEventListener('change', function () {
+      rotateModel = rotateModelCheckbox.checked ? 1 : 0;
     });
   }
+
+
+
 }
 
 // Automatically initialize all viewers
