@@ -1,28 +1,21 @@
-import * as THREE from '/three.js-master/build/three.module.min.js';
-import { OrbitControls } from '/three.js-master/examples/jsm/controls/OrbitControls.js'
-import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js';
-import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from '/three.js-dev/build/three.module.min.js';
+import { OrbitControls } from '/three.js-dev/examples/jsm/controls/OrbitControls.js'
+import { RGBELoader } from '/three.js-dev/examples/jsm/loaders/RGBELoader.js';
+import { GLTFLoader } from '/three.js-dev/examples/jsm/loaders/GLTFLoader.js';
+import Stats from '/three.js-dev/examples/jsm/libs/stats.module.js';
 import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
 
-function initViewer(container, 
-  modelPath, 
-  skyboxHdriPath, 
-  environmentHdriPath, 
-  materialRoughness, 
+function initViewer(container,
+  modelPath,
+  skyboxHdriPath,
+  environmentHdriPath,
+  materialRoughness,
   materialMetalness,
   cameraMinDistance,
   cameraMaxDistance,
   modelScale) {
 
   const aspectRatio = container.clientWidth / container.clientHeight;
-
-  const stats = new Stats();
-  stats.showPanel(0);
-  container.appendChild(stats.dom);
-
-  stats.dom.style.position = 'absolute';
-  stats.dom.style.top = '0px';
-  stats.dom.style.left = '10%';
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
@@ -160,8 +153,38 @@ function initViewer(container,
     }
   });
 
+  // Create the container for stats dynamically
+  var statsContainer = document.createElement('div');
+  statsContainer.id = 'stats-container';
+  container.appendChild(statsContainer);
+
+  // Apply styles to the container
+  statsContainer.style.display = 'flex';
+  statsContainer.style.position = 'absolute';
+  statsContainer.style.top = '0';
+  statsContainer.style.left = '0';
+
+  // Initialize stats
+  var stats1 = new Stats();
+  stats1.showPanel(0); // 0: FPS
+  statsContainer.appendChild(stats1.dom);
+
+  var stats2 = new Stats();
+  stats2.showPanel(1); // 1: MS
+  statsContainer.appendChild(stats2.dom);
+
+  var stats3 = new Stats();
+  stats3.showPanel(2); // 2: Memory
+  statsContainer.appendChild(stats3.dom);
+
+  stats1.dom.style.position = 'static';
+  stats2.dom.style.position = 'static';
+  stats3.dom.style.position = 'static';
+
   function animate() {
-    stats.begin();
+    stats1.begin();
+    stats2.begin();
+    stats3.begin();
     requestAnimationFrame(animate);
 
     if (modelMesh && container.getAttribute('data-rotate-enabled') === 'true') {
@@ -179,7 +202,9 @@ function initViewer(container,
       scene.background = null;
     }
 
-    stats.end();
+    stats1.end();
+    stats2.end();
+    stats3.end();
   }
 
   animate();
@@ -211,19 +236,19 @@ document.querySelectorAll('.vv').forEach(container => {
   const modelPath = container.getAttribute('data-model-path');
   const skyboxHdriPath = container.getAttribute('data-skybox-hdri-path');
   const environmentHdriPath = container.getAttribute('data-environment-hdri-path');
-  const materialRoughness = parseFloat(container.getAttribute('data-material-roughness'));
-  const materialMetalness = parseFloat(container.getAttribute('data-material-metalness'));
-  const cameraMinDistance = parseFloat(container.getAttribute('data-camera-min-distance'));
-  const cameraMaxDistance = parseFloat(container.getAttribute('data-camera-max-distance'));
+  const materialRoughness = parseFloat(container.getAttribute('data-material-roughness')) || 0.5; // Use the user value or default to the default value 
+  const materialMetalness = parseFloat(container.getAttribute('data-material-metalness')) || 0.5;
+  const cameraMinDistance = parseFloat(container.getAttribute('data-camera-min-distance')) || 1;
+  const cameraMaxDistance = parseFloat(container.getAttribute('data-camera-max-distance')) || 10;
   const modelScale = parseFloat(container.getAttribute('data-model-scale'));
 
   if (modelPath && skyboxHdriPath && environmentHdriPath) {
-    initViewer(container, 
-      modelPath, 
-      skyboxHdriPath, 
-      environmentHdriPath, 
-      materialRoughness, 
-      materialMetalness, 
+    initViewer(container,
+      modelPath,
+      skyboxHdriPath,
+      environmentHdriPath,
+      materialRoughness,
+      materialMetalness,
       cameraMinDistance,
       cameraMaxDistance,
       modelScale);
