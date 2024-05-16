@@ -155,11 +155,11 @@ function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath, m
     stats.begin();
     requestAnimationFrame(animate);
 
-    if (modelMesh && rotateModel) {
+    if (modelMesh && container.getAttribute('data-rotate-enabled') === 'true') {
       modelMesh.rotation.y += 0.01;
     }
 
-    
+
     controls.update();
     renderer.render(scene, camera);
 
@@ -175,11 +175,10 @@ function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath, m
 
   animate();
 
-  let rotateModel = 0;
-  const rotateModelCheckbox = document.getElementById('rotateModelCheckbox');
+  const rotateModelCheckbox = container.querySelector('.rotateModelCheckbox');
   if (rotateModelCheckbox) {
     rotateModelCheckbox.addEventListener('change', function () {
-      rotateModel = rotateModelCheckbox.checked ? 1 : 0;
+      container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
     });
   }
 
