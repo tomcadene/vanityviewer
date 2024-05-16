@@ -6,11 +6,11 @@ A versatile open-source 3D model viewer designed for seamless integration into a
 - ⏱️ **Ease of installation:** The viewer can be implemented into any website in ~10min even by a beginner.
 
 ## Use cases
-- 🛍️ **Online Store Product Display:** Online retailers can enhance listings with 3D models, giving customers a more immersive product view, boosting engagement and conversion rates.
-- 🖥️ **Artist Portfolio Showcase:** Artists can embed interactive 3D models into their websites, offering potential clients a detailed, hands-on experience with their creations.
-- 🔧 **Virtual Prototyping:** Designers and engineers can share interactive models with colleagues or clients for feedback before manufacturing.
-- 🏫 **Educational Purposes:** Educators can use the viewer to teach students about complex structures or concepts interactively, in subjects like architecture, engineering, and biology.
-- 🎮 **VR and AR Development:** Game developers and AR/VR designers can preview models in 3D before exporting, ensuring assets are optimized for their projects.
+- 🛍️ **Online Store:** Retailers can use 3D models to enhance product listings, boosting engagement and sales.
+- 🖥️ **Artist Portfolio:** Artists can embed 3D models in their websites for a detailed, interactive showcase.
+- 🔧 **Virtual Prototyping:** Designers can share interactive models for feedback before manufacturing.
+- 🏫 **Education:** Educators can teach complex subjects with interactive 3D models.
+- 🎮 **VR/AR Development:** Developers can preview 3D models to ensure optimal assets for their projects.
 
 ## Key Features:
 - **Interactive Viewing:** Tools to rotate, zoom, and pan models to view them from any angle.
