@@ -4,7 +4,7 @@ import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js'
 import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
 import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
 
-function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath) {
+function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath, materialRoughness, materialMetalness) {
   const aspectRatio = container.clientWidth / container.clientHeight;
 
   const stats = new Stats();
@@ -65,7 +65,8 @@ function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath) {
       if (node.isMesh) {
         node.castShadow = true;
         node.receiveShadow = true;
-        node.material.roughness = 0.5; // Adjust material roughness
+        node.material.roughness = materialRoughness;
+        node.material.metalness = materialMetalness;
         // Optional: Optimize material properties for better performance
         node.material.precision = 'mediump';
         // Ensure frustum culling is enabled (default is true)
@@ -198,7 +199,10 @@ document.querySelectorAll('.vv').forEach(container => {
   const modelPath = container.getAttribute('data-model-path');
   const skyboxHdriPath = container.getAttribute('data-skybox-hdri-path');
   const environmentHdriPath = container.getAttribute('data-environment-hdri-path');
+  const materialRoughness = parseFloat(container.getAttribute('data-material-roughness')) || 0.5;
+  const materialMetalness = parseFloat(container.getAttribute('data-material-metalness')) || 0.5;
+
   if (modelPath && skyboxHdriPath && environmentHdriPath) {
-    initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath);
+    initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath, materialRoughness, materialMetalness);
   }
 });
