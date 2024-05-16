@@ -17,7 +17,7 @@ function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath) {
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
-  camera.position.set(2, 2, 5);
+  camera.position.set(1, 1, 1);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
