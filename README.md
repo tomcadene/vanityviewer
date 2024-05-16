@@ -44,7 +44,7 @@ Instructions on how to set up and run the model viewer locally, including requir
 ```
 - Add your GLTF model(s) in vanityviewer-main/models
 - Add your HDR Environment(s) in vanityviewer-main/hdris
-- Inside the HTML file of the webpage that will contain the model viewer, add the model viewer container div. This is the actual model viewer. Make sure to replace the path with the path and name of the model and hdri files. If reflections on the model are barely visible it is recommended to use a lower resolution file for the environment. This is also where you modify certain values of the viewer and the model, this method allows to have as many viewers as you like, each with its own values, all without creating redundant code.
+- Inside the HTML file of the webpage that will contain the model viewer, add the model viewer container div. This is the actual model viewer. Make sure to replace the path with the path and name of the model and hdri files. If reflections on the model are barely visible it is recommended to use a lower resolution file for the environment. This is also where you modify certain values of the viewer and the model, this method allows to have as many viewers as you like, each with its own values, all without creating redundant code. Bonus, all these data attributes (except model and hdri paths) are optional, so you can safely delete them and the code will take care of them with default values.
 ```html
 <div class="vv" 
             data-model-path="/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf"
