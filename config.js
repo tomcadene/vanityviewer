@@ -10,4 +10,4 @@ const ADD_PERFORMANCE_MONITOR = false; // Set this to true to add a performance 
 // MB MBytes of allocated memory.
 // Source: https://github.com/mrdoob/stats.js
 
-export { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE };
+export { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE, ADD_PERFORMANCE_MONITOR};
