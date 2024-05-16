@@ -62,6 +62,7 @@ function initViewer(container, modelPath, hdriPath) {
       if (node.isMesh) {
         node.castShadow = true; // Make the model cast shadows
         node.receiveShadow = true; // Make the model receive shadows
+        node.material.roughness = 0.5; // Adjust material roughness
       }
     });
   }, undefined, function (error) {
@@ -78,7 +79,7 @@ function initViewer(container, modelPath, hdriPath) {
 
   scene.add(plane);
 
-  const light = new THREE.DirectionalLight(0xffffff, 1);
+  const light = new THREE.DirectionalLight(0xffffff, 10);
   light.position.set(2, 10, 5);
   light.castShadow = true;
   // Configure shadow properties for better quality
@@ -93,11 +94,14 @@ function initViewer(container, modelPath, hdriPath) {
   light.shadow.camera.top = 10;
   light.shadow.camera.bottom = -10;
 
+  // Adjust shadow bias to reduce artifacts
+  light.shadow.bias = -0.005;
+
   if (USE_SUN_LIGHT) {
     scene.add(light);
   }
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
   scene.add(ambientLight);
   ambientLight.intensity = 1;
 
