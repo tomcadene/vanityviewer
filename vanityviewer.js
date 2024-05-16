@@ -4,7 +4,16 @@ import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js'
 import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
 import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
 
-function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath, materialRoughness, materialMetalness) {
+function initViewer(container, 
+  modelPath, 
+  skyboxHdriPath, 
+  environmentHdriPath, 
+  materialRoughness, 
+  materialMetalness,
+  cameraMinDistance,
+  cameraMaxDistance,
+  modelScale) {
+
   const aspectRatio = container.clientWidth / container.clientHeight;
 
   const stats = new Stats();
@@ -50,6 +59,8 @@ function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath, m
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
+  controls.minDistance = cameraMinDistance;
+  controls.maxDistance = cameraMaxDistance;
 
   const loader = new GLTFLoader();
   let modelMesh;
@@ -57,7 +68,7 @@ function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath, m
   loader.load(modelPath, (gltf) => {
     modelMesh = gltf.scene;
     modelMesh.position.set(0, 0, 0);
-    modelMesh.scale.set(2.5, 2.5, 2.5);
+    modelMesh.scale.set(modelScale, modelScale, modelScale);
     modelMesh.castShadow = true;
     modelMesh.receiveShadow = true;
     // Enable shadows for each child mesh in the model
@@ -127,8 +138,6 @@ function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath, m
     scene.environment = environmentTexture;
   });
 
-
-  let displaySkybox = 1;
   // Load the skybox HDR (if needed)
   let skyboxTexture = null;
   if (USE_BACKGROUND_TEXTURE) {
@@ -202,10 +211,21 @@ document.querySelectorAll('.vv').forEach(container => {
   const modelPath = container.getAttribute('data-model-path');
   const skyboxHdriPath = container.getAttribute('data-skybox-hdri-path');
   const environmentHdriPath = container.getAttribute('data-environment-hdri-path');
-  const materialRoughness = parseFloat(container.getAttribute('data-material-roughness')) || 0.5;
-  const materialMetalness = parseFloat(container.getAttribute('data-material-metalness')) || 0.5;
+  const materialRoughness = parseFloat(container.getAttribute('data-material-roughness'));
+  const materialMetalness = parseFloat(container.getAttribute('data-material-metalness'));
+  const cameraMinDistance = parseFloat(container.getAttribute('data-camera-min-distance'));
+  const cameraMaxDistance = parseFloat(container.getAttribute('data-camera-max-distance'));
+  const modelScale = parseFloat(container.getAttribute('data-model-scale'));
 
   if (modelPath && skyboxHdriPath && environmentHdriPath) {
-    initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath, materialRoughness, materialMetalness);
+    initViewer(container, 
+      modelPath, 
+      skyboxHdriPath, 
+      environmentHdriPath, 
+      materialRoughness, 
+      materialMetalness, 
+      cameraMinDistance,
+      cameraMaxDistance,
+      modelScale);
   }
 });
