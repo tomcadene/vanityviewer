@@ -11,12 +11,17 @@
 
 <body>
     <main>
-        <div class="vv" data-model-path="/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf" data-skybox-hdri-path="/hdris/vestibule_2k.hdr" data-environment-hdri-path="/hdris/vestibule_1k.hdr" style="position: relative;">
+        <div class="vv" data-model-path="/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf"
+            data-skybox-hdri-path="/hdris/vestibule_2k.hdr" data-environment-hdri-path="/hdris/vestibule_1k.hdr"
+            style="position: relative;">
             <div style="position: absolute; top: 1rem; left: 1rem;">Demo</div>
-            <button id="rotateModelButton" style="position: absolute; top: 10%; right: 1rem;">rotateModelButton</button>
+            <input type="checkbox" id="rotateModelCheckbox" style="position: absolute; top: 10%; right: 1rem;">
+            <label for="rotateModelCheckbox" style="position: absolute; top: 10%; right: 1rem;">Rotate Model</label>
+
             <button id="skyboxButton" style="position: absolute; top: 30%; right: 1rem;">skyboxButton</button>
         </div>
-        <div class="vv" data-model-path="/models/another_model.gltf" data-skybox-hdri-path="/hdris/another_hdri.hdr" data-environment-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
+        <div class="vv" data-model-path="/models/another_model.gltf" data-skybox-hdri-path="/hdris/another_hdri.hdr"
+            data-environment-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
             <div style="position: absolute; top: 1rem; left: 1rem;">Demo</div>
             <button id="rotateModelButton" style="position: absolute; top: 10%; right: 1rem;">rotateModelButton</button>
             <button id="skyboxButton" style="position: absolute; top: 30%; right: 1rem;">skyboxButton</button>
