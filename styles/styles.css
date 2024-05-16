@@ -65,6 +65,12 @@ button {
     backdrop-filter: blur(10px);
 }
 
+.checkbox-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
 @media screen and (orientation: portrait) {
     main {
         width: 90vw;
