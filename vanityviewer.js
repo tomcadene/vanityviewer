@@ -3,7 +3,7 @@ import { OrbitControls } from '/three.js-dev/examples/jsm/controls/OrbitControls
 import { RGBELoader } from '/three.js-dev/examples/jsm/loaders/RGBELoader.js';
 import { GLTFLoader } from '/three.js-dev/examples/jsm/loaders/GLTFLoader.js';
 import Stats from '/three.js-dev/examples/jsm/libs/stats.module.js';
-import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE, ADD_PERFORMANCE_MONITOR } from '/config.js';
+import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE, ADD_PERFORMANCE_MONITOR, ADD_DEBUGGING_TOOLS } from '/config.js';
 
 function initViewer(container,
   modelPath,
@@ -119,9 +119,22 @@ function initViewer(container,
     scene.add(light);
   }
 
+  // Adding an arrow helper to visualize the light direction
+  const direction = new THREE.Vector3(2, 10, 5).normalize(); // Light direction vector
+  const origin = new THREE.Vector3(0, 0, 0); // Origin of the arrow (can be adjusted)
+  const length = 10; // Length of the arrow
+  const color = 0xffff00; // Color of the arrow (yellow)
+
+  // Create the ArrowHelper
+  const arrowHelper = new THREE.ArrowHelper(direction, origin, length, color);
+
+  if (ADD_DEBUGGING_TOOLS) {
+    scene.add(arrowHelper);
+  }
+
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
   scene.add(ambientLight);
-  ambientLight.intensity = 1;
+  ambientLight.intensity = 0.2;
 
   const rgbeLoader = new RGBELoader();
 
