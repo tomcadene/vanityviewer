@@ -44,17 +44,17 @@ Instructions on how to set up and run the model viewer locally, including requir
 ```
 - Add your GLTF model(s) in vanityviewer-main/models
 - Add your HDR Environment(s) in vanityviewer-main/hdris
-- Inside the HTML file of the webpage that will contain the model viewer, add the model viewer container div. This is the actual model viewer. make sure to replace the path with the path and name of the model and hdri files.
+- Inside the HTML file of the webpage that will contain the model viewer, add the model viewer container div. This is the actual model viewer. Make sure to replace the path with the path and name of the model and hdri files. If reflections on the model are barely visible it is recommended to use a lower resolution file for the environment.
 ```html
-<div class="vv" data-model-path="/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf" data-hdri-path="/hdris/safari_sunset_2k.hdr" style="position: relative;"></div>
+<div class="vv" data-model-path="/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf" data-skybox-hdri-path="/hdris/vestibule_2k.hdr" data-environment-hdri-path="/hdris/vestibule_1k.hdr" style="position: relative;"></div>
 ```
 - You can add as many viewer as you want.
 ```html
-<div class="vv" data-model-path="/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf" data-hdri-path="/hdris/safari_sunset_2k.hdr" style="position: relative;"></div>
-<div class="vv" data-model-path="/models/another_model.gltf" data-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
-<div class="vv" data-model-path="/models/another_model.gltf" data-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
-<div class="vv" data-model-path="/models/another_model.gltf" data-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
-<div class="vv" data-model-path="/models/another_model.gltf" data-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
+<div class="vv" data-model-path="/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf" data-skybox-hdri-path="/hdris/vestibule_2k.hdr" data-environment-hdri-path="/hdris/vestibule_1k.hdr" style="position: relative;"></div>
+<div class="vv" data-model-path="/models/another_model.gltf" data-skybox-hdri-path="/hdris/another_hdri.hdr" data-environment-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
+<div class="vv" data-model-path="/models/another_model.gltf" data-skybox-hdri-path="/hdris/another_hdri.hdr" data-environment-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
+<div class="vv" data-model-path="/models/another_model.gltf" data-skybox-hdri-path="/hdris/another_hdri.hdr" data-environment-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
+<div class="vv" data-model-path="/models/another_model.gltf" data-skybox-hdri-path="/hdris/another_hdri.hdr" data-environment-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
 ```
 - In the vanityviewer-main folder open the config.js file, this is the configuration file where you will select the viewer functionalities.
 - Select the viewer functionalities by changing their value by either true or false.
