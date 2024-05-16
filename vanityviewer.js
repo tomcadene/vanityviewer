@@ -56,10 +56,12 @@ function initViewer(container, modelPath, hdriPath) {
     modelMesh.position.set(0, 0, 0);
     modelMesh.scale.set(2.5, 2.5, 2.5);
     modelMesh.castShadow = true;
+    modelMesh.receiveShadow = true;
     // Enable shadows for each child mesh in the model
     modelMesh.traverse(function (node) {
       if (node.isMesh) {
         node.castShadow = true; // Make the model cast shadows
+        node.receiveShadow = true; // Make the model receive shadows
       }
     });
   }, undefined, function (error) {
@@ -77,19 +79,25 @@ function initViewer(container, modelPath, hdriPath) {
   scene.add(plane);
 
   const light = new THREE.DirectionalLight(0xffffff, 1);
-  light.position.set(2, 2, 5);
+  light.position.set(2, 10, 5);
   light.castShadow = true;
   // Configure shadow properties for better quality
-  light.shadow.mapSize.width = 1024;
-  light.shadow.mapSize.height = 1024;
+  light.shadow.mapSize.width = 2048;  // Increase shadow map size for better quality
+  light.shadow.mapSize.height = 2048;
   light.shadow.camera.near = 0.5;
   light.shadow.camera.far = 50;
+
+  // Adjust shadow camera bounds to fit the scene
+  light.shadow.camera.left = -10;
+  light.shadow.camera.right = 10;
+  light.shadow.camera.top = 10;
+  light.shadow.camera.bottom = -10;
 
   if (USE_SUN_LIGHT) {
     scene.add(light);
   }
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
   scene.add(ambientLight);
   ambientLight.intensity = 1;
 
