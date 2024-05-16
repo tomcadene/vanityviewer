@@ -3,7 +3,7 @@ import { OrbitControls } from '/three.js-dev/examples/jsm/controls/OrbitControls
 import { RGBELoader } from '/three.js-dev/examples/jsm/loaders/RGBELoader.js';
 import { GLTFLoader } from '/three.js-dev/examples/jsm/loaders/GLTFLoader.js';
 import Stats from '/three.js-dev/examples/jsm/libs/stats.module.js';
-import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
+import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE, ADD_PERFORMANCE_MONITOR } from '/config.js';
 
 function initViewer(container,
   modelPath,
@@ -167,19 +167,22 @@ function initViewer(container,
   // Initialize stats
   var stats1 = new Stats();
   stats1.showPanel(0); // 0: FPS
-  statsContainer.appendChild(stats1.dom);
 
   var stats2 = new Stats();
   stats2.showPanel(1); // 1: MS
-  statsContainer.appendChild(stats2.dom);
 
   var stats3 = new Stats();
   stats3.showPanel(2); // 2: Memory
-  statsContainer.appendChild(stats3.dom);
 
   stats1.dom.style.position = 'static';
   stats2.dom.style.position = 'static';
   stats3.dom.style.position = 'static';
+
+  if (ADD_PERFORMANCE_MONITOR) {
+    statsContainer.appendChild(stats1.dom);
+    statsContainer.appendChild(stats2.dom);
+    statsContainer.appendChild(stats3.dom);
+  }
 
   function animate() {
     stats1.begin();
@@ -232,6 +235,7 @@ function initViewer(container,
 }
 
 // Automatically initialize all viewers
+// The container is any HTML element with the class .vv. The script looks for all elements with the class .vv, retrieves their attributes, and then initializes the Three.js viewer for each of these elements by passing them as the container argument to the initViewer function.
 document.querySelectorAll('.vv').forEach(container => {
   const modelPath = container.getAttribute('data-model-path');
   const skyboxHdriPath = container.getAttribute('data-skybox-hdri-path');
