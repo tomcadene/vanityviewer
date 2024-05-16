@@ -88,7 +88,9 @@ renderer.shadowMap.needsUpdate = true;
   plane.rotation.x = -Math.PI / 2;
   plane.receiveShadow = true;
 
-  scene.add(plane);
+  if (ADD_PLANE_TO_THE_SCENE) {
+    scene.add(plane);
+  }
 
   const light = new THREE.DirectionalLight(0xffffff, 10);
   light.position.set(2, 10, 5);
