@@ -15,10 +15,15 @@
             data-skybox-hdri-path="/hdris/vestibule_2k.hdr" data-environment-hdri-path="/hdris/vestibule_1k.hdr"
             style="position: relative;">
             <div style="position: absolute; top: 1rem; left: 1rem;">Demo</div>
-            <input type="checkbox" id="rotateModelCheckbox" style="position: absolute; top: 10%; right: 1rem;">
-            <label for="rotateModelCheckbox" style="position: absolute; top: 10%; right: 1rem;">Rotate Model</label>
+            <div class="checkbox-container" style="position: absolute; top: 10%; right: 1rem;">
+                <input type="checkbox" id="rotateModelCheckbox">
+                <label for="rotateModelCheckbox">Rotate Model</label>
+            </div>
 
-            <button id="skyboxButton" style="position: absolute; top: 30%; right: 1rem;">skyboxButton</button>
+            <div class="checkbox-container" style="position: absolute; top: 20%; right: 1rem;">
+                <input type="checkbox" id="displaySkyboxCheckbox" checked="checked">
+                <label for="displaySkyboxCheckbox">displaySkybox</label>
+            </div>
         </div>
         <div class="vv" data-model-path="/models/another_model.gltf" data-skybox-hdri-path="/hdris/another_hdri.hdr"
             data-environment-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
