@@ -4,7 +4,7 @@ import { RGBELoader } from '/three.js-master/examples/jsm/loaders/RGBELoader.js'
 import { GLTFLoader } from '/three.js-master/examples/jsm/loaders/GLTFLoader.js';
 import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE } from '/config.js';
 
-function initViewer(container, modelPath, hdriPath) {
+function initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath) {
   const aspectRatio = container.clientWidth / container.clientHeight;
 
   const stats = new Stats();
@@ -119,13 +119,21 @@ renderer.shadowMap.needsUpdate = true;
   ambientLight.intensity = 1;
 
   const rgbeLoader = new RGBELoader();
-  rgbeLoader.load(hdriPath, function (texture) {
-    texture.mapping = THREE.EquirectangularReflectionMapping;
-    scene.environment = texture;
-    if (USE_BACKGROUND_TEXTURE) {
-      scene.background = texture;
-    }
+
+// Load the environment HDR
+rgbeLoader.load(environmentHdriPath, function (environmentTexture) {
+  environmentTexture.mapping = THREE.EquirectangularReflectionMapping;
+  scene.environment = environmentTexture;
+});
+
+// Load the skybox HDR (if needed)
+if (USE_BACKGROUND_TEXTURE) {
+  rgbeLoader.load(skyboxHdriPath, function (skyboxTexture) {
+    skyboxTexture.mapping = THREE.EquirectangularReflectionMapping;
+    scene.background = skyboxTexture;
   });
+}
+
 
   renderer.setClearColor(0x000000, 0);
 
@@ -163,8 +171,9 @@ renderer.shadowMap.needsUpdate = true;
 // Automatically initialize all viewers
 document.querySelectorAll('.vv').forEach(container => {
   const modelPath = container.getAttribute('data-model-path');
-  const hdriPath = container.getAttribute('data-hdri-path');
-  if (modelPath && hdriPath) {
-    initViewer(container, modelPath, hdriPath);
+  const skyboxHdriPath = container.getAttribute('data-skybox-hdri-path');
+  const environmentHdriPath = container.getAttribute('data-environment-hdri-path');
+  if (modelPath && skyboxHdriPath && environmentHdriPath) {
+    initViewer(container, modelPath, skyboxHdriPath, environmentHdriPath);
   }
 });
