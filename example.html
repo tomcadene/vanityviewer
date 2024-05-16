@@ -25,11 +25,18 @@
                 <label for="displaySkyboxCheckbox">displaySkybox</label>
             </div>
         </div>
-        <div class="vv" data-model-path="/models/another_model.gltf" data-skybox-hdri-path="/hdris/another_hdri.hdr"
-            data-environment-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
+        <div class="vv" data-model-path="/models/rock_09_2k.gltf/rock_09_2k.gltf" data-skybox-hdri-path="/hdris/safari_sunset_2k.hdr"
+            data-environment-hdri-path="/hdris/safari_sunset_2k.hdr" style="position: relative;">
             <div style="position: absolute; top: 1rem; left: 1rem;">Demo</div>
-            <button id="rotateModelButton" style="position: absolute; top: 10%; right: 1rem;">rotateModelButton</button>
-            <button id="skyboxButton" style="position: absolute; top: 30%; right: 1rem;">skyboxButton</button>
+            <div class="checkbox-container" style="position: absolute; top: 10%; right: 1rem;">
+                <input type="checkbox" id="rotateModelCheckbox">
+                <label for="rotateModelCheckbox">Rotate Model</label>
+            </div>
+
+            <div class="checkbox-container" style="position: absolute; top: 20%; right: 1rem;">
+                <input type="checkbox" id="displaySkyboxCheckbox" checked="checked">
+                <label for="displaySkyboxCheckbox">displaySkybox</label>
+            </div>
         </div>
     </main>
     <script id="vanityviewer" type="module" src="vanityviewer.js"></script>
