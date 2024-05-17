@@ -188,7 +188,9 @@ function initViewer(container,
   loadSkybox(skyboxHdriPaths[0]);
 
   // Populate HDRI selectors
-  const skyboxSelector = container.querySelector('.skybox-selector');
+  const skyboxSelector = document.createElement('select');
+  skyboxSelector.className = 'skybox-selector';
+  container.appendChild(skyboxSelector);
   skyboxHdriPaths.forEach((path, index) => {
     const option = document.createElement('option');
     option.value = path;
@@ -196,7 +198,9 @@ function initViewer(container,
     skyboxSelector.appendChild(option);
   });
 
-  const environmentSelector = container.querySelector('.environment-selector');
+  const environmentSelector = document.createElement('select');
+  environmentSelector.className = 'environment-selector';
+  container.appendChild(environmentSelector);
   environmentHdriPaths.forEach((path, index) => {
     const option = document.createElement('option');
     option.value = path;
