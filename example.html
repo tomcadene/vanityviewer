@@ -12,7 +12,8 @@
 <body>
     <main>
         <div class="vv" data-model-path="/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf"
-            data-skybox-hdri-path="/hdris/vestibule_2k.hdr" data-environment-hdri-path="/hdris/vestibule_1k.hdr"
+            data-skybox-hdri-path="/hdris/vestibule_2k.hdr, /hdris/safari_sunset_2k.hdr"
+            data-environment-hdri-path="/hdris/vestibule_1k.hdr, /hdris/safari_sunset_2k.hdr"
             data-material-roughness="0" data-material-metalness="1" data-camera-min-distance="1"
             data-camera-max-distance="10" data-model-scale="2.5" style="position: relative;">
             <div class="checkbox-container" style="position: absolute; top: 10%; right: 1rem;">
@@ -24,6 +25,8 @@
                 <input type="checkbox" class="displaySkyboxCheckbox" checked="checked">
                 <label for="displaySkyboxCheckbox">displaySkybox</label>
             </div>
+            <select class="skybox-selector"></select>
+            <select class="environment-selector"></select>
         </div>
         <div class="vv" data-model-path="/models/barrel_stove_2k.gltf/barrel_stove_2k.gltf"
             data-skybox-hdri-path="/hdris/safari_sunset_2k.hdr" data-environment-hdri-path="/hdris/safari_sunset_2k.hdr"
