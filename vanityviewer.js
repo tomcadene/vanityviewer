@@ -7,8 +7,8 @@ import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE, SHADOW_T
 
 function initViewer(container,
   modelPath,
-  skyboxHdriPath,
-  environmentHdriPath,
+  skyboxHdriPaths,
+  environmentHdriPaths,
   materialRoughness,
   materialMetalness,
   cameraMinDistance,
@@ -149,16 +149,19 @@ function initViewer(container,
 
   const rgbeLoader = new RGBELoader();
 
-  // Load the environment HDR
-  rgbeLoader.load(environmentHdriPath, function (environmentTexture) {
-    environmentTexture.mapping = THREE.EquirectangularReflectionMapping;
-    scene.environment = environmentTexture;
-  });
-
-  // Load the skybox HDR (if needed)
   let skyboxTexture = null;
-  if (USE_BACKGROUND_TEXTURE) {
-    rgbeLoader.load(skyboxHdriPath, function (texture) {
+  let environmentTexture = null;
+
+  function loadEnvironment(hdriPath) {
+    rgbeLoader.load(hdriPath, function (texture) {
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      scene.environment = texture;
+      environmentTexture = texture;
+    });
+  }
+
+  function loadSkybox(hdriPath) {
+    rgbeLoader.load(hdriPath, function (texture) {
       texture.mapping = THREE.EquirectangularReflectionMapping;
       skyboxTexture = texture;
       if (container.getAttribute('data-display-skybox-enabled') === 'true') {
@@ -166,6 +169,35 @@ function initViewer(container,
       }
     });
   }
+
+  // Load initial HDRIs
+  loadEnvironment(environmentHdriPaths[0]);
+  loadSkybox(skyboxHdriPaths[0]);
+
+  // Populate HDRI selectors
+  const skyboxSelector = container.querySelector('.skybox-selector');
+  skyboxHdriPaths.forEach((path, index) => {
+    const option = document.createElement('option');
+    option.value = path;
+    option.textContent = `Skybox ${index + 1}`;
+    skyboxSelector.appendChild(option);
+  });
+
+  const environmentSelector = container.querySelector('.environment-selector');
+  environmentHdriPaths.forEach((path, index) => {
+    const option = document.createElement('option');
+    option.value = path;
+    option.textContent = `Environment ${index + 1}`;
+    environmentSelector.appendChild(option);
+  });
+
+  skyboxSelector.addEventListener('change', (event) => {
+    loadSkybox(event.target.value);
+  });
+
+  environmentSelector.addEventListener('change', (event) => {
+    loadEnvironment(event.target.value);
+  });
 
 
   renderer.setClearColor(0x000000, 0);
@@ -262,19 +294,19 @@ function initViewer(container,
 // The container is any HTML element with the class .vv. The script looks for all elements with the class .vv, retrieves their attributes, and then initializes the Three.js viewer for each of these elements by passing them as the container argument to the initViewer function.
 document.querySelectorAll('.vv').forEach(container => {
   const modelPath = container.getAttribute('data-model-path');
-  const skyboxHdriPath = container.getAttribute('data-skybox-hdri-path');
-  const environmentHdriPath = container.getAttribute('data-environment-hdri-path');
+  const skyboxHdriPaths = container.getAttribute('data-skybox-hdri-path').split(',');
+  const environmentHdriPaths = container.getAttribute('data-environment-hdri-path').split(',');
   const materialRoughness = parseFloat(container.getAttribute('data-material-roughness')) || 0.5; // Use the user value or default to the default value 
   const materialMetalness = parseFloat(container.getAttribute('data-material-metalness')) || 0.5;
   const cameraMinDistance = parseFloat(container.getAttribute('data-camera-min-distance')) || 1;
   const cameraMaxDistance = parseFloat(container.getAttribute('data-camera-max-distance')) || 10;
   const modelScale = parseFloat(container.getAttribute('data-model-scale'));
 
-  if (modelPath && skyboxHdriPath && environmentHdriPath) {
+  if (modelPath && skyboxHdriPaths && environmentHdriPaths) {
     initViewer(container,
       modelPath,
-      skyboxHdriPath,
-      environmentHdriPath,
+      skyboxHdriPaths,
+      environmentHdriPaths,
       materialRoughness,
       materialMetalness,
       cameraMinDistance,
