@@ -13,7 +13,7 @@ A versatile open-source 3D model viewer designed for seamless integration into a
 - 🎮 **VR/AR Development:** Developers can preview 3D models to ensure optimal assets for their projects.
 
 ## Key Features:
-- **Interactive Viewing:** Tools to rotate, zoom, and pan models to view them from any angle.
+- **Interactive Viewing:** Tools to rotate, zoom, pan models to view them from any angle, change the skybox and equirectangular mapping on the fly.
 - **Responsive Design:** Optimized for performance on desktops, tablets, and mobile devices.
 - **Customizable UI:** Adjustable interface to cater to specific user needs and preferences.
 - **Embeddable:** Easily integrate into web applications using simple embedding options.
