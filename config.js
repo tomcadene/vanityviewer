@@ -1,8 +1,20 @@
 const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
 const USE_SUN_LIGHT = true; // Set this to true to add a sun light to the scene
-const ADD_PLANE_TO_THE_SCENE = false; // Set this to true to add a plane to the scene
+const ADD_PLANE_TO_THE_SCENE = true; // Set this to true to add a plane to the scene
 
-// PERFORMANCE_MONITOR
+// SHADOW TYPES
+const SHADOW_TYPE = 'PCFSoftShadowMap';
+// 'BasicShadowMap', gives unfiltered shadow maps - fastest, but lowest quality.
+// 'PCFShadowMap', filters shadow maps using the Percentage-Closer Filtering (PCF) algorithm (default).
+// 'PCFSoftShadowMap' (DEFAULT), filters shadow maps using the Percentage-Closer Filtering (PCF) algorithm with better soft shadows especially when using low-resolution shadow maps.
+// 'VSMShadowMap', filters shadow maps using the Variance Shadow Map (VSM) algorithm. When using VSMShadowMap all shadow receivers will also cast shadows.
+// Source: https://threejs.org/docs/#api/en/constants/Renderer
+
+const SHADOW_MAP_SIZE = 1024; // Increase shadow map size to 2048 for better quality
+
+const DISABLE_COLOR_CORRECTION = false; // Set this to true to disable toneMapping
+
+// PERFORMANCE MONITOR
 const ADD_PERFORMANCE_MONITOR = false; // Set this to true to add a performance monitor to the scene
 // Notes
 // FPS Frames rendered in the last second. The higher the number the better.
@@ -10,9 +22,18 @@ const ADD_PERFORMANCE_MONITOR = false; // Set this to true to add a performance 
 // MB MBytes of allocated memory.
 // Source: https://github.com/mrdoob/stats.js
 
-// DEBUGGING_TOOLS
+// DEBUGGING TOOLS
 const ADD_DEBUGGING_TOOLS = true; // Set this to true to add a debugging tools to the scene
 // Notes
 // If set to true, a yellow arrow helper will be added to visualize the light direction.
 
-export { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE, ADD_PERFORMANCE_MONITOR, ADD_DEBUGGING_TOOLS };
+export {
+    USE_BACKGROUND_TEXTURE,
+    USE_SUN_LIGHT,
+    ADD_PLANE_TO_THE_SCENE,
+    SHADOW_TYPE,
+    SHADOW_MAP_SIZE,
+    DISABLE_COLOR_CORRECTION,
+    ADD_PERFORMANCE_MONITOR,
+    ADD_DEBUGGING_TOOLS
+};
