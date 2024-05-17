@@ -317,7 +317,7 @@ document.querySelectorAll('.vv').forEach(container => {
   const lightPositionZ = parseFloat(container.getAttribute('data-light-position-z')) || 5;
   const cameraMinDistance = parseFloat(container.getAttribute('data-camera-min-distance')) || 1;
   const cameraMaxDistance = parseFloat(container.getAttribute('data-camera-max-distance')) || 10;
-  const modelScale = parseFloat(container.getAttribute('data-model-scale'));
+  const modelScale = parseFloat(container.getAttribute('data-model-scale')) || 10;
 
   if (modelPath && skyboxHdriPaths && environmentHdriPaths) {
     initViewer(container,
