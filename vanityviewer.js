@@ -3,7 +3,17 @@ import { OrbitControls } from '/three.js-dev/examples/jsm/controls/OrbitControls
 import { RGBELoader } from '/three.js-dev/examples/jsm/loaders/RGBELoader.js';
 import { GLTFLoader } from '/three.js-dev/examples/jsm/loaders/GLTFLoader.js';
 import Stats from '/three.js-dev/examples/jsm/libs/stats.module.js';
-import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE, SHADOW_TYPE as SHADOW_TYPE_PLACEHOLDER, SHADOW_MAP_SIZE, DISABLE_COLOR_CORRECTION, ADD_PERFORMANCE_MONITOR, ADD_DEBUGGING_TOOLS } from '/config.js';
+import {
+  USE_BACKGROUND_TEXTURE,
+  USE_SUN_LIGHT,
+  ADD_PLANE_TO_THE_SCENE,
+  LIGHT_STRENGTH,
+  SHADOW_TYPE as SHADOW_TYPE_PLACEHOLDER,
+  SHADOW_MAP_SIZE,
+  DISABLE_COLOR_CORRECTION,
+  ADD_PERFORMANCE_MONITOR,
+  ADD_DEBUGGING_TOOLS
+} from '/config.js';
 
 function initViewer(container,
   modelPath,
@@ -11,6 +21,9 @@ function initViewer(container,
   environmentHdriPaths,
   materialRoughness,
   materialMetalness,
+  lightPositionX,
+  lightPositionY,
+  lightPositionZ,
   cameraMinDistance,
   cameraMaxDistance,
   modelScale) {
@@ -108,8 +121,8 @@ function initViewer(container,
     scene.add(plane);
   }
 
-  const light = new THREE.DirectionalLight(0xffffff, 10);
-  light.position.set(20, 100, 50);
+  const light = new THREE.DirectionalLight(0xffffff, LIGHT_STRENGTH);
+  light.position.set(lightPositionX, lightPositionY, lightPositionZ);
   light.castShadow = true;
 
   light.shadow.mapSize.width = SHADOW_MAP_SIZE;
@@ -131,9 +144,9 @@ function initViewer(container,
   }
 
   // Adding an arrow helper to visualize the light direction
-  const direction = new THREE.Vector3(20, 100, 50).normalize(); // Light direction vector
+  const direction = new THREE.Vector3(lightPositionX, lightPositionY, lightPositionZ).normalize(); // Light direction vector
   const origin = new THREE.Vector3(0, 0, 0); // Origin of the arrow (can be adjusted)
-  const length = 100; // Length of the arrow
+  const length = 50; // Length of the arrow
   const color = 0xffff00; // Color of the arrow (yellow)
 
   // Create the ArrowHelper
@@ -298,6 +311,9 @@ document.querySelectorAll('.vv').forEach(container => {
   const environmentHdriPaths = container.getAttribute('data-environment-hdri-path').split(',');
   const materialRoughness = parseFloat(container.getAttribute('data-material-roughness')) || 0.5; // Use the user value or default to the default value 
   const materialMetalness = parseFloat(container.getAttribute('data-material-metalness')) || 0.5;
+  const lightPositionX = parseFloat(container.getAttribute('data-light-position-x')) || 1;
+  const lightPositionY = parseFloat(container.getAttribute('data-light-position-y')) || 1;
+  const lightPositionZ = parseFloat(container.getAttribute('data-light-position-z')) || 1;
   const cameraMinDistance = parseFloat(container.getAttribute('data-camera-min-distance')) || 1;
   const cameraMaxDistance = parseFloat(container.getAttribute('data-camera-max-distance')) || 10;
   const modelScale = parseFloat(container.getAttribute('data-model-scale'));
@@ -309,6 +325,9 @@ document.querySelectorAll('.vv').forEach(container => {
       environmentHdriPaths,
       materialRoughness,
       materialMetalness,
+      lightPositionX,
+      lightPositionY,
+      lightPositionZ,
       cameraMinDistance,
       cameraMaxDistance,
       modelScale);
