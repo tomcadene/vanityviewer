@@ -3,7 +3,7 @@ import { OrbitControls } from '/three.js-dev/examples/jsm/controls/OrbitControls
 import { RGBELoader } from '/three.js-dev/examples/jsm/loaders/RGBELoader.js';
 import { GLTFLoader } from '/three.js-dev/examples/jsm/loaders/GLTFLoader.js';
 import Stats from '/three.js-dev/examples/jsm/libs/stats.module.js';
-import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE, ADD_PERFORMANCE_MONITOR, ADD_DEBUGGING_TOOLS } from '/config.js';
+import { USE_BACKGROUND_TEXTURE, USE_SUN_LIGHT, ADD_PLANE_TO_THE_SCENE, SHADOW_TYPE as SHADOW_TYPE_PLACEHOLDER, SHADOW_MAP_SIZE, DISABLE_COLOR_CORRECTION, ADD_PERFORMANCE_MONITOR, ADD_DEBUGGING_TOOLS } from '/config.js';
 
 function initViewer(container,
   modelPath,
@@ -19,15 +19,26 @@ function initViewer(container,
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
-  camera.position.set(1, 1, 1);
+  camera.position.set(10, 10, 10);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.25;
+
+  const SHADOW_TYPE = ({
+    'PCFSoftShadowMap': THREE.PCFSoftShadowMap,
+    'BasicShadowMap': THREE.BasicShadowMap,
+    'PCFShadowMap': THREE.PCFShadowMap,
+    'VSMShadowMap': THREE.VSMShadowMap
+  })[SHADOW_TYPE_PLACEHOLDER];
+
+  renderer.shadowMap.type = SHADOW_TYPE;
+
+  if (!DISABLE_COLOR_CORRECTION) {
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.25;
+  }
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.physicallyCorrectLights = true;
   renderer.autoClear = true;
@@ -52,8 +63,8 @@ function initViewer(container,
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
-  controls.minDistance = cameraMinDistance;
-  controls.maxDistance = cameraMaxDistance;
+  controls.minDistance = cameraMinDistance * 10;
+  controls.maxDistance = cameraMaxDistance * 10;
 
   const loader = new GLTFLoader();
   let modelMesh;
@@ -61,7 +72,7 @@ function initViewer(container,
   loader.load(modelPath, (gltf) => {
     modelMesh = gltf.scene;
     modelMesh.position.set(0, 0, 0);
-    modelMesh.scale.set(modelScale, modelScale, modelScale);
+    modelMesh.scale.set(modelScale * 10, modelScale * 10, modelScale * 10);
     modelMesh.castShadow = true;
     modelMesh.receiveShadow = true;
     // Enable shadows for each child mesh in the model
@@ -101,8 +112,8 @@ function initViewer(container,
   light.position.set(2, 10, 5);
   light.castShadow = true;
 
-  light.shadow.mapSize.width = 1024;  // Increase shadow map size to 2048 for better quality
-  light.shadow.mapSize.height = 1024;
+  light.shadow.mapSize.width = SHADOW_MAP_SIZE;
+  light.shadow.mapSize.height = SHADOW_MAP_SIZE;
   light.shadow.camera.near = 0.5;
   light.shadow.camera.far = 50;
 
