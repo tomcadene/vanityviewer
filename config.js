@@ -2,6 +2,8 @@ const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background te
 const USE_SUN_LIGHT = true; // Set this to true to add a sun light to the scene
 const ADD_PLANE_TO_THE_SCENE = true; // Set this to true to add a plane to the scene
 
+const LIGHT_STRENGTH = 1; // Set this to true to add a plane to the scene
+
 // SHADOW TYPES
 const SHADOW_TYPE = 'PCFSoftShadowMap';
 // 'BasicShadowMap', gives unfiltered shadow maps - fastest, but lowest quality.
@@ -31,6 +33,7 @@ export {
     USE_BACKGROUND_TEXTURE,
     USE_SUN_LIGHT,
     ADD_PLANE_TO_THE_SCENE,
+    LIGHT_STRENGTH,
     SHADOW_TYPE,
     SHADOW_MAP_SIZE,
     DISABLE_COLOR_CORRECTION,
