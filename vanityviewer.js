@@ -109,7 +109,7 @@ function initViewer(container,
   }
 
   const light = new THREE.DirectionalLight(0xffffff, 10);
-  light.position.set(2, 10, 5);
+  light.position.set(20, 100, 50);
   light.castShadow = true;
 
   light.shadow.mapSize.width = SHADOW_MAP_SIZE;
@@ -131,9 +131,9 @@ function initViewer(container,
   }
 
   // Adding an arrow helper to visualize the light direction
-  const direction = new THREE.Vector3(2, 10, 5).normalize(); // Light direction vector
+  const direction = new THREE.Vector3(20, 100, 50).normalize(); // Light direction vector
   const origin = new THREE.Vector3(0, 0, 0); // Origin of the arrow (can be adjusted)
-  const length = 10; // Length of the arrow
+  const length = 100; // Length of the arrow
   const color = 0xffff00; // Color of the arrow (yellow)
 
   // Create the ArrowHelper
