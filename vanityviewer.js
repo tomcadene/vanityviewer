@@ -323,6 +323,55 @@ document.addEventListener('click', (event) => {
     statsContainer.appendChild(stats3.dom);
   }
 
+  const rotateModelCheckbox = document.createElement('input');
+rotateModelCheckbox.type = 'checkbox';
+rotateModelCheckbox.className = 'rotateModelCheckbox';
+rotateModelCheckbox.id = 'rotateModelCheckbox';
+
+const rotateModelLabel = document.createElement('label');
+rotateModelLabel.htmlFor = 'rotateModelCheckbox';
+rotateModelLabel.innerText = 'Rotate Model';
+
+const rotateModelContainer = document.createElement('div');
+rotateModelContainer.className = 'checkbox-container';
+rotateModelContainer.style.position = 'absolute';
+rotateModelContainer.style.top = '10%';
+rotateModelContainer.style.right = '1rem';
+rotateModelContainer.appendChild(rotateModelCheckbox);
+rotateModelContainer.appendChild(rotateModelLabel);
+
+const displaySkyboxCheckbox = document.createElement('input');
+displaySkyboxCheckbox.type = 'checkbox';
+displaySkyboxCheckbox.className = 'displaySkyboxCheckbox';
+displaySkyboxCheckbox.id = 'displaySkyboxCheckbox';
+displaySkyboxCheckbox.checked = true;
+
+const displaySkyboxLabel = document.createElement('label');
+displaySkyboxLabel.htmlFor = 'displaySkyboxCheckbox';
+displaySkyboxLabel.innerText = 'Display Skybox';
+
+const displaySkyboxContainer = document.createElement('div');
+displaySkyboxContainer.className = 'checkbox-container';
+displaySkyboxContainer.style.position = 'absolute';
+displaySkyboxContainer.style.top = '20%';
+displaySkyboxContainer.style.right = '1rem';
+displaySkyboxContainer.appendChild(displaySkyboxCheckbox);
+displaySkyboxContainer.appendChild(displaySkyboxLabel);
+
+container.appendChild(rotateModelContainer);
+container.appendChild(displaySkyboxContainer);
+
+rotateModelCheckbox.addEventListener('change', function () {
+  container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
+});
+container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
+
+displaySkyboxCheckbox.addEventListener('change', function () {
+  container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
+});
+container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
+
+
   function animate() {
     stats1.begin();
     stats2.begin();
@@ -350,24 +399,6 @@ document.addEventListener('click', (event) => {
   }
 
   animate();
-
-  const rotateModelCheckbox = container.querySelector('.rotateModelCheckbox');
-  if (rotateModelCheckbox) {
-    rotateModelCheckbox.addEventListener('change', function () {
-      container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
-    });
-    // Set initial state
-    container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
-  }
-
-  const displaySkyboxCheckbox = container.querySelector('.displaySkyboxCheckbox');
-  if (displaySkyboxCheckbox) {
-    displaySkyboxCheckbox.addEventListener('change', function () {
-      container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
-    });
-    // Set initial state
-    container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
-  }
 
 
 
