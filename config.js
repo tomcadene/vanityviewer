@@ -14,6 +14,8 @@ const SHADOW_MAP_SIZE = 1024; // Increase shadow map size to 2048 for better qua
 
 const DISABLE_COLOR_CORRECTION = false; // Set this to true to disable toneMapping
 
+const ENABLE_INTERFACE = true; // Set this to true to enable the user interface
+
 // PERFORMANCE MONITOR
 const ADD_PERFORMANCE_MONITOR = false; // Set this to true to add a performance monitor to the scene
 // Notes
