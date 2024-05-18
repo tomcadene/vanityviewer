@@ -98,9 +98,15 @@ select option {
 }
 
 /* skybox custom select */
+/* Parent container for both dropdowns */
+.dropdown-container {
+    display: flex;
+    gap: 20px; /* Adjust the gap as needed */
+}
+
+/* Styles for the custom skybox dropdown */
 .custom-dropdown {
-    position: absolute;
-    bottom: 0;
+    position: relative;
     display: inline-block;
     width: 200px;
 }
@@ -138,8 +144,8 @@ select option {
 .dropdown-option:hover {
     background-color: #f1f1f1;
 }
-/* skybox custom select */
-/* env custom select */
+
+/* Styles for the custom environment dropdown */
 .custom-env-dropdown {
     position: relative;
     display: inline-block;
@@ -179,6 +185,7 @@ select option {
 .env-dropdown-option:hover {
     background-color: #f1f1f1;
 }
+
 /* env custom select */
 
 
