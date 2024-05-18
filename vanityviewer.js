@@ -20,6 +20,7 @@ function initViewer(container,
   environmentHdriPaths,
   materialRoughness,
   materialMetalness,
+  antialiasing,
   lightStrength,
   lightPositionX,
   lightPositionY,
@@ -34,10 +35,15 @@ function initViewer(container,
   const camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
   camera.position.set(10, 10, 10);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  const antialiasingValue = antialiasing === "true" ? true : false;
+
+  const renderer = new THREE.WebGLRenderer({ antialias: antialiasingValue, alpha: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.shadowMap.enabled = true;
+
+  console.log(antialiasingValue)
+  console.log(antialiasing)
 
   const SHADOW_TYPE = ({
     'PCFSoftShadowMap': THREE.PCFSoftShadowMap,
@@ -412,6 +418,7 @@ document.querySelectorAll('.vv').forEach(container => {
   const environmentHdriPaths = container.getAttribute('data-environment-hdri-path').split(',');
   const materialRoughness = parseFloat(container.getAttribute('data-material-roughness')) || 0.5; // Use the user value or default to the default value 
   const materialMetalness = parseFloat(container.getAttribute('data-material-metalness')) || 0.5;
+  const antialiasing = container.getAttribute('data-antialiasing') || "true";
   const lightStrength = parseFloat(container.getAttribute('data-light-strength')) || 1;
   const lightPositionX = parseFloat(container.getAttribute('data-light-position-x')) || 2;
   const lightPositionY = parseFloat(container.getAttribute('data-light-position-y')) || 10;
@@ -427,6 +434,7 @@ document.querySelectorAll('.vv').forEach(container => {
       environmentHdriPaths,
       materialRoughness,
       materialMetalness,
+      antialiasing,
       lightStrength,
       lightPositionX,
       lightPositionY,
