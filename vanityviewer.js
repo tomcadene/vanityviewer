@@ -188,24 +188,29 @@ function initViewer(container,
   loadSkybox(skyboxHdriPaths[0]);
 
   // Populate HDRI selectors
-  // Create custom dropdown container
-  const customDropdown = document.createElement('div');
-  customDropdown.className = 'custom-dropdown';
-  container.appendChild(customDropdown);
+  // Create a parent container for both dropdowns
+const dropdownContainer = document.createElement('div');
+dropdownContainer.className = 'dropdown-container';
+container.appendChild(dropdownContainer);
 
-  // Create the visible part of the custom dropdown
-  const selected = document.createElement('div');
-  selected.className = 'selected';
-  selected.textContent = 'Select a Skybox';
-  customDropdown.appendChild(selected);
+// Create custom dropdown container for skybox selector
+const customDropdown = document.createElement('div');
+customDropdown.className = 'custom-dropdown';
+dropdownContainer.appendChild(customDropdown);
 
-  // Create the dropdown menu
-  const dropdownMenu = document.createElement('div');
-  dropdownMenu.className = 'dropdown-menu';
-  customDropdown.appendChild(dropdownMenu);
+// Create the visible part of the custom dropdown
+const selected = document.createElement('div');
+selected.className = 'selected';
+selected.textContent = 'Select a Skybox';
+customDropdown.appendChild(selected);
 
-  // Populate the dropdown menu with options
-  skyboxHdriPaths.forEach((path, index) => {
+// Create the dropdown menu
+const dropdownMenu = document.createElement('div');
+dropdownMenu.className = 'dropdown-menu';
+customDropdown.appendChild(dropdownMenu);
+
+// Populate the dropdown menu with options
+skyboxHdriPaths.forEach((path, index) => {
     const dropdownOption = document.createElement('div');
     dropdownOption.className = 'dropdown-option';
     dropdownOption.dataset.value = path;
@@ -214,28 +219,28 @@ function initViewer(container,
 
     // Add event listener to each option
     dropdownOption.addEventListener('click', () => {
-      selected.textContent = dropdownOption.textContent;
-      dropdownMenu.classList.remove('show');
-      loadSkybox(path);
+        selected.textContent = dropdownOption.textContent;
+        dropdownMenu.classList.remove('show');
+        loadSkybox(path);
     });
-  });
+});
 
-  // Toggle dropdown menu
-  selected.addEventListener('click', () => {
+// Toggle dropdown menu
+selected.addEventListener('click', () => {
     dropdownMenu.classList.toggle('show');
-  });
+});
 
-  // Close the dropdown if clicked outside
-  document.addEventListener('click', (event) => {
+// Close the dropdown if clicked outside
+document.addEventListener('click', (event) => {
     if (!customDropdown.contains(event.target)) {
-      dropdownMenu.classList.remove('show');
+        dropdownMenu.classList.remove('show');
     }
-  });
+});
 
 // Create custom dropdown container for environment selector
 const customEnvDropdown = document.createElement('div');
 customEnvDropdown.className = 'custom-env-dropdown';
-container.appendChild(customEnvDropdown);
+dropdownContainer.appendChild(customEnvDropdown);
 
 // Create the visible part of the custom dropdown
 const envSelected = document.createElement('div');
@@ -275,6 +280,7 @@ document.addEventListener('click', (event) => {
         envDropdownMenu.classList.remove('show');
     }
 });
+
 
 
   renderer.setClearColor(0x000000, 0);
