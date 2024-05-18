@@ -79,19 +79,6 @@ input[type="checkbox" i] {
     accent-color: green !important;
 }
 
-.skybox-selector {
-    position: absolute;
-    top: 0%;
-    border: 0.1rem solid rgba(0, 0, 0, 0.1);
-    border-radius: 0.25rem;
-    padding: 0.25rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
 .environment-selector {
     position: absolute;
     top: 0%;
@@ -109,6 +96,49 @@ input[type="checkbox" i] {
 select option {
     background-color: green;
 }
+
+/* skybox custom select */
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+}
+
+.selected {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-option {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+}
+
+.dropdown-option:last-child {
+    border-bottom: none;
+}
+
+.dropdown-option:hover {
+    background-color: #f1f1f1;
+}
+/* This is a single-line comment */
+
 
 @media screen and (orientation: portrait) {
     main {
