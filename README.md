@@ -19,15 +19,7 @@ A versatile open-source 3D model viewer designed for seamless integration into a
 - **Embeddable:** Easily integrate into web applications using simple embedding options.
 - **Accessible customizable Settings:** Allows customization of lighting, background, and other display settings to enhance the viewing experience.
 - **Automated support for your models:** scene, camera, renderer, window resize, light, shadows, reflections.
-```javascript
-const USE_BACKGROUND_TEXTURE = true; // Set this to true to enable background texture
-const ADD_PLANE_TO_THE_SCENE = false; // Set this to true to add a plane to the scene
-```
-
-- **Control what your user can control**
-```javascript
-const ENABLE_INTERFACE = true; // Set this to true to enable the user interface
-```
+- **Control what your user can control:** Allows customization of the ui.
 
 ## Live demo
 A live demo is present at https://tomcadene.com/projects/vanityviewer.html.
@@ -58,17 +50,75 @@ Instructions on how to set up and run the model viewer locally, including requir
             style="position: relative;">
 </div>
 ```
-- You can add as many viewer as you want.
+- You can add as many viewer as you want. Each with its own properties.
 ```html
-<div class="vv" data-model-path="/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf" data-skybox-hdri-path="/hdris/vestibule_2k.hdr" data-environment-hdri-path="/hdris/vestibule_1k.hdr" style="position: relative;"></div>
-<div class="vv" data-model-path="/models/another_model.gltf" data-skybox-hdri-path="/hdris/another_hdri.hdr" data-environment-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
-<div class="vv" data-model-path="/models/another_model.gltf" data-skybox-hdri-path="/hdris/another_hdri.hdr" data-environment-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
-<div class="vv" data-model-path="/models/another_model.gltf" data-skybox-hdri-path="/hdris/another_hdri.hdr" data-environment-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
-<div class="vv" data-model-path="/models/another_model.gltf" data-skybox-hdri-path="/hdris/another_hdri.hdr" data-environment-hdri-path="/hdris/another_hdri.hdr" style="position: relative;">
+<div class="vv" data-model-path="/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf" data-skybox-hdri-path="/hdris/vestibule_2k.hdr" data-environment-hdri-path="/hdris/vestibule_1k.hdr" data-model-scale="1" style="position: relative;"></div>
+<div class="vv" data-model-path="/models/barrel_stove_2k.gltf/barrel_stove_2k.gltf" data-skybox-hdri-path="/hdris/safari_sunset_2k.hdr" data-environment-hdri-path="/hdris/safari_sunset_2k.hdr" data-model-scale="2.5" style="position: relative;"></div>
+
 ```
 - In the vanityviewer-main folder open the config.js file, this is the configuration file where you will select the viewer functionalities.
 - Select the viewer functionalities by changing their value by either true or false.
 - And you should have a working viewer in your website, good job 😀.
+
+## Data attributes
+All these data attributes (except model and hdri paths) are optional, so you can safely delete them and the code will take care of them with default values.
+```html
+data-material-roughness="0"
+```
+```html
+data-material-metalness="1"
+```
+```html
+data-camera-min-distance="1"
+```
+```html
+data-camera-max-distance="10"
+```
+```html
+data-model-scale="2.5"
+```
+
+## Examples
+HTML:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vanity Viewer</title>
+    <link rel="stylesheet" href="/vanityviewer/styles/styles.css">
+</head>
+<body>
+    <main>
+        <div class="vv"
+            data-model-path="/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf"
+            data-skybox-hdri-path="/hdris/vestibule_2k.hdr, /hdris/safari_sunset_2k.hdr"
+            data-environment-hdri-path="/hdris/vestibule_1k.hdr, /hdris/safari_sunset_2k.hdr"
+            data-material-roughness="0"
+            data-material-metalness="1"
+            data-light-strength="1"
+            data-light-position-x="2"
+            data-light-position-y="10"
+            data-light-position-z="5"
+            data-camera-min-distance="1"
+            data-camera-max-distance="10"
+            data-model-scale="2.5"
+            style="position: relative;">
+            <div class="checkbox-container" style="position: absolute; top: 10%; right: 1rem;">
+                <input type="checkbox" class="rotateModelCheckbox">
+                <label for="rotateModelCheckbox">Rotate Model</label>
+            </div>
+
+            <div class="checkbox-container" style="position: absolute; top: 20%; right: 1rem;">
+                <input type="checkbox" class="displaySkyboxCheckbox" checked="checked">
+                <label for="displaySkyboxCheckbox">displaySkybox</label>
+            </div>
+        </div>
+    </main>
+    <script id="vanityviewer" type="module" src="/vanityviewer/vanityviewer.js"></script>
+</body>
+</html>
+```
 
 ## Contributing:
 Guidelines for contributing to the project, including coding standards, pull requests, and issue reporting.
