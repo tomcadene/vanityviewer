@@ -16,18 +16,15 @@ const DISABLE_COLOR_CORRECTION = false; // Set this to true to disable toneMappi
 
 const ENABLE_INTERFACE = true; // Set this to true to enable the user interface
 
-// PERFORMANCE MONITOR
-const ADD_PERFORMANCE_MONITOR = false; // Set this to true to add a performance monitor to the scene
-// Notes
-// FPS Frames rendered in the last second. The higher the number the better.
-// MS Milliseconds needed to render a frame. The lower the number the better.
-// MB MBytes of allocated memory.
-// Source: https://github.com/mrdoob/stats.js
-
 // DEBUGGING TOOLS
 const ADD_DEBUGGING_TOOLS = true; // Set this to true to add a debugging tools to the scene
 // Notes
 // If set to true, a yellow arrow helper will be added to visualize the light direction.
+// If set to true, a performance monitor will be added to the scene.
+    // FPS Frames rendered in the last second. The higher the number the better.
+    // MS Milliseconds needed to render a frame. The lower the number the better.
+    // MB MBytes of allocated memory.
+    // Source: https://github.com/mrdoob/stats.js
 
 export {
     USE_BACKGROUND_TEXTURE,
@@ -36,7 +33,6 @@ export {
     SHADOW_TYPE,
     SHADOW_MAP_SIZE,
     DISABLE_COLOR_CORRECTION,
-    ADD_PERFORMANCE_MONITOR,
     ADD_DEBUGGING_TOOLS
 };
 
