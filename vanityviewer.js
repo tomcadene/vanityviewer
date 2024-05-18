@@ -416,9 +416,9 @@ function initViewer(container,
 // Automatically initialize all viewers
 // The container is any HTML element with the class .vv. The script looks for all elements with the class .vv, retrieves their attributes, and then initializes the Three.js viewer for each of these elements by passing them as the container argument to the initViewer function.
 document.querySelectorAll('.vv').forEach(container => {
-  const modelPath = container.getAttribute('data-model-path');
-  const skyboxHdriPaths = container.getAttribute('data-skybox-hdri-path').split(',');
-  const environmentHdriPaths = container.getAttribute('data-environment-hdri-path').split(',');
+  const modelPath = container.getAttribute('data-model-path') || "/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf";
+  const skyboxHdriPaths = container.getAttribute('data-skybox-hdri-path').split(',') || "/hdris/vestibule_2k.hdr, /hdris/safari_sunset_2k.hdr";
+  const environmentHdriPaths = container.getAttribute('data-environment-hdri-path').split(',') || "/hdris/vestibule_2k.hdr, /hdris/safari_sunset_2k.hdr";
   const materialRoughness = parseFloat(container.getAttribute('data-material-roughness')) || 0.5; // Use the user value or default to the default value 
   const materialMetalness = parseFloat(container.getAttribute('data-material-metalness')) || 0.5;
   const antialiasing = container.getAttribute('data-antialiasing') || "true";
