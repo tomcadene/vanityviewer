@@ -61,36 +61,63 @@ Instructions on how to set up and run the model viewer locally, including requir
 - And you should have a working viewer in your website, good job 😀.
 
 ## Data attributes
-All these data attributes (except model and hdri paths) are optional, so you can safely delete them and the code will take care of them with default values.
+**All data attributes are optional, so you can safely delete them and the code will take care of it with default values.**
+
+data-model-path
+```html
+data-model-path="/models/model.gltf"
+```
+skybox-hdri-path
+```html
+data-skybox-hdri-path="/hdris/vestibule_2k.hdr, /hdris/safari_sunset_2k.hdr"
+```
+environment-hdri-path
+```html
+data-environment-hdri-path="/hdris/vestibule_1k.hdr, /hdris/safari_sunset_2k.hdr"
+```
+material-roughness
 ```html
 data-material-roughness="0"
 ```
+material-metalness
 ```html
 data-material-metalness="1"
 ```
+antialiasing
 ```html
 data-antialiasing="true"
 ```
+light-strength
 ```html
 data-light-strength="1"
 ```
+light-position-x
 ```html
 data-light-position-x="2"
 ```
+light-position-y
 ```html
 data-light-position-y="10"
 ```
+light-position-z
 ```html
 data-light-position-z="5"
 ```
+camera-min-distance
 ```html
 data-camera-min-distance="1"
 ```
+camera-max-distance
 ```html
 data-camera-max-distance="10"
 ```
+Scale of the model
 ```html
 data-model-scale="2.5"
+```
+Horizontal rotation speed of the object - Recommended value: "0.005"
+```html
+data-rotation-speed="0.005"
 ```
 
 ## Examples
