@@ -10,7 +10,6 @@ import {
   SHADOW_TYPE as SHADOW_TYPE_PLACEHOLDER,
   SHADOW_MAP_SIZE,
   DISABLE_COLOR_CORRECTION,
-  ADD_PERFORMANCE_MONITOR,
   ADD_DEBUGGING_TOOLS
 } from '/config.js';
 
@@ -323,7 +322,7 @@ function initViewer(container,
   stats2.dom.style.position = 'static';
   stats3.dom.style.position = 'static';
 
-  if (ADD_PERFORMANCE_MONITOR) {
+  if (ADD_DEBUGGING_TOOLS) {
     statsContainer.appendChild(stats1.dom);
     statsContainer.appendChild(stats2.dom);
     statsContainer.appendChild(stats3.dom);
