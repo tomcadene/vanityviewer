@@ -99,7 +99,8 @@ select option {
 
 /* skybox custom select */
 .custom-dropdown {
-    position: relative;
+    position: absolute;
+    bottom: 0;
     display: inline-block;
     width: 200px;
 }
@@ -137,7 +138,48 @@ select option {
 .dropdown-option:hover {
     background-color: #f1f1f1;
 }
-/* This is a single-line comment */
+/* skybox custom select */
+/* env custom select */
+.custom-env-dropdown {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+}
+
+.env-selected {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.env-dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.env-dropdown-menu.show {
+    display: block;
+}
+
+.env-dropdown-option {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+}
+
+.env-dropdown-option:last-child {
+    border-bottom: none;
+}
+
+.env-dropdown-option:hover {
+    background-color: #f1f1f1;
+}
+/* env custom select */
 
 
 @media screen and (orientation: portrait) {
