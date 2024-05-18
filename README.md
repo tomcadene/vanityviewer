@@ -1,9 +1,8 @@
 A versatile 3D model viewer designed for seamless integration into any website. Leveraging the powerful three.js library, this foundation tool enables easy display and interaction with 3D models. The viewer is built to be highly accessible and compatible across different devices and browsers, ensuring a smooth user experience.
 
 ## What makes it accessible
-- 📄 **Accessible customizable Settings:** Remember when you used to modify the value of lines in the .ini file of your games? It's the same here: open the config.js file and select the viewer functionalities, simply set them to true or false.
+- 📄 **Accessible customizable Settings:** Allows customization of lighting, shadow, background, and other display settings to enhance the viewing experience using HTML data attributes, with all processing handled using JavaScript.
 - 📚 **No dependencies:** The three.js library is alreary present in the repo.
-- ⏱️ **Ease of installation:** The viewer can be implemented into any website in ~10min even by a beginner.
 
 ## Use cases
 - 🛍️ **Online Store:** Retailers can use 3D models to enhance product listings, boosting engagement and sales.
