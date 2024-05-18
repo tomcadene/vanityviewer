@@ -189,23 +189,23 @@ function initViewer(container,
 
   // Populate HDRI selectors
   // Create custom dropdown container
-const customDropdown = document.createElement('div');
-customDropdown.className = 'custom-dropdown';
-container.appendChild(customDropdown);
+  const customDropdown = document.createElement('div');
+  customDropdown.className = 'custom-dropdown';
+  container.appendChild(customDropdown);
 
-// Create the visible part of the custom dropdown
-const selected = document.createElement('div');
-selected.className = 'selected';
-selected.textContent = 'Select a Skybox';
-customDropdown.appendChild(selected);
+  // Create the visible part of the custom dropdown
+  const selected = document.createElement('div');
+  selected.className = 'selected';
+  selected.textContent = 'Select a Skybox';
+  customDropdown.appendChild(selected);
 
-// Create the dropdown menu
-const dropdownMenu = document.createElement('div');
-dropdownMenu.className = 'dropdown-menu';
-customDropdown.appendChild(dropdownMenu);
+  // Create the dropdown menu
+  const dropdownMenu = document.createElement('div');
+  dropdownMenu.className = 'dropdown-menu';
+  customDropdown.appendChild(dropdownMenu);
 
-// Populate the dropdown menu with options
-skyboxHdriPaths.forEach((path, index) => {
+  // Populate the dropdown menu with options
+  skyboxHdriPaths.forEach((path, index) => {
     const dropdownOption = document.createElement('div');
     dropdownOption.className = 'dropdown-option';
     dropdownOption.dataset.value = path;
@@ -214,38 +214,67 @@ skyboxHdriPaths.forEach((path, index) => {
 
     // Add event listener to each option
     dropdownOption.addEventListener('click', () => {
-        selected.textContent = dropdownOption.textContent;
-        dropdownMenu.classList.remove('show');
-        loadSkybox(path);
+      selected.textContent = dropdownOption.textContent;
+      dropdownMenu.classList.remove('show');
+      loadSkybox(path);
+    });
+  });
+
+  // Toggle dropdown menu
+  selected.addEventListener('click', () => {
+    dropdownMenu.classList.toggle('show');
+  });
+
+  // Close the dropdown if clicked outside
+  document.addEventListener('click', (event) => {
+    if (!customDropdown.contains(event.target)) {
+      dropdownMenu.classList.remove('show');
+    }
+  });
+
+// Create custom dropdown container for environment selector
+const customEnvDropdown = document.createElement('div');
+customEnvDropdown.className = 'custom-env-dropdown';
+container.appendChild(customEnvDropdown);
+
+// Create the visible part of the custom dropdown
+const envSelected = document.createElement('div');
+envSelected.className = 'env-selected';
+envSelected.textContent = 'Select an Environment';
+customEnvDropdown.appendChild(envSelected);
+
+// Create the dropdown menu
+const envDropdownMenu = document.createElement('div');
+envDropdownMenu.className = 'env-dropdown-menu';
+customEnvDropdown.appendChild(envDropdownMenu);
+
+// Populate the dropdown menu with options
+environmentHdriPaths.forEach((path, index) => {
+    const envDropdownOption = document.createElement('div');
+    envDropdownOption.className = 'env-dropdown-option';
+    envDropdownOption.dataset.value = path;
+    envDropdownOption.textContent = `Environment ${index + 1}`;
+    envDropdownMenu.appendChild(envDropdownOption);
+
+    // Add event listener to each option
+    envDropdownOption.addEventListener('click', () => {
+        envSelected.textContent = envDropdownOption.textContent;
+        envDropdownMenu.classList.remove('show');
+        loadEnvironment(path);
     });
 });
 
 // Toggle dropdown menu
-selected.addEventListener('click', () => {
-    dropdownMenu.classList.toggle('show');
+envSelected.addEventListener('click', () => {
+    envDropdownMenu.classList.toggle('show');
 });
 
 // Close the dropdown if clicked outside
 document.addEventListener('click', (event) => {
-    if (!customDropdown.contains(event.target)) {
-        dropdownMenu.classList.remove('show');
+    if (!customEnvDropdown.contains(event.target)) {
+        envDropdownMenu.classList.remove('show');
     }
 });
-
-
-  const environmentSelector = document.createElement('select');
-  environmentSelector.className = 'environment-selector';
-  container.appendChild(environmentSelector);
-  environmentHdriPaths.forEach((path, index) => {
-    const option = document.createElement('option');
-    option.value = path;
-    option.textContent = `Environment ${index + 1}`;
-    environmentSelector.appendChild(option);
-  });
-
-  environmentSelector.addEventListener('change', (event) => {
-    loadEnvironment(event.target.value);
-  });
 
 
   renderer.setClearColor(0x000000, 0);
