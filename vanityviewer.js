@@ -195,28 +195,28 @@ function initViewer(container,
 
   // Populate HDRI selectors
   // Create a parent container for both dropdowns
-const dropdownContainer = document.createElement('div');
-dropdownContainer.className = 'dropdown-container';
-container.appendChild(dropdownContainer);
+  const dropdownContainer = document.createElement('div');
+  dropdownContainer.className = 'dropdown-container';
+  container.appendChild(dropdownContainer);
 
-// Create custom dropdown container for skybox selector
-const customDropdown = document.createElement('div');
-customDropdown.className = 'custom-dropdown';
-dropdownContainer.appendChild(customDropdown);
+  // Create custom dropdown container for skybox selector
+  const customDropdown = document.createElement('div');
+  customDropdown.className = 'custom-dropdown';
+  dropdownContainer.appendChild(customDropdown);
 
-// Create the visible part of the custom dropdown
-const selected = document.createElement('div');
-selected.className = 'selected';
-selected.textContent = 'Select a Skybox';
-customDropdown.appendChild(selected);
+  // Create the visible part of the custom dropdown
+  const selected = document.createElement('div');
+  selected.className = 'selected';
+  selected.textContent = 'Select a Skybox';
+  customDropdown.appendChild(selected);
 
-// Create the dropdown menu
-const dropdownMenu = document.createElement('div');
-dropdownMenu.className = 'dropdown-menu';
-customDropdown.appendChild(dropdownMenu);
+  // Create the dropdown menu
+  const dropdownMenu = document.createElement('div');
+  dropdownMenu.className = 'dropdown-menu';
+  customDropdown.appendChild(dropdownMenu);
 
-// Populate the dropdown menu with options
-skyboxHdriPaths.forEach((path, index) => {
+  // Populate the dropdown menu with options
+  skyboxHdriPaths.forEach((path, index) => {
     const dropdownOption = document.createElement('div');
     dropdownOption.className = 'dropdown-option';
     dropdownOption.dataset.value = path;
@@ -225,42 +225,42 @@ skyboxHdriPaths.forEach((path, index) => {
 
     // Add event listener to each option
     dropdownOption.addEventListener('click', () => {
-        selected.textContent = dropdownOption.textContent;
-        dropdownMenu.classList.remove('show');
-        loadSkybox(path);
+      selected.textContent = dropdownOption.textContent;
+      dropdownMenu.classList.remove('show');
+      loadSkybox(path);
     });
-});
+  });
 
-// Toggle dropdown menu
-selected.addEventListener('click', () => {
+  // Toggle dropdown menu
+  selected.addEventListener('click', () => {
     dropdownMenu.classList.toggle('show');
-});
+  });
 
-// Close the dropdown if clicked outside
-document.addEventListener('click', (event) => {
+  // Close the dropdown if clicked outside
+  document.addEventListener('click', (event) => {
     if (!customDropdown.contains(event.target)) {
-        dropdownMenu.classList.remove('show');
+      dropdownMenu.classList.remove('show');
     }
-});
+  });
 
-// Create custom dropdown container for environment selector
-const customEnvDropdown = document.createElement('div');
-customEnvDropdown.className = 'custom-env-dropdown';
-dropdownContainer.appendChild(customEnvDropdown);
+  // Create custom dropdown container for environment selector
+  const customEnvDropdown = document.createElement('div');
+  customEnvDropdown.className = 'custom-env-dropdown';
+  dropdownContainer.appendChild(customEnvDropdown);
 
-// Create the visible part of the custom dropdown
-const envSelected = document.createElement('div');
-envSelected.className = 'env-selected';
-envSelected.textContent = 'Select an Environment';
-customEnvDropdown.appendChild(envSelected);
+  // Create the visible part of the custom dropdown
+  const envSelected = document.createElement('div');
+  envSelected.className = 'env-selected';
+  envSelected.textContent = 'Select an Environment';
+  customEnvDropdown.appendChild(envSelected);
 
-// Create the dropdown menu
-const envDropdownMenu = document.createElement('div');
-envDropdownMenu.className = 'env-dropdown-menu';
-customEnvDropdown.appendChild(envDropdownMenu);
+  // Create the dropdown menu
+  const envDropdownMenu = document.createElement('div');
+  envDropdownMenu.className = 'env-dropdown-menu';
+  customEnvDropdown.appendChild(envDropdownMenu);
 
-// Populate the dropdown menu with options
-environmentHdriPaths.forEach((path, index) => {
+  // Populate the dropdown menu with options
+  environmentHdriPaths.forEach((path, index) => {
     const envDropdownOption = document.createElement('div');
     envDropdownOption.className = 'env-dropdown-option';
     envDropdownOption.dataset.value = path;
@@ -269,23 +269,23 @@ environmentHdriPaths.forEach((path, index) => {
 
     // Add event listener to each option
     envDropdownOption.addEventListener('click', () => {
-        envSelected.textContent = envDropdownOption.textContent;
-        envDropdownMenu.classList.remove('show');
-        loadEnvironment(path);
+      envSelected.textContent = envDropdownOption.textContent;
+      envDropdownMenu.classList.remove('show');
+      loadEnvironment(path);
     });
-});
+  });
 
-// Toggle dropdown menu
-envSelected.addEventListener('click', () => {
+  // Toggle dropdown menu
+  envSelected.addEventListener('click', () => {
     envDropdownMenu.classList.toggle('show');
-});
+  });
 
-// Close the dropdown if clicked outside
-document.addEventListener('click', (event) => {
+  // Close the dropdown if clicked outside
+  document.addEventListener('click', (event) => {
     if (!customEnvDropdown.contains(event.target)) {
-        envDropdownMenu.classList.remove('show');
+      envDropdownMenu.classList.remove('show');
     }
-});
+  });
 
 
 
@@ -330,52 +330,52 @@ document.addEventListener('click', (event) => {
   }
 
   const rotateModelCheckbox = document.createElement('input');
-rotateModelCheckbox.type = 'checkbox';
-rotateModelCheckbox.className = 'rotateModelCheckbox';
-rotateModelCheckbox.id = 'rotateModelCheckbox';
+  rotateModelCheckbox.type = 'checkbox';
+  rotateModelCheckbox.className = 'rotateModelCheckbox';
+  rotateModelCheckbox.id = 'rotateModelCheckbox';
 
-const rotateModelLabel = document.createElement('label');
-rotateModelLabel.htmlFor = 'rotateModelCheckbox';
-rotateModelLabel.innerText = 'Rotate Model';
+  const rotateModelLabel = document.createElement('label');
+  rotateModelLabel.htmlFor = 'rotateModelCheckbox';
+  rotateModelLabel.innerText = 'Rotate Model';
 
-const rotateModelContainer = document.createElement('div');
-rotateModelContainer.className = 'checkbox-container';
-rotateModelContainer.style.position = 'absolute';
-rotateModelContainer.style.top = '10%';
-rotateModelContainer.style.right = '1rem';
-rotateModelContainer.appendChild(rotateModelCheckbox);
-rotateModelContainer.appendChild(rotateModelLabel);
+  const rotateModelContainer = document.createElement('div');
+  rotateModelContainer.className = 'checkbox-container';
+  rotateModelContainer.style.position = 'absolute';
+  rotateModelContainer.style.top = '10%';
+  rotateModelContainer.style.right = '1rem';
+  rotateModelContainer.appendChild(rotateModelCheckbox);
+  rotateModelContainer.appendChild(rotateModelLabel);
 
-const displaySkyboxCheckbox = document.createElement('input');
-displaySkyboxCheckbox.type = 'checkbox';
-displaySkyboxCheckbox.className = 'displaySkyboxCheckbox';
-displaySkyboxCheckbox.id = 'displaySkyboxCheckbox';
-displaySkyboxCheckbox.checked = true;
+  const displaySkyboxCheckbox = document.createElement('input');
+  displaySkyboxCheckbox.type = 'checkbox';
+  displaySkyboxCheckbox.className = 'displaySkyboxCheckbox';
+  displaySkyboxCheckbox.id = 'displaySkyboxCheckbox';
+  displaySkyboxCheckbox.checked = true;
 
-const displaySkyboxLabel = document.createElement('label');
-displaySkyboxLabel.htmlFor = 'displaySkyboxCheckbox';
-displaySkyboxLabel.innerText = 'Display Skybox';
+  const displaySkyboxLabel = document.createElement('label');
+  displaySkyboxLabel.htmlFor = 'displaySkyboxCheckbox';
+  displaySkyboxLabel.innerText = 'Display Skybox';
 
-const displaySkyboxContainer = document.createElement('div');
-displaySkyboxContainer.className = 'checkbox-container';
-displaySkyboxContainer.style.position = 'absolute';
-displaySkyboxContainer.style.top = '20%';
-displaySkyboxContainer.style.right = '1rem';
-displaySkyboxContainer.appendChild(displaySkyboxCheckbox);
-displaySkyboxContainer.appendChild(displaySkyboxLabel);
+  const displaySkyboxContainer = document.createElement('div');
+  displaySkyboxContainer.className = 'checkbox-container';
+  displaySkyboxContainer.style.position = 'absolute';
+  displaySkyboxContainer.style.top = '20%';
+  displaySkyboxContainer.style.right = '1rem';
+  displaySkyboxContainer.appendChild(displaySkyboxCheckbox);
+  displaySkyboxContainer.appendChild(displaySkyboxLabel);
 
-container.appendChild(rotateModelContainer);
-container.appendChild(displaySkyboxContainer);
+  container.appendChild(rotateModelContainer);
+  container.appendChild(displaySkyboxContainer);
 
-rotateModelCheckbox.addEventListener('change', function () {
+  rotateModelCheckbox.addEventListener('change', function () {
+    container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
+  });
   container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
-});
-container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
 
-displaySkyboxCheckbox.addEventListener('change', function () {
+  displaySkyboxCheckbox.addEventListener('change', function () {
+    container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
+  });
   container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
-});
-container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
 
 
   function animate() {
