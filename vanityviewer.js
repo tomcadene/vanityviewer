@@ -340,9 +340,6 @@ function initViewer(container,
 
   const rotateModelContainer = document.createElement('div');
   rotateModelContainer.className = 'checkbox-container';
-  rotateModelContainer.style.position = 'absolute';
-  rotateModelContainer.style.top = '10%';
-  rotateModelContainer.style.right = '1rem';
   rotateModelContainer.appendChild(rotateModelCheckbox);
   rotateModelContainer.appendChild(rotateModelLabel);
 
@@ -358,14 +355,19 @@ function initViewer(container,
 
   const displaySkyboxContainer = document.createElement('div');
   displaySkyboxContainer.className = 'checkbox-container';
-  displaySkyboxContainer.style.position = 'absolute';
-  displaySkyboxContainer.style.top = '20%';
-  displaySkyboxContainer.style.right = '1rem';
   displaySkyboxContainer.appendChild(displaySkyboxCheckbox);
   displaySkyboxContainer.appendChild(displaySkyboxLabel);
 
-  container.appendChild(rotateModelContainer);
-  container.appendChild(displaySkyboxContainer);
+  // Create a new div to wrap both containers
+  const flexContainer = document.createElement('div');
+  flexContainer.className = 'main-checkbox-container';
+
+  // Append the containers to the new flex container
+  flexContainer.appendChild(rotateModelContainer);
+  flexContainer.appendChild(displaySkyboxContainer);
+
+  // Append the flex container to the main container
+  container.appendChild(flexContainer);
 
   rotateModelCheckbox.addEventListener('change', function () {
     container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
@@ -376,6 +378,7 @@ function initViewer(container,
     container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
   });
   container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
+
 
 
   function animate() {
