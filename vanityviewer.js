@@ -188,15 +188,50 @@ function initViewer(container,
   loadSkybox(skyboxHdriPaths[0]);
 
   // Populate HDRI selectors
-  const skyboxSelector = document.createElement('select');
-  skyboxSelector.className = 'skybox-selector';
-  container.appendChild(skyboxSelector);
-  skyboxHdriPaths.forEach((path, index) => {
-    const option = document.createElement('option');
-    option.value = path;
-    option.textContent = `Skybox ${index + 1}`;
-    skyboxSelector.appendChild(option);
-  });
+  // Create custom dropdown container
+const customDropdown = document.createElement('div');
+customDropdown.className = 'custom-dropdown';
+container.appendChild(customDropdown);
+
+// Create the visible part of the custom dropdown
+const selected = document.createElement('div');
+selected.className = 'selected';
+selected.textContent = 'Select a Skybox';
+customDropdown.appendChild(selected);
+
+// Create the dropdown menu
+const dropdownMenu = document.createElement('div');
+dropdownMenu.className = 'dropdown-menu';
+customDropdown.appendChild(dropdownMenu);
+
+// Populate the dropdown menu with options
+skyboxHdriPaths.forEach((path, index) => {
+    const dropdownOption = document.createElement('div');
+    dropdownOption.className = 'dropdown-option';
+    dropdownOption.dataset.value = path;
+    dropdownOption.textContent = `Skybox ${index + 1}`;
+    dropdownMenu.appendChild(dropdownOption);
+
+    // Add event listener to each option
+    dropdownOption.addEventListener('click', () => {
+        selected.textContent = dropdownOption.textContent;
+        dropdownMenu.classList.remove('show');
+        loadSkybox(path);
+    });
+});
+
+// Toggle dropdown menu
+selected.addEventListener('click', () => {
+    dropdownMenu.classList.toggle('show');
+});
+
+// Close the dropdown if clicked outside
+document.addEventListener('click', (event) => {
+    if (!customDropdown.contains(event.target)) {
+        dropdownMenu.classList.remove('show');
+    }
+});
+
 
   const environmentSelector = document.createElement('select');
   environmentSelector.className = 'environment-selector';
@@ -206,10 +241,6 @@ function initViewer(container,
     option.value = path;
     option.textContent = `Environment ${index + 1}`;
     environmentSelector.appendChild(option);
-  });
-
-  skyboxSelector.addEventListener('change', (event) => {
-    loadSkybox(event.target.value);
   });
 
   environmentSelector.addEventListener('change', (event) => {
