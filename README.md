@@ -104,15 +104,6 @@ HTML:
             data-camera-max-distance="10"
             data-model-scale="2.5"
             style="position: relative;">
-            <div class="checkbox-container" style="position: absolute; top: 10%; right: 1rem;">
-                <input type="checkbox" class="rotateModelCheckbox">
-                <label for="rotateModelCheckbox">Rotate Model</label>
-            </div>
-
-            <div class="checkbox-container" style="position: absolute; top: 20%; right: 1rem;">
-                <input type="checkbox" class="displaySkyboxCheckbox" checked="checked">
-                <label for="displaySkyboxCheckbox">displaySkybox</label>
-            </div>
         </div>
     </main>
     <script id="vanityviewer" type="module" src="/vanityviewer/vanityviewer.js"></script>
