@@ -26,7 +26,8 @@ function initViewer(container,
   lightPositionZ,
   cameraMinDistance,
   cameraMaxDistance,
-  modelScale) {
+  modelScale,
+  rotationSpeed) {
 
   const aspectRatio = container.clientWidth / container.clientHeight;
 
@@ -387,7 +388,7 @@ function initViewer(container,
     requestAnimationFrame(animate);
 
     if (modelMesh && container.getAttribute('data-rotate-enabled') === 'true') {
-      modelMesh.rotation.y += 0.01;
+      modelMesh.rotation.y += rotationSpeed;
     }
 
 
@@ -428,6 +429,7 @@ document.querySelectorAll('.vv').forEach(container => {
   const cameraMinDistance = parseFloat(container.getAttribute('data-camera-min-distance')) || 1;
   const cameraMaxDistance = parseFloat(container.getAttribute('data-camera-max-distance')) || 10;
   const modelScale = parseFloat(container.getAttribute('data-model-scale')) || 10;
+  const rotationSpeed = parseFloat(container.getAttribute('data-rotation-speed')) || 0.005;
 
   if (modelPath && skyboxHdriPaths && environmentHdriPaths) {
     initViewer(container,
@@ -443,6 +445,7 @@ document.querySelectorAll('.vv').forEach(container => {
       lightPositionZ,
       cameraMinDistance,
       cameraMaxDistance,
-      modelScale);
+      modelScale,
+      rotationSpeed);
   }
 });
