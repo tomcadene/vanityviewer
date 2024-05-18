@@ -51,10 +51,9 @@ main {
     height: 50vh;
     width: 100%;
     color: rgba(0, 0, 0, 0.9);
-    background-color: rgba(255, 255, 255, 0.5);
-    border: 0.1rem solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.05);
     border-radius: 1rem;
-    box-shadow: 0rem 0.1rem 1rem 0rem rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 button {
@@ -208,6 +207,7 @@ select option {
 
     .vv {
         color: rgba(0, 0, 0, 0.9);
+        background-color: rgba(255, 255, 255, 0.05);
     }
 }
 
