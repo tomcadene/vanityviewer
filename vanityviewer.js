@@ -158,31 +158,6 @@ function initViewer(container,
     scene.add(light);
   }
 
-  // Adding an arrow helper to visualize the light direction
-  const direction = new THREE.Vector3(lightPositionX, lightPositionY, lightPositionZ).normalize(); // Light direction vector
-  const origin = new THREE.Vector3(0, 0, 0); // Origin of the arrow (can be adjusted)
-  const length = 50; // Length of the arrow
-  const color = 0xffff00; // Color of the arrow (yellow)
-  const arrowHelper = new THREE.ArrowHelper(direction, origin, length, color);
-  const axesHelper = new THREE.AxesHelper(10);
-  const sphere = new THREE.SphereGeometry();
-  const object = new THREE.Mesh(sphere, new THREE.MeshBasicMaterial(0xff0000));
-  const box = new THREE.BoxHelper(object, 0xffff00);
-  const CameraHelper = new THREE.CameraHelper(camera);
-  const ligthHelper = new THREE.DirectionalLightHelper(light, 5);
-  const gridHelper = new THREE.GridHelper(10000, 1000);
-  const PolarGridHelper = new THREE.PolarGridHelper(10, 16, 8, 64);
-
-  if (ADD_DEBUGGING_TOOLS) {
-    scene.add(arrowHelper);
-    scene.add(axesHelper);
-    scene.add(box);
-    scene.add(CameraHelper);
-    scene.add(ligthHelper);
-    scene.add(gridHelper);
-    scene.add(PolarGridHelper);
-  }
-
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
   scene.add(ambientLight);
   ambientLight.intensity = 0.2;
@@ -319,36 +294,6 @@ function initViewer(container,
     }
   });
 
-  // Create the container for stats dynamically
-  var statsContainer = document.createElement('div');
-  statsContainer.id = 'stats-container';
-  container.appendChild(statsContainer);
-
-  // Apply styles to the container
-  statsContainer.style.display = 'flex';
-  statsContainer.style.position = 'absolute';
-  statsContainer.style.top = '0';
-  statsContainer.style.left = '0';
-
-  // Initialize stats
-  var stats1 = new Stats();
-  stats1.showPanel(0); // 0: FPS
-
-  var stats2 = new Stats();
-  stats2.showPanel(1); // 1: MS
-
-  var stats3 = new Stats();
-  stats3.showPanel(2); // 2: Memory
-
-  stats1.dom.style.position = 'static';
-  stats2.dom.style.position = 'static';
-  stats3.dom.style.position = 'static';
-
-  if (ADD_DEBUGGING_TOOLS) {
-    statsContainer.appendChild(stats1.dom);
-    statsContainer.appendChild(stats2.dom);
-    statsContainer.appendChild(stats3.dom);
-  }
 
   const rotateModelCheckbox = document.createElement('input');
   rotateModelCheckbox.type = 'checkbox';
@@ -408,6 +353,58 @@ function initViewer(container,
   container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
 
 
+  // Create the container for stats dynamically
+  var statsContainer = document.createElement('div');
+  statsContainer.id = 'stats-container';
+  container.appendChild(statsContainer);
+
+  // Apply styles to the container
+  statsContainer.style.display = 'flex';
+  statsContainer.style.position = 'absolute';
+  statsContainer.style.top = '0';
+  statsContainer.style.left = '0';
+
+  // Initialize stats
+  var stats1 = new Stats();
+  stats1.showPanel(0); // 0: FPS
+
+  var stats2 = new Stats();
+  stats2.showPanel(1); // 1: MS
+
+  var stats3 = new Stats();
+  stats3.showPanel(2); // 2: Memory
+
+  stats1.dom.style.position = 'static';
+  stats2.dom.style.position = 'static';
+  stats3.dom.style.position = 'static';
+
+  // Adding an arrow helper to visualize the light direction
+  const direction = new THREE.Vector3(lightPositionX, lightPositionY, lightPositionZ).normalize(); // Light direction vector
+  const origin = new THREE.Vector3(0, 0, 0); // Origin of the arrow (can be adjusted)
+  const length = 50; // Length of the arrow
+  const color = 0xffff00; // Color of the arrow (yellow)
+  const arrowHelper = new THREE.ArrowHelper(direction, origin, length, color);
+  const axesHelper = new THREE.AxesHelper(10);
+  const sphere = new THREE.SphereGeometry();
+  const object = new THREE.Mesh(sphere, new THREE.MeshBasicMaterial(0xff0000));
+  const box = new THREE.BoxHelper(object, 0xffff00);
+  const CameraHelper = new THREE.CameraHelper(camera);
+  const ligthHelper = new THREE.DirectionalLightHelper(light, 5);
+  const gridHelper = new THREE.GridHelper(10000, 1000);
+  const PolarGridHelper = new THREE.PolarGridHelper(10, 16, 8, 64);
+
+  if (ADD_DEBUGGING_TOOLS) {
+    statsContainer.appendChild(stats1.dom);
+    statsContainer.appendChild(stats2.dom);
+    statsContainer.appendChild(stats3.dom);
+    scene.add(arrowHelper);
+    scene.add(axesHelper);
+    scene.add(box);
+    scene.add(CameraHelper);
+    scene.add(ligthHelper);
+    scene.add(gridHelper);
+    scene.add(PolarGridHelper);
+  }
 
   function animate() {
     stats1.begin();
