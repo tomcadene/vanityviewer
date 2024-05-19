@@ -61,18 +61,10 @@ Instructions on how to set up and run the model viewer locally, including requir
 
 ## Data attributes
 **All data attributes are optional, so you can safely delete them and the code will take care of it with default values.**
-
+### **Model data attributes**
 data-model-path
 ```html
 data-model-path="/models/model.gltf"
-```
-skybox-hdri-path
-```html
-data-skybox-hdri-path="/hdris/vestibule_2k.hdr, /hdris/safari_sunset_2k.hdr"
-```
-environment-hdri-path
-```html
-data-environment-hdri-path="/hdris/vestibule_1k.hdr, /hdris/safari_sunset_2k.hdr"
 ```
 material-roughness
 ```html
@@ -81,6 +73,20 @@ data-material-roughness="0"
 material-metalness
 ```html
 data-material-metalness="1"
+```
+Scale of the model
+```html
+data-model-scale="2.5"
+```
+
+### **Scene data attributes**
+skybox-hdri-path
+```html
+data-skybox-hdri-path="/hdris/vestibule_2k.hdr, /hdris/safari_sunset_2k.hdr"
+```
+environment-hdri-path
+```html
+data-environment-hdri-path="/hdris/vestibule_1k.hdr, /hdris/safari_sunset_2k.hdr"
 ```
 antialiasing
 ```html
@@ -110,9 +116,11 @@ camera-max-distance
 ```html
 data-camera-max-distance="10"
 ```
-Scale of the model
+
+### **UI data attributes**
+Visibility of the "Rotate model" button - true by default, set it to false to disable it
 ```html
-data-model-scale="2.5"
+data-ui-rotate="true"
 ```
 Horizontal rotation speed of the object - Recommended value: "0.005"
 ```html
