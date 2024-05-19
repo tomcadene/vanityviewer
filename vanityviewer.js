@@ -103,6 +103,8 @@ function initViewer(container,
         node.receiveShadow = true;
         node.material.roughness = materialRoughness;
         node.material.metalness = materialMetalness;
+        node.material.wireframe = document.getElementById('renderGeometryAsWireframeCheckbox').checked;
+        console.log(container.getAttribute('data-renderGeometryAsWireframe-enabled'))
         // Optional: Optimize material properties for better performance
         node.material.precision = 'mediump';
         // Ensure frustum culling is enabled (default is true)
@@ -188,6 +190,116 @@ function initViewer(container,
   // Load initial HDRIs
   loadEnvironment(environmentHdriPaths[0]);
   loadSkybox(skyboxHdriPaths[0]);
+
+  renderer.setClearColor(0x000000, 0);
+
+  // Frustum Culling Optimization, Ensure objects outside the camera view are not rendered.
+  scene.traverse(function (object) {
+    if (object.isMesh) {
+      object.frustumCulled = true;
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const rotateModelCheckbox = document.createElement('input');
+  rotateModelCheckbox.type = 'checkbox';
+  rotateModelCheckbox.className = 'rotateModelCheckbox';
+  rotateModelCheckbox.id = 'rotateModelCheckbox';
+  const rotateModelLabel = document.createElement('label');
+  rotateModelLabel.htmlFor = 'rotateModelCheckbox';
+  rotateModelLabel.innerText = 'Rotate Model';
+  const rotateModelContainer = document.createElement('div');
+  rotateModelContainer.className = 'checkbox-container';
+  rotateModelContainer.appendChild(rotateModelCheckbox);
+  rotateModelContainer.appendChild(rotateModelLabel);
+
+  const renderGeometryAsWireframeCheckbox = document.createElement('input');
+  renderGeometryAsWireframeCheckbox.type = 'checkbox';
+  renderGeometryAsWireframeCheckbox.className = 'renderGeometryAsWireframeCheckbox';
+  renderGeometryAsWireframeCheckbox.id = 'renderGeometryAsWireframeCheckbox';
+  const renderGeometryAsWireframeLabel = document.createElement('label');
+  renderGeometryAsWireframeLabel.htmlFor = 'renderGeometryAsWireframeCheckbox';
+  renderGeometryAsWireframeLabel.innerText = 'renderGeometryAsWireframe';
+  const renderGeometryAsWireframeContainer = document.createElement('div');
+  renderGeometryAsWireframeContainer.className = 'checkbox-container';
+  renderGeometryAsWireframeContainer.appendChild(renderGeometryAsWireframeCheckbox);
+  renderGeometryAsWireframeContainer.appendChild(renderGeometryAsWireframeLabel);
+
+
+  const displaySkyboxCheckbox = document.createElement('input');
+  displaySkyboxCheckbox.type = 'checkbox';
+  displaySkyboxCheckbox.className = 'displaySkyboxCheckbox';
+  displaySkyboxCheckbox.id = 'displaySkyboxCheckbox';
+  displaySkyboxCheckbox.checked = true;
+  const displaySkyboxLabel = document.createElement('label');
+  displaySkyboxLabel.htmlFor = 'displaySkyboxCheckbox';
+  displaySkyboxLabel.innerText = 'Display Skybox';
+  const displaySkyboxContainer = document.createElement('div');
+  displaySkyboxContainer.className = 'checkbox-container';
+  displaySkyboxContainer.appendChild(displaySkyboxCheckbox);
+  displaySkyboxContainer.appendChild(displaySkyboxLabel);
+
+  // Create a new div to wrap both containers
+  const flexContainer = document.createElement('div');
+  flexContainer.className = 'main-checkbox-container';
+
+  // Append the containers to the new flex container
+  const uiRotateValue = uiRotate === "true" ? true : false;
+  if (uiRotateValue) {
+    flexContainer.appendChild(rotateModelContainer);
+  }
+  flexContainer.appendChild(renderGeometryAsWireframeContainer);
+  flexContainer.appendChild(displaySkyboxContainer);
+
+  // Append the flex container to the main container
+  container.appendChild(flexContainer);
+
+  rotateModelCheckbox.addEventListener('change', function () {
+    container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
+  });
+  container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
+
+  document.getElementById('renderGeometryAsWireframeCheckbox').addEventListener('change', function () {
+    if (modelMesh) {
+      modelMesh.traverse(function (node) {
+        if (node.isMesh) {
+          node.material.wireframe = this.checked;
+        }
+      }.bind(this));
+    }
+  });
+
+  displaySkyboxCheckbox.addEventListener('change', function () {
+    container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
+  });
+  container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // Populate HDRI selectors
   // Create a parent container for both dropdowns
@@ -284,75 +396,6 @@ function initViewer(container,
   });
 
 
-
-  renderer.setClearColor(0x000000, 0);
-
-  // Frustum Culling Optimization, Ensure objects outside the camera view are not rendered.
-  scene.traverse(function (object) {
-    if (object.isMesh) {
-      object.frustumCulled = true;
-    }
-  });
-
-
-  const rotateModelCheckbox = document.createElement('input');
-  rotateModelCheckbox.type = 'checkbox';
-  rotateModelCheckbox.className = 'rotateModelCheckbox';
-  rotateModelCheckbox.id = 'rotateModelCheckbox';
-
-  const rotateModelLabel = document.createElement('label');
-  rotateModelLabel.htmlFor = 'rotateModelCheckbox';
-  rotateModelLabel.innerText = 'Rotate Model';
-
-  const rotateModelContainer = document.createElement('div');
-
-
-  rotateModelContainer.className = 'checkbox-container';
-
-  rotateModelContainer.appendChild(rotateModelCheckbox);
-  rotateModelContainer.appendChild(rotateModelLabel);
-
-
-  const displaySkyboxCheckbox = document.createElement('input');
-  displaySkyboxCheckbox.type = 'checkbox';
-  displaySkyboxCheckbox.className = 'displaySkyboxCheckbox';
-  displaySkyboxCheckbox.id = 'displaySkyboxCheckbox';
-  displaySkyboxCheckbox.checked = true;
-
-  const displaySkyboxLabel = document.createElement('label');
-  displaySkyboxLabel.htmlFor = 'displaySkyboxCheckbox';
-  displaySkyboxLabel.innerText = 'Display Skybox';
-
-  const displaySkyboxContainer = document.createElement('div');
-  displaySkyboxContainer.className = 'checkbox-container';
-  displaySkyboxContainer.appendChild(displaySkyboxCheckbox);
-  displaySkyboxContainer.appendChild(displaySkyboxLabel);
-
-  // Create a new div to wrap both containers
-  const flexContainer = document.createElement('div');
-  flexContainer.className = 'main-checkbox-container';
-
-  // Append the containers to the new flex container
-  const uiRotateValue = uiRotate === "true" ? true : false;
-  if (uiRotateValue) {
-    flexContainer.appendChild(rotateModelContainer);
-  }
-  flexContainer.appendChild(displaySkyboxContainer);
-
-  // Append the flex container to the main container
-  container.appendChild(flexContainer);
-
-  rotateModelCheckbox.addEventListener('change', function () {
-    container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
-  });
-  container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
-
-  displaySkyboxCheckbox.addEventListener('change', function () {
-    container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
-  });
-  container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
-
-
   // Create the container for stats dynamically
   var statsContainer = document.createElement('div');
   statsContainer.id = 'stats-container';
@@ -405,6 +448,22 @@ function initViewer(container,
     scene.add(gridHelper);
     scene.add(PolarGridHelper);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   function animate() {
     stats1.begin();
