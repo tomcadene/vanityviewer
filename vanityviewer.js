@@ -2,6 +2,7 @@ import * as THREE from '/three.js-dev/build/three.module.min.js';
 import { OrbitControls } from '/three.js-dev/examples/jsm/controls/OrbitControls.js'
 import { RGBELoader } from '/three.js-dev/examples/jsm/loaders/RGBELoader.js';
 import { GLTFLoader } from '/three.js-dev/examples/jsm/loaders/GLTFLoader.js';
+import { VertexNormalsHelper } from '/three.js-dev/examples/jsm/helpers/VertexNormalsHelper.js';
 import Stats from '/three.js-dev/examples/jsm/libs/stats.module.js';
 import {
   USE_BACKGROUND_TEXTURE,
@@ -112,6 +113,13 @@ function initViewer(container,
 
     // Optimize shadow map update
     renderer.shadowMap.needsUpdate = true;
+
+    const SkeletonHelper = new THREE.SkeletonHelper(modelMesh);
+    scene.add(SkeletonHelper);
+
+    const vertexNormalsHelper = new VertexNormalsHelper(modelMesh, 1, 0xff0000);
+
+    scene.add(vertexNormalsHelper);
   }, undefined, function (error) {
     console.error('An error happened while loading the model:', error);
   });
@@ -155,12 +163,24 @@ function initViewer(container,
   const origin = new THREE.Vector3(0, 0, 0); // Origin of the arrow (can be adjusted)
   const length = 50; // Length of the arrow
   const color = 0xffff00; // Color of the arrow (yellow)
-
-  // Create the ArrowHelper
   const arrowHelper = new THREE.ArrowHelper(direction, origin, length, color);
+  const axesHelper = new THREE.AxesHelper(10);
+  const sphere = new THREE.SphereGeometry();
+  const object = new THREE.Mesh(sphere, new THREE.MeshBasicMaterial(0xff0000));
+  const box = new THREE.BoxHelper(object, 0xffff00);
+  const CameraHelper = new THREE.CameraHelper(camera);
+  const ligthHelper = new THREE.DirectionalLightHelper(light, 5);
+  const gridHelper = new THREE.GridHelper(10000, 1000);
+  const PolarGridHelper = new THREE.PolarGridHelper(10, 16, 8, 64);
 
   if (ADD_DEBUGGING_TOOLS) {
     scene.add(arrowHelper);
+    scene.add(axesHelper);
+    scene.add(box);
+    scene.add(CameraHelper);
+    scene.add(ligthHelper);
+    scene.add(gridHelper);
+    scene.add(PolarGridHelper);
   }
 
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
