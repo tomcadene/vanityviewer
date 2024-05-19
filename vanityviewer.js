@@ -27,6 +27,7 @@ function initViewer(container,
   cameraMinDistance,
   cameraMaxDistance,
   modelScale,
+  uiRotate,
   rotationSpeed) {
 
   const aspectRatio = container.clientWidth / container.clientHeight;
@@ -339,9 +340,13 @@ function initViewer(container,
   rotateModelLabel.innerText = 'Rotate Model';
 
   const rotateModelContainer = document.createElement('div');
+
+
   rotateModelContainer.className = 'checkbox-container';
+
   rotateModelContainer.appendChild(rotateModelCheckbox);
   rotateModelContainer.appendChild(rotateModelLabel);
+
 
   const displaySkyboxCheckbox = document.createElement('input');
   displaySkyboxCheckbox.type = 'checkbox';
@@ -363,7 +368,10 @@ function initViewer(container,
   flexContainer.className = 'main-checkbox-container';
 
   // Append the containers to the new flex container
-  flexContainer.appendChild(rotateModelContainer);
+  const uiRotateValue = uiRotate === "true" ? true : false;
+  if (uiRotateValue) {
+    flexContainer.appendChild(rotateModelContainer);
+  }
   flexContainer.appendChild(displaySkyboxContainer);
 
   // Append the flex container to the main container
@@ -433,6 +441,7 @@ document.querySelectorAll('.vv').forEach(container => {
   const cameraMinDistance = parseFloat(container.getAttribute('data-camera-min-distance')) || 1;
   const cameraMaxDistance = parseFloat(container.getAttribute('data-camera-max-distance')) || 10;
   const modelScale = parseFloat(container.getAttribute('data-model-scale')) || 10;
+  const uiRotate = container.getAttribute('data-ui-rotate') || "true";
   const rotationSpeed = parseFloat(container.getAttribute('data-rotation-speed')) || 0.005;
 
   if (modelPath && skyboxHdriPaths && environmentHdriPaths) {
@@ -450,6 +459,7 @@ document.querySelectorAll('.vv').forEach(container => {
       cameraMinDistance,
       cameraMaxDistance,
       modelScale,
+      uiRotate,
       rotationSpeed);
   }
 });
