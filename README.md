@@ -114,6 +114,10 @@ Scale of the model
 ```html
 data-model-scale="2.5"
 ```
+Visibility of the "Rotate model" button - true by default, set it to false to disable it
+```html
+data-ui-rotate="true"
+```
 Horizontal rotation speed of the object - Recommended value: "0.005"
 ```html
 data-rotation-speed="0.005"
