@@ -389,6 +389,10 @@ function initViewer(container,
 
     if (modelMesh && container.getAttribute('data-rotate-enabled') === 'true') {
       modelMesh.rotation.y += rotationSpeed;
+      // Force shadow map update
+      renderer.shadowMap.autoUpdate = true;
+    } else {
+      renderer.shadowMap.autoUpdate = false;
     }
 
 
