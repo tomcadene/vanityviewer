@@ -16,8 +16,7 @@ import {
 
 function initViewer(container,
   modelPath,
-  skyboxHdriPaths,
-  environmentHdriPaths,
+  hdriPaths,
   materialRoughness,
   materialMetalness,
   antialiasing,
@@ -164,33 +163,6 @@ function initViewer(container,
   scene.add(ambientLight);
   ambientLight.intensity = 0.2;
 
-  const rgbeLoader = new RGBELoader();
-
-  let skyboxTexture = null;
-  let environmentTexture = null;
-
-  function loadEnvironment(hdriPath) {
-    rgbeLoader.load(hdriPath, function (texture) {
-      texture.mapping = THREE.EquirectangularReflectionMapping;
-      scene.environment = texture;
-      environmentTexture = texture;
-    });
-  }
-
-  function loadSkybox(hdriPath) {
-    rgbeLoader.load(hdriPath, function (texture) {
-      texture.mapping = THREE.EquirectangularReflectionMapping;
-      skyboxTexture = texture;
-      if (container.getAttribute('data-display-skybox-enabled') === 'true') {
-        scene.background = skyboxTexture;
-      }
-    });
-  }
-
-  // Load initial HDRIs
-  loadEnvironment(environmentHdriPaths[0]);
-  loadSkybox(skyboxHdriPaths[0]);
-
   renderer.setClearColor(0x000000, 0);
 
   // Frustum Culling Optimization, Ensure objects outside the camera view are not rendered.
@@ -299,15 +271,32 @@ function initViewer(container,
 
 
 
+  const rgbeLoader = new RGBELoader();
 
+  let skyboxTexture = null;
+  let environmentTexture = null;
 
-  // Populate HDRI selectors
-  // Create a parent container for both dropdowns
+  function loadHDRI(hdriPath) {
+    rgbeLoader.load(hdriPath, function (texture) {
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      scene.environment = texture;
+      environmentTexture = texture;
+      skyboxTexture = texture;
+      if (container.getAttribute('data-display-skybox-enabled') === 'true') {
+        scene.background = skyboxTexture;
+      }
+    });
+  }
+
+  // Load initial HDRI
+  loadHDRI(hdriPaths[0]);
+
+  // Create a parent container for the dropdown
   const dropdownContainer = document.createElement('div');
   dropdownContainer.className = 'dropdown-container';
   container.appendChild(dropdownContainer);
 
-  // Create custom dropdown container for skybox selector
+  // Create custom dropdown container for HDRI selector
   const customDropdown = document.createElement('div');
   customDropdown.className = 'custom-dropdown';
   dropdownContainer.appendChild(customDropdown);
@@ -315,7 +304,7 @@ function initViewer(container,
   // Create the visible part of the custom dropdown
   const selected = document.createElement('div');
   selected.className = 'selected';
-  selected.textContent = 'Select a Skybox';
+  selected.textContent = 'Select an HDRI';
   customDropdown.appendChild(selected);
 
   // Create the dropdown menu
@@ -324,18 +313,18 @@ function initViewer(container,
   customDropdown.appendChild(dropdownMenu);
 
   // Populate the dropdown menu with options
-  skyboxHdriPaths.forEach((path, index) => {
+  hdriPaths.forEach((path, index) => {
     const dropdownOption = document.createElement('div');
     dropdownOption.className = 'dropdown-option';
     dropdownOption.dataset.value = path;
-    dropdownOption.textContent = `Skybox ${index + 1}`;
+    dropdownOption.textContent = `HDRI ${index + 1}`;
     dropdownMenu.appendChild(dropdownOption);
 
     // Add event listener to each option
     dropdownOption.addEventListener('click', () => {
       selected.textContent = dropdownOption.textContent;
       dropdownMenu.classList.remove('show');
-      loadSkybox(path);
+      loadHDRI(path);
     });
   });
 
@@ -351,49 +340,24 @@ function initViewer(container,
     }
   });
 
-  // Create custom dropdown container for environment selector
-  const customEnvDropdown = document.createElement('div');
-  customEnvDropdown.className = 'custom-env-dropdown';
-  dropdownContainer.appendChild(customEnvDropdown);
 
-  // Create the visible part of the custom dropdown
-  const envSelected = document.createElement('div');
-  envSelected.className = 'env-selected';
-  envSelected.textContent = 'Select an Environment';
-  customEnvDropdown.appendChild(envSelected);
 
-  // Create the dropdown menu
-  const envDropdownMenu = document.createElement('div');
-  envDropdownMenu.className = 'env-dropdown-menu';
-  customEnvDropdown.appendChild(envDropdownMenu);
 
-  // Populate the dropdown menu with options
-  environmentHdriPaths.forEach((path, index) => {
-    const envDropdownOption = document.createElement('div');
-    envDropdownOption.className = 'env-dropdown-option';
-    envDropdownOption.dataset.value = path;
-    envDropdownOption.textContent = `Environment ${index + 1}`;
-    envDropdownMenu.appendChild(envDropdownOption);
 
-    // Add event listener to each option
-    envDropdownOption.addEventListener('click', () => {
-      envSelected.textContent = envDropdownOption.textContent;
-      envDropdownMenu.classList.remove('show');
-      loadEnvironment(path);
-    });
-  });
 
-  // Toggle dropdown menu
-  envSelected.addEventListener('click', () => {
-    envDropdownMenu.classList.toggle('show');
-  });
 
-  // Close the dropdown if clicked outside
-  document.addEventListener('click', (event) => {
-    if (!customEnvDropdown.contains(event.target)) {
-      envDropdownMenu.classList.remove('show');
-    }
-  });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   // Create the container for stats dynamically
@@ -505,8 +469,7 @@ function initViewer(container,
 // The container is any HTML element with the class .vv. The script looks for all elements with the class .vv, retrieves their attributes, and then initializes the Three.js viewer for each of these elements by passing them as the container argument to the initViewer function.
 document.querySelectorAll('.vv').forEach(container => {
   const modelPath = container.getAttribute('data-model-path') || "/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf";
-  const skyboxHdriPaths = container.getAttribute('data-skybox-hdri-path').split(',') || "/hdris/vestibule_2k.hdr, /hdris/safari_sunset_2k.hdr";
-  const environmentHdriPaths = container.getAttribute('data-environment-hdri-path').split(',') || "/hdris/vestibule_2k.hdr, /hdris/safari_sunset_2k.hdr";
+  const hdriPaths = container.getAttribute('data-hdri-path').split(',') || "/hdris/vestibule_2k.hdr, /hdris/safari_sunset_2k.hdr";
   const materialRoughness = parseFloat(container.getAttribute('data-material-roughness')) || 0.5; // Use the user value or default to the default value 
   const materialMetalness = parseFloat(container.getAttribute('data-material-metalness')) || 0.5;
   const antialiasing = container.getAttribute('data-antialiasing') || "true";
@@ -520,11 +483,10 @@ document.querySelectorAll('.vv').forEach(container => {
   const uiRotate = container.getAttribute('data-ui-rotate') || "true";
   const rotationSpeed = parseFloat(container.getAttribute('data-rotation-speed')) || 0.005;
 
-  if (modelPath && skyboxHdriPaths && environmentHdriPaths) {
+  if (modelPath && hdriPaths) {
     initViewer(container,
       modelPath,
-      skyboxHdriPaths,
-      environmentHdriPaths,
+      hdriPaths,
       materialRoughness,
       materialMetalness,
       antialiasing,
