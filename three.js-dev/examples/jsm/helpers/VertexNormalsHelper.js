@@ -5,7 +5,7 @@ import {
 	LineBasicMaterial,
 	Matrix3,
 	Vector3
-} from '/three.js-dev/build/three.module.js';
+} from '/three.js-dev/build/three.module.min.js';
 
 const _v1 = new Vector3();
 const _v2 = new Vector3();
