@@ -95,20 +95,20 @@ function initViewer(container,
     modelMesh.scale.set(modelScale * 10, modelScale * 10, modelScale * 10);
     modelMesh.castShadow = true;
     modelMesh.receiveShadow = true;
+
     // Enable shadows for each child mesh in the model
     modelMesh.traverse(function (node) {
-      if (node.isMesh) {
-        node.castShadow = true;
-        node.receiveShadow = true;
-        node.material.roughness = materialRoughness;
-        node.material.metalness = materialMetalness;
-        node.material.wireframe = document.getElementById('renderGeometryAsWireframeCheckbox').checked;
-        console.log(container.getAttribute('data-renderGeometryAsWireframe-enabled'))
-        // Optional: Optimize material properties for better performance
-        node.material.precision = 'mediump';
-        // Ensure frustum culling is enabled (default is true)
-        node.frustumCulled = true;
-      }
+        if (node.isMesh) {
+            node.castShadow = true;
+            node.receiveShadow = true;
+            node.material.roughness = materialRoughness;
+            node.material.metalness = materialMetalness;
+            node.material.wireframe = container.querySelector('.renderGeometryAsWireframeCheckbox').checked;
+            // Optional: Optimize material properties for better performance
+            node.material.precision = 'mediump';
+            // Ensure frustum culling is enabled (default is true)
+            node.frustumCulled = true;
+        }
     });
     scene.add(modelMesh);
 
@@ -119,11 +119,10 @@ function initViewer(container,
     scene.add(SkeletonHelper);
 
     const vertexNormalsHelper = new VertexNormalsHelper(modelMesh, 1, 0xff0000);
-
     scene.add(vertexNormalsHelper);
-  }, undefined, function (error) {
+}, undefined, function (error) {
     console.error('An error happened while loading the model:', error);
-  });
+});
 
 
   const planeGeometry = new THREE.PlaneGeometry(10000, 10000);
@@ -184,78 +183,106 @@ function initViewer(container,
 
 
 
-  const rotateModelCheckbox = document.createElement('input');
-  rotateModelCheckbox.type = 'checkbox';
-  rotateModelCheckbox.className = 'rotateModelCheckbox';
-  rotateModelCheckbox.id = 'rotateModelCheckbox';
-  const rotateModelLabel = document.createElement('label');
-  rotateModelLabel.htmlFor = 'rotateModelCheckbox';
-  rotateModelLabel.innerText = 'Rotate Model';
-  const rotateModelContainer = document.createElement('div');
-  rotateModelContainer.className = 'checkbox-container';
-  rotateModelContainer.appendChild(rotateModelCheckbox);
-  rotateModelContainer.appendChild(rotateModelLabel);
-
-  const renderGeometryAsWireframeCheckbox = document.createElement('input');
-  renderGeometryAsWireframeCheckbox.type = 'checkbox';
-  renderGeometryAsWireframeCheckbox.className = 'renderGeometryAsWireframeCheckbox';
-  renderGeometryAsWireframeCheckbox.id = 'renderGeometryAsWireframeCheckbox';
-  const renderGeometryAsWireframeLabel = document.createElement('label');
-  renderGeometryAsWireframeLabel.htmlFor = 'renderGeometryAsWireframeCheckbox';
-  renderGeometryAsWireframeLabel.innerText = 'renderGeometryAsWireframe';
-  const renderGeometryAsWireframeContainer = document.createElement('div');
-  renderGeometryAsWireframeContainer.className = 'checkbox-container';
-  renderGeometryAsWireframeContainer.appendChild(renderGeometryAsWireframeCheckbox);
-  renderGeometryAsWireframeContainer.appendChild(renderGeometryAsWireframeLabel);
 
 
-  const displaySkyboxCheckbox = document.createElement('input');
-  displaySkyboxCheckbox.type = 'checkbox';
-  displaySkyboxCheckbox.className = 'displaySkyboxCheckbox';
-  displaySkyboxCheckbox.id = 'displaySkyboxCheckbox';
-  displaySkyboxCheckbox.checked = true;
-  const displaySkyboxLabel = document.createElement('label');
-  displaySkyboxLabel.htmlFor = 'displaySkyboxCheckbox';
-  displaySkyboxLabel.innerText = 'Display Skybox';
-  const displaySkyboxContainer = document.createElement('div');
-  displaySkyboxContainer.className = 'checkbox-container';
-  displaySkyboxContainer.appendChild(displaySkyboxCheckbox);
-  displaySkyboxContainer.appendChild(displaySkyboxLabel);
 
-  // Create a new div to wrap both containers
-  const flexContainer = document.createElement('div');
-  flexContainer.className = 'main-checkbox-container';
 
-  // Append the containers to the new flex container
-  const uiRotateValue = uiRotate === "true" ? true : false;
-  if (uiRotateValue) {
+
+
+
+
+
+
+  // Create the UI elements
+const rotateModelCheckbox = document.createElement('input');
+rotateModelCheckbox.type = 'checkbox';
+rotateModelCheckbox.className = 'rotateModelCheckbox';
+rotateModelCheckbox.id = 'rotateModelCheckbox';
+
+const rotateModelLabel = document.createElement('label');
+rotateModelLabel.htmlFor = 'rotateModelCheckbox';
+rotateModelLabel.innerText = 'Rotate Model';
+
+const rotateModelContainer = document.createElement('div');
+rotateModelContainer.className = 'checkbox-container';
+rotateModelContainer.appendChild(rotateModelCheckbox);
+rotateModelContainer.appendChild(rotateModelLabel);
+
+const renderGeometryAsWireframeCheckbox = document.createElement('input');
+renderGeometryAsWireframeCheckbox.type = 'checkbox';
+renderGeometryAsWireframeCheckbox.className = 'renderGeometryAsWireframeCheckbox';
+renderGeometryAsWireframeCheckbox.id = 'renderGeometryAsWireframeCheckbox';
+
+const renderGeometryAsWireframeLabel = document.createElement('label');
+renderGeometryAsWireframeLabel.htmlFor = 'renderGeometryAsWireframeCheckbox';
+renderGeometryAsWireframeLabel.innerText = 'Render Geometry As Wireframe';
+
+const renderGeometryAsWireframeContainer = document.createElement('div');
+renderGeometryAsWireframeContainer.className = 'checkbox-container';
+renderGeometryAsWireframeContainer.appendChild(renderGeometryAsWireframeCheckbox);
+renderGeometryAsWireframeContainer.appendChild(renderGeometryAsWireframeLabel);
+
+const displaySkyboxCheckbox = document.createElement('input');
+displaySkyboxCheckbox.type = 'checkbox';
+displaySkyboxCheckbox.className = 'displaySkyboxCheckbox';
+displaySkyboxCheckbox.id = 'displaySkyboxCheckbox';
+displaySkyboxCheckbox.checked = true;
+
+const displaySkyboxLabel = document.createElement('label');
+displaySkyboxLabel.htmlFor = 'displaySkyboxCheckbox';
+displaySkyboxLabel.innerText = 'Display Skybox';
+
+const displaySkyboxContainer = document.createElement('div');
+displaySkyboxContainer.className = 'checkbox-container';
+displaySkyboxContainer.appendChild(displaySkyboxCheckbox);
+displaySkyboxContainer.appendChild(displaySkyboxLabel);
+
+// Create a new div to wrap both containers
+const flexContainer = document.createElement('div');
+flexContainer.className = 'main-checkbox-container';
+
+// Append the containers to the new flex container
+const uiRotateValue = uiRotate === "true" ? true : false;
+if (uiRotateValue) {
     flexContainer.appendChild(rotateModelContainer);
-  }
-  flexContainer.appendChild(renderGeometryAsWireframeContainer);
-  flexContainer.appendChild(displaySkyboxContainer);
+}
+flexContainer.appendChild(renderGeometryAsWireframeContainer);
+flexContainer.appendChild(displaySkyboxContainer);
 
-  // Append the flex container to the main container
-  container.appendChild(flexContainer);
+// Append the flex container to the main container
+container.appendChild(flexContainer);
 
-  rotateModelCheckbox.addEventListener('change', function () {
+rotateModelCheckbox.addEventListener('change', function () {
     container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
-  });
-  container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
+});
+container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
 
-  document.getElementById('renderGeometryAsWireframeCheckbox').addEventListener('change', function () {
+renderGeometryAsWireframeCheckbox.addEventListener('change', function () {
     if (modelMesh) {
-      modelMesh.traverse(function (node) {
-        if (node.isMesh) {
-          node.material.wireframe = this.checked;
-        }
-      }.bind(this));
+        modelMesh.traverse(function (node) {
+            if (node.isMesh) {
+                node.material.wireframe = renderGeometryAsWireframeCheckbox.checked;
+            }
+        });
     }
-  });
+});
 
-  displaySkyboxCheckbox.addEventListener('change', function () {
+displaySkyboxCheckbox.addEventListener('change', function () {
     container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
-  });
-  container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
+});
+container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
