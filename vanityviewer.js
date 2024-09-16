@@ -103,7 +103,7 @@ function initViewer(container,
             node.receiveShadow = true;
             node.material.roughness = materialRoughness;
             node.material.metalness = materialMetalness;
-            node.material.wireframe = container.querySelector('.renderGeometryAsWireframeCheckbox').checked;
+            node.material.wireframe = container.querySelector('.renderWireframeButton').checked;
             // Optional: Optimize material properties for better performance
             node.material.precision = 'mediump';
             // Ensure frustum culling is enabled (default is true)
@@ -193,7 +193,8 @@ function initViewer(container,
 
 
 
-  // Create the UI elements
+// // Rotate Model button // //
+
 const rotateModelCheckbox = document.createElement('input');
 rotateModelCheckbox.type = 'checkbox';
 rotateModelCheckbox.className = 'rotateModelCheckbox';
@@ -208,34 +209,108 @@ rotateModelContainer.className = 'checkbox-container';
 rotateModelContainer.appendChild(rotateModelCheckbox);
 rotateModelContainer.appendChild(rotateModelLabel);
 
-const renderGeometryAsWireframeCheckbox = document.createElement('input');
-renderGeometryAsWireframeCheckbox.type = 'checkbox';
-renderGeometryAsWireframeCheckbox.className = 'renderGeometryAsWireframeCheckbox';
-renderGeometryAsWireframeCheckbox.id = 'renderGeometryAsWireframeCheckbox';
 
-const renderGeometryAsWireframeLabel = document.createElement('label');
-renderGeometryAsWireframeLabel.htmlFor = 'renderGeometryAsWireframeCheckbox';
-renderGeometryAsWireframeLabel.innerText = 'Render Geometry As Wireframe';
 
-const renderGeometryAsWireframeContainer = document.createElement('div');
-renderGeometryAsWireframeContainer.className = 'checkbox-container';
-renderGeometryAsWireframeContainer.appendChild(renderGeometryAsWireframeCheckbox);
-renderGeometryAsWireframeContainer.appendChild(renderGeometryAsWireframeLabel);
 
-const displaySkyboxCheckbox = document.createElement('input');
-displaySkyboxCheckbox.type = 'checkbox';
-displaySkyboxCheckbox.className = 'displaySkyboxCheckbox';
-displaySkyboxCheckbox.id = 'displaySkyboxCheckbox';
-displaySkyboxCheckbox.checked = true;
 
-const displaySkyboxLabel = document.createElement('label');
-displaySkyboxLabel.htmlFor = 'displaySkyboxCheckbox';
-displaySkyboxLabel.innerText = 'Display Skybox';
 
+
+// =========================
+// Render Wireframe Button
+// =========================
+
+// Create the button element
+const renderWireframeButton = document.createElement('button');
+renderWireframeButton.className = 'renderWireframeButton';
+renderWireframeButton.id = 'renderWireframeButton';
+
+// Initialize the button state
+let isWireframeEnabled = false; // Initial state (false for "Off", true for "On")
+updateWireframeButton();
+
+// Add click event listener to toggle the state
+renderWireframeButton.addEventListener('click', function () {
+    isWireframeEnabled = !isWireframeEnabled;
+    updateWireframeButton();
+    applyWireframeSetting(isWireframeEnabled);
+    container.setAttribute('data-render-wireframe-enabled', isWireframeEnabled ? 'true' : 'false');
+});
+
+// Function to update the button's text based on the state
+function updateWireframeButton() {
+    const statusText = isWireframeEnabled ? 'On' : 'Off';
+    renderWireframeButton.innerHTML = `<span class="wireframe-status-text">${statusText}</span> Render Geometry As Wireframe`;
+}
+
+// Function to apply the wireframe setting to the model
+function applyWireframeSetting(enabled) {
+    if (modelMesh) {
+        modelMesh.traverse(function (node) {
+            if (node.isMesh) {
+                node.material.wireframe = enabled;
+            }
+        });
+    }
+}
+
+// Append the button to the container
+const renderWireframeContainer = document.createElement('div');
+renderWireframeContainer.className = 'wireframe-button-container';
+renderWireframeContainer.appendChild(renderWireframeButton);
+container.appendChild(renderWireframeContainer);
+
+// Initialize the data attribute
+container.setAttribute('data-render-wireframe-enabled', isWireframeEnabled ? 'true' : 'false');
+
+
+
+
+
+// =========================
+// Display Skybox Button
+// =========================
+
+// Create the button element
+const displaySkyboxButton = document.createElement('button');
+displaySkyboxButton.className = 'displaySkyboxButton';
+displaySkyboxButton.id = 'displaySkyboxButton';
+
+// Initialize the button state
+let isSkyboxDisplayed = true; // Initial state (true for "On", false for "Off")
+updateButton();
+
+// Add click event listener to toggle the state
+displaySkyboxButton.addEventListener('click', function () {
+    isSkyboxDisplayed = !isSkyboxDisplayed;
+    updateButton();
+    container.setAttribute('data-display-skybox-enabled', isSkyboxDisplayed ? 'true' : 'false');
+});
+
+// Function to update the button's text based on the state
+function updateButton() {
+    const statusText = isSkyboxDisplayed ? 'On' : 'Off';
+    displaySkyboxButton.innerHTML = `<span class="status-text">${statusText}</span> Display Skybox`;
+}
+
+// Append the button to the container
 const displaySkyboxContainer = document.createElement('div');
-displaySkyboxContainer.className = 'checkbox-container';
-displaySkyboxContainer.appendChild(displaySkyboxCheckbox);
-displaySkyboxContainer.appendChild(displaySkyboxLabel);
+displaySkyboxContainer.className = 'button-container';
+displaySkyboxContainer.appendChild(displaySkyboxButton);
+container.appendChild(displaySkyboxContainer);
+
+// Initialize the data attribute
+container.setAttribute('data-display-skybox-enabled', isSkyboxDisplayed ? 'true' : 'false');
+
+
+
+
+
+
+
+
+
+
+
 
 // Create a new div to wrap both containers
 const flexContainer = document.createElement('div');
@@ -246,7 +321,7 @@ const uiRotateValue = uiRotate === "true" ? true : false;
 if (uiRotateValue) {
     flexContainer.appendChild(rotateModelContainer);
 }
-flexContainer.appendChild(renderGeometryAsWireframeContainer);
+flexContainer.appendChild(renderWireframeContainer);
 flexContainer.appendChild(displaySkyboxContainer);
 
 // Append the flex container to the main container
@@ -257,20 +332,7 @@ rotateModelCheckbox.addEventListener('change', function () {
 });
 container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
 
-renderGeometryAsWireframeCheckbox.addEventListener('change', function () {
-    if (modelMesh) {
-        modelMesh.traverse(function (node) {
-            if (node.isMesh) {
-                node.material.wireframe = renderGeometryAsWireframeCheckbox.checked;
-            }
-        });
-    }
-});
 
-displaySkyboxCheckbox.addEventListener('change', function () {
-    container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
-});
-container.setAttribute('data-display-skybox-enabled', displaySkyboxCheckbox.checked ? 'true' : 'false');
 
 
 
