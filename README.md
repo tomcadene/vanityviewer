@@ -169,5 +169,4 @@ Details about the software license, specifying how it can be used and distribute
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Credits:
-- Default model originates from Polyhaven and was made by Tina
-- Default HDR Environment originates from Polyhaven and was made by Dimitrios Savva (Photography) and  Jarod Guest (Processing)
+- <a href="https://polyhaven.com/models">Polyhaven</a> for the default models and hdr files.
