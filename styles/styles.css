@@ -76,6 +76,49 @@ button {
     border-radius: 0.25rem;
 }
 
+/* Container for the button */
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* You can adjust padding or margin as needed */
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+}
+
+/* Style for the Display Skybox button */
+.displaySkyboxButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the button */
+.displaySkyboxButton:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Style for the status text ("On" / "Off") */
+.status-text {
+    color: gray;
+    font-weight: bold;
+}
+
+/* Optional: Remove focus outline */
+.displaySkyboxButton:focus {
+    outline: none;
+}
+
+/* Optional: If you had existing checkbox styles, you can remove or comment them out */
+/*
 .checkbox-container {
     display: flex;
     flex-direction: row;
@@ -89,6 +132,51 @@ button {
 input[type="checkbox" i] {
     accent-color: green !important;
 }
+*/
+
+/* Container for the Wireframe button */
+.wireframe-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* You can adjust padding or margin as needed */
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    margin-top: 0.5rem; /* Optional: Adds space between buttons */
+}
+
+/* Style for the Render Wireframe button */
+.renderWireframeButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the Wireframe button */
+.renderWireframeButton:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Style for the status text ("On" / "Off") */
+.wireframe-status-text {
+    color: gray;
+    font-weight: bold;
+}
+
+/* Optional: Remove focus outline */
+.renderWireframeButton:focus {
+    outline: none;
+}
+
+
 
 select option {
     background-color: green;
