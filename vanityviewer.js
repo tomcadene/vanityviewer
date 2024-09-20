@@ -195,19 +195,52 @@ function initViewer(container,
 
 // // Rotate Model button // //
 
-const rotateModelCheckbox = document.createElement('input');
-rotateModelCheckbox.type = 'checkbox';
-rotateModelCheckbox.className = 'rotateModelCheckbox';
-rotateModelCheckbox.id = 'rotateModelCheckbox';
+// Inside your initViewer() function
 
-const rotateModelLabel = document.createElement('label');
-rotateModelLabel.htmlFor = 'rotateModelCheckbox';
-rotateModelLabel.innerText = 'Rotate Model';
+// Create the Rotate Model button element
+const rotateModelButton = document.createElement('button');
+rotateModelButton.className = 'rotateModelButton';
+rotateModelButton.id = 'rotateModelButton';
 
+// Initialize the button state based on uiRotate
+let isRotateEnabled = false; // Initial state: rotation disabled
+updateRotateButton();
+
+// Add click event listener to toggle the rotation state
+rotateModelButton.addEventListener('click', function () {
+  isRotateEnabled = !isRotateEnabled;
+  updateRotateButton();
+  container.setAttribute('data-rotate-enabled', isRotateEnabled ? 'true' : 'false');
+});
+
+// Function to update the button's text based on the state
+function updateRotateButton() {
+    const statusText = isRotateEnabled ? 'On' : 'Off';
+    rotateModelButton.innerHTML = `<span class="rotate-status-text">${statusText}</span> Rotate Model`;
+}
+
+// Append the button to its container
 const rotateModelContainer = document.createElement('div');
-rotateModelContainer.className = 'checkbox-container';
-rotateModelContainer.appendChild(rotateModelCheckbox);
-rotateModelContainer.appendChild(rotateModelLabel);
+rotateModelContainer.className = 'rotate-button-container';
+rotateModelContainer.appendChild(rotateModelButton);
+
+// Modify the flexContainer to include the new Rotate Model button
+// const flexContainer = document.createElement('div');
+// flexContainer.className = 'main-checkbox-container';
+
+// Append the Rotate Model button only if uiRotate is true
+// if (uiRotateValue) {
+//     flexContainer.appendChild(rotateModelContainer);
+// }
+// flexContainer.appendChild(renderWireframeContainer);
+// flexContainer.appendChild(displaySkyboxContainer);
+
+// Append the flex container to the main container
+// container.appendChild(flexContainer);
+
+// Initialize the data attribute for rotation
+container.setAttribute('data-rotate-enabled', 'false');
+
 
 
 
@@ -317,7 +350,7 @@ const flexContainer = document.createElement('div');
 flexContainer.className = 'main-checkbox-container';
 
 // Append the containers to the new flex container
-const uiRotateValue = uiRotate === "true" ? true : false;
+const uiRotateValue = uiRotate === "true"; // Simplified boolean conversion
 if (uiRotateValue) {
     flexContainer.appendChild(rotateModelContainer);
 }
@@ -327,10 +360,10 @@ flexContainer.appendChild(displaySkyboxContainer);
 // Append the flex container to the main container
 container.appendChild(flexContainer);
 
-rotateModelCheckbox.addEventListener('change', function () {
-    container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
-});
-container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
+// rotateModelCheckbox.addEventListener('change', function () {
+//     container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
+// });
+// container.setAttribute('data-rotate-enabled', rotateModelCheckbox.checked ? 'true' : 'false');
 
 
 
