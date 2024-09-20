@@ -1,5 +1,6 @@
-
-*, html, body {
+*,
+html,
+body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -31,7 +32,15 @@ body {
     overflow-y: auto;
 }
 
-body, button, h1, h2, h3, h4, h5, html, p {
+body,
+button,
+h1,
+h2,
+h3,
+h4,
+h5,
+html,
+p {
     padding: 0;
     margin: 0;
     position: relative;
@@ -68,7 +77,9 @@ button {
 .main-checkbox-container {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 0.1rem;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -91,7 +102,8 @@ button {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent black */
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -142,7 +154,8 @@ input[type="checkbox" i] {
     /* You can adjust padding or margin as needed */
     padding: 0.25rem;
     border-radius: 0.25rem;
-    margin-top: 0.5rem; /* Optional: Adds space between buttons */
+    margin-top: 0.5rem;
+    /* Optional: Adds space between buttons */
 }
 
 /* Style for the Render Wireframe button */
@@ -150,7 +163,8 @@ input[type="checkbox" i] {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent black */
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -177,6 +191,49 @@ input[type="checkbox" i] {
 }
 
 
+/* Container for the Rotate Model button */
+.rotate-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    margin-top: 0.5rem;
+    /* Optional: Adds space between buttons */
+}
+
+/* Style for the Rotate Model button */
+.rotateModelButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent black */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the Rotate Model button */
+.rotateModelButton:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Style for the status text ("On" / "Off") */
+.rotate-status-text {
+    color: gray;
+    font-weight: bold;
+}
+
+/* Optional: Remove focus outline */
+.rotateModelButton:focus {
+    outline: none;
+}
+
 
 select option {
     background-color: green;
@@ -184,12 +241,14 @@ select option {
 
 /* skybox custom select */
 /* Parent container for both dropdowns */
+/* Container for the dropdown */
 .dropdown-container {
     position: absolute;
     bottom: 0;
     display: flex;
     flex-direction: column;
-    gap: 1rem; /* Adjust the gap as needed */
+    gap: 1rem;
+    /* Adjust the gap as needed */
     padding: 1rem;
 }
 
@@ -201,40 +260,101 @@ select option {
     text-align: center;
 }
 
+/* Main button styling */
 .selected {
-    color:rgba(0, 0, 0, 0.75);
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 0.25rem;
+    /* Updated to semi-transparent black background */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent black */
+
+    /* Updated text color to white */
+    color: #ffffff;
+    /* White text */
+
+    padding: 0.5rem;
+    /* Increased padding for better appearance */
     cursor: pointer;
     border-radius: 0.25rem;
+
+    /* Optional: Slightly adjust the backdrop filter for better contrast */
     backdrop-filter: blur(10px);
+
+    /* Optional: Add transition for smooth hover effect */
+    transition: background-color 0.3s, color 0.3s;
 }
 
+.selected:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Updated dropdown-menu to expand upwards */
 .dropdown-menu {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
+    bottom: 100%;
+    /* Positions the dropdown above the selected element */
+    left: 0;
+    /* Aligns the dropdown to the left */
+    background-color: #2c2c2c;
+    /* Darker background */
     min-width: 100%;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    box-shadow: 0px -8px 16px 0px rgba(0, 0, 0, 0.2);
+    /* Adjusted shadow for upward expansion */
+    z-index: 100;
+    border-radius: 0.25rem;
+    /* Optional: Adds slight rounding for aesthetics */
+
+    /* Optional: Add transition for smooth dropdown effect */
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
 }
 
+
+/* Show the dropdown menu when .show is added */
 .dropdown-menu.show {
     display: block;
+
+    /* For transition effects */
+    max-height: 500px;
+    /* Arbitrary large value to allow full expansion */
+    opacity: 1;
 }
 
+/* Dropdown option styles */
 .dropdown-option {
     padding: 10px;
+
+    /* Updated to darker background */
+    background-color: #3a3a3a;
+    /* Darker shade */
+
+    /* Updated text color to gray */
+    color: #d3d3d3;
+    /* Light gray text */
+
     cursor: pointer;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #555;
+    /* Darker border */
+    z-index: 100;
+
+    /* Optional: Add transition for hover effect */
+    transition: background-color 0.3s, color 0.3s;
 }
 
+/* Remove border from the last option */
 .dropdown-option:last-child {
     border-bottom: none;
 }
 
+/* Hover effect for non-selected options */
 .dropdown-option:hover {
-    background-color: #f1f1f1;
+    /* Slightly lighter background on hover */
+    background-color: #4a4a4a;
+
+    /* Slightly darker gray text on hover */
+    color: #ffffff;
+    /* Optional: Change text to white for better contrast */
 }
 
 /* Styles for the custom environment dropdown */
@@ -246,7 +366,7 @@ select option {
 }
 
 .env-selected {
-    color:rgba(0, 0, 0, 0.75);
+    color: rgba(0, 0, 0, 0.75);
     background-color: rgba(255, 255, 255, 0.5);
     padding: 0.25rem;
     cursor: pointer;
@@ -259,7 +379,7 @@ select option {
     position: absolute;
     background-color: #f9f9f9;
     min-width: 100%;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
@@ -280,6 +400,7 @@ select option {
 .env-dropdown-option:hover {
     background-color: #f1f1f1;
 }
+
 /* env custom select */
 
 /* Dark mode styles */
