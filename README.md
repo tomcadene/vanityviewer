@@ -98,6 +98,14 @@ environment-hdri-path
 ```html
 data-environment-hdri-path="/hdris/vestibule_1k.hdr, /hdris/safari_sunset_2k.hdr"
 ```
+skybox
+```html
+data-skybox="true"
+```
+plane
+```html
+data-plane="true"
+```
 antialiasing
 ```html
 data-antialiasing="true"
@@ -130,11 +138,26 @@ data-camera-max-distance="10"
 ### **UI data attributes**
 Visibility of the "Rotate model" button - true by default, set it to false to disable it
 ```html
+data-ui-hdri="true" 
+```
+```html
+data-ui-wireframe="true" 
+```
+```html
+data-ui-skybox="true"
+```
+```html
 data-ui-rotate="true"
 ```
 Horizontal rotation speed of the object - Recommended value: "0.005"
 ```html
 data-rotation-speed="0.005"
+```
+
+### **Misc**
+add-debugging-tools
+```html
+data-add-debugging-tools="true"
 ```
 
 ## Examples
