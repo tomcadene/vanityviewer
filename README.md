@@ -1,5 +1,15 @@
 A versatile 3D model viewer designed for seamless integration into any website. Leveraging the powerful three.js library, this foundation tool enables easy display and interaction with 3D models. The viewer is built to be highly accessible and compatible across different devices and browsers, ensuring a smooth user experience.
 
+## Preview
+Menus and skybox enabled
+
+![vv_2](https://github.com/user-attachments/assets/f341b993-29fa-4b4d-aa5c-040aaacf1d93)
+
+
+With debugging tools
+
+![vv_3](https://github.com/user-attachments/assets/4ab3dca5-28fa-47a2-ba73-5a9d8444c06c)
+
 ## What makes it accessible
 - 📄 **Accessible customizable Settings:** Allows customization of lighting, shadow, background, and other display settings to enhance the viewing experience using HTML data attributes, with all processing handled using JavaScript.
 - 📚 **No dependencies:** The three.js library is alreary present in the repo.
