@@ -136,16 +136,19 @@ data-camera-max-distance="10"
 ```
 
 ### **UI data attributes**
-Visibility of the "Rotate model" button - true by default, set it to false to disable it
+Visibility of the "HDRI" button
 ```html
 data-ui-hdri="true" 
 ```
+Visibility of the "Render geometry as wireframe" button
 ```html
 data-ui-wireframe="true" 
 ```
+Visibility of the "Display SKybox" button
 ```html
 data-ui-skybox="true"
 ```
+Visibility of the "Rotate model" button - true by default, set it to false to disable it
 ```html
 data-ui-rotate="true"
 ```
