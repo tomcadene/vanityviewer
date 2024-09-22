@@ -1,4 +1,4 @@
-A versatile 3D model viewer designed for seamless integration into any website. Leveraging the powerful three.js library, this foundation tool enables easy display and interaction with 3D models. The viewer is built to be highly accessible and compatible across different devices and browsers, ensuring a smooth user experience.
+A versatile 3D model viewer designed for seamless integration into any website. Leveraging three.js library, this foundation tool enables easy display and interaction with 3D models. The viewer is built to be highly accessible and compatible across different devices and browsers, ensuring a smooth user experience.
 
 ## Preview
 Menus and skybox enabled
