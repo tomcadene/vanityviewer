@@ -10,13 +10,14 @@ import {
   ADD_PLANE_TO_THE_SCENE,
   SHADOW_TYPE as SHADOW_TYPE_PLACEHOLDER,
   SHADOW_MAP_SIZE,
-  DISABLE_COLOR_CORRECTION,
-  ADD_DEBUGGING_TOOLS
+  DISABLE_COLOR_CORRECTION
 } from '/config.js';
 
 function initViewer(container,
   modelPath,
   hdriPaths,
+  displaySkybox,
+  displayPlane,
   materialRoughness,
   materialMetalness,
   antialiasing,
@@ -27,8 +28,12 @@ function initViewer(container,
   cameraMinDistance,
   cameraMaxDistance,
   modelScale,
+  uiHdri,
   uiRotate,
-  rotationSpeed) {
+  uiWireframe,
+  uiSkybox,
+  rotationSpeed,
+  addDebuggingTools) {
 
   const aspectRatio = container.clientWidth / container.clientHeight;
 
@@ -103,7 +108,7 @@ function initViewer(container,
             node.receiveShadow = true;
             node.material.roughness = materialRoughness;
             node.material.metalness = materialMetalness;
-            node.material.wireframe = container.querySelector('.renderWireframeButton').checked;
+            node.material.wireframe = container.querySelector('.renderWireframeButton'); // was container.querySelector('.renderWireframeButton').checked this cause an issue with data-ui-wireframe="false"
             // Optional: Optimize material properties for better performance
             node.material.precision = 'mediump';
             // Ensure frustum culling is enabled (default is true)
@@ -132,7 +137,7 @@ function initViewer(container,
   plane.rotation.x = -Math.PI / 2;
   plane.receiveShadow = true;
 
-  if (ADD_PLANE_TO_THE_SCENE) {
+  if (displayPlane === 'true') {
     scene.add(plane);
   }
 
@@ -290,7 +295,7 @@ function applyWireframeSetting(enabled) {
 const renderWireframeContainer = document.createElement('div');
 renderWireframeContainer.className = 'wireframe-button-container';
 renderWireframeContainer.appendChild(renderWireframeButton);
-container.appendChild(renderWireframeContainer);
+// container.appendChild(renderWireframeContainer);
 
 // Initialize the data attribute
 container.setAttribute('data-render-wireframe-enabled', isWireframeEnabled ? 'true' : 'false');
@@ -329,7 +334,7 @@ function updateButton() {
 const displaySkyboxContainer = document.createElement('div');
 displaySkyboxContainer.className = 'button-container';
 displaySkyboxContainer.appendChild(displaySkyboxButton);
-container.appendChild(displaySkyboxContainer);
+// container.appendChild(displaySkyboxContainer);
 
 // Initialize the data attribute
 container.setAttribute('data-display-skybox-enabled', isSkyboxDisplayed ? 'true' : 'false');
@@ -352,10 +357,18 @@ flexContainer.className = 'main-checkbox-container';
 // Append the containers to the new flex container
 const uiRotateValue = uiRotate === "true"; // Simplified boolean conversion
 if (uiRotateValue) {
-    flexContainer.appendChild(rotateModelContainer);
+  flexContainer.appendChild(rotateModelContainer);
 }
-flexContainer.appendChild(renderWireframeContainer);
-flexContainer.appendChild(displaySkyboxContainer);
+const uiWireframeValue = uiWireframe === "true";
+if (uiWireframeValue) {
+  flexContainer.appendChild(renderWireframeContainer);
+}
+const uiSkyboxValue = uiSkybox === "true";
+if (uiSkyboxValue) {
+  flexContainer.appendChild(displaySkyboxContainer);
+}
+
+
 
 // Append the flex container to the main container
 container.appendChild(flexContainer);
@@ -404,7 +417,7 @@ container.appendChild(flexContainer);
       scene.environment = texture;
       environmentTexture = texture;
       skyboxTexture = texture;
-      if (container.getAttribute('data-display-skybox-enabled') === 'true') {
+      if (container.getAttribute('data-display-skybox-enabled') === 'true' && displaySkybox === 'true') {
         scene.background = skyboxTexture;
       }
     });
@@ -416,7 +429,11 @@ container.appendChild(flexContainer);
   // Create a parent container for the dropdown
   const dropdownContainer = document.createElement('div');
   dropdownContainer.className = 'dropdown-container';
-  container.appendChild(dropdownContainer);
+
+  const uiHdriValue = uiHdri === "true";
+  if (uiHdriValue) {
+    container.appendChild(dropdownContainer);
+  }
 
   // Create custom dropdown container for HDRI selector
   const customDropdown = document.createElement('div');
@@ -510,7 +527,7 @@ container.appendChild(flexContainer);
   // Adding an arrow helper to visualize the light direction
   const direction = new THREE.Vector3(lightPositionX, lightPositionY, lightPositionZ).normalize(); // Light direction vector
   const origin = new THREE.Vector3(0, 0, 0); // Origin of the arrow (can be adjusted)
-  const length = 50; // Length of the arrow
+  const length = 15; // Length of the arrow
   const color = 0xffff00; // Color of the arrow (yellow)
   const arrowHelper = new THREE.ArrowHelper(direction, origin, length, color);
   const axesHelper = new THREE.AxesHelper(10);
@@ -518,11 +535,11 @@ container.appendChild(flexContainer);
   const object = new THREE.Mesh(sphere, new THREE.MeshBasicMaterial(0xff0000));
   const box = new THREE.BoxHelper(object, 0xffff00);
   const CameraHelper = new THREE.CameraHelper(camera);
-  const ligthHelper = new THREE.DirectionalLightHelper(light, 5);
+  const lightHelper = new THREE.DirectionalLightHelper(light, 5);
   const gridHelper = new THREE.GridHelper(10000, 1000);
   const PolarGridHelper = new THREE.PolarGridHelper(10, 16, 8, 64);
 
-  if (ADD_DEBUGGING_TOOLS) {
+  if (addDebuggingTools) {
     statsContainer.appendChild(stats1.dom);
     statsContainer.appendChild(stats2.dom);
     statsContainer.appendChild(stats3.dom);
@@ -530,7 +547,7 @@ container.appendChild(flexContainer);
     scene.add(axesHelper);
     scene.add(box);
     scene.add(CameraHelper);
-    scene.add(ligthHelper);
+    scene.add(lightHelper);
     scene.add(gridHelper);
     scene.add(PolarGridHelper);
   }
@@ -570,7 +587,7 @@ container.appendChild(flexContainer);
     renderer.render(scene, camera);
 
     // Update skybox visibility based on the checkbox
-    if (container.getAttribute('data-display-skybox-enabled') === 'true') {
+    if (container.getAttribute('data-display-skybox-enabled') === 'true' && displaySkybox === 'true') {
       scene.background = skyboxTexture;
     } else {
       scene.background = null;
@@ -592,6 +609,8 @@ container.appendChild(flexContainer);
 document.querySelectorAll('.vv').forEach(container => {
   const modelPath = container.getAttribute('data-model-path') || "/models/brass_goblets_2k.gltf/brass_goblets_2k.gltf";
   const hdriPaths = container.getAttribute('data-hdri-path').split(',') || "/hdris/vestibule_2k.hdr, /hdris/safari_sunset_2k.hdr";
+  const displaySkybox = container.getAttribute('data-skybox') || "true";
+  const displayPlane = container.getAttribute('data-plane') || "true";
   const materialRoughness = parseFloat(container.getAttribute('data-material-roughness')) || 0.5; // Use the user value or default to the default value 
   const materialMetalness = parseFloat(container.getAttribute('data-material-metalness')) || 0.5;
   const antialiasing = container.getAttribute('data-antialiasing') || "true";
@@ -602,13 +621,19 @@ document.querySelectorAll('.vv').forEach(container => {
   const cameraMinDistance = parseFloat(container.getAttribute('data-camera-min-distance')) || 1;
   const cameraMaxDistance = parseFloat(container.getAttribute('data-camera-max-distance')) || 10;
   const modelScale = parseFloat(container.getAttribute('data-model-scale')) || 10;
+  const uiHdri = container.getAttribute('data-ui-hdri') || "true";
   const uiRotate = container.getAttribute('data-ui-rotate') || "true";
+  const uiWireframe = container.getAttribute('data-ui-wireframe') || "true";
+  const uiSkybox = container.getAttribute('data-ui-skybox') || "true";
   const rotationSpeed = parseFloat(container.getAttribute('data-rotation-speed')) || 0.005;
+  const addDebuggingTools = container.getAttribute('data-add-debugging-tools') === "true";
 
   if (modelPath && hdriPaths) {
     initViewer(container,
       modelPath,
       hdriPaths,
+      displaySkybox,
+      displayPlane,
       materialRoughness,
       materialMetalness,
       antialiasing,
@@ -619,7 +644,11 @@ document.querySelectorAll('.vv').forEach(container => {
       cameraMinDistance,
       cameraMaxDistance,
       modelScale,
+      uiHdri,
       uiRotate,
-      rotationSpeed);
+      uiWireframe,
+      uiSkybox,
+      rotationSpeed,
+      addDebuggingTools);
   }
 });
