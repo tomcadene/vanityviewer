@@ -10,18 +10,70 @@
 </head>
 
 <body>
+    
     <main>
+        <h2></h2>
+        <!-- when i set data-ui-wireframe="false" the model disappear -->
         <div class="vv" data-model-path="/models/brass_goblets_1k.glb"
             data-hdri-path="/hdris/vestibule_2k.hdr, /hdris/safari_sunset_2k.hdr"
-            data-material-roughness="0" data-material-metalness="1" data-antialiasing="true" 
-            data-light-strength="1" data-camera-min-distance="1" data-camera-max-distance="10" data-model-scale="2.5" data-ui-rotate="false" data-rotation-speed="0.005"
+            data-skybox="false"
+            data-plane="false"
+            data-material-roughness="0" 
+            data-material-metalness="1" 
+            data-antialiasing="true" 
+            data-light-strength="1" 
+            data-camera-min-distance="1" 
+            data-camera-max-distance="10" 
+            data-model-scale="2.5" 
+            data-ui-hdri="false" 
+            data-ui-rotate="false" 
+            data-ui-wireframe="false" 
+            data-ui-skybox="false"
+            data-rotation-speed="0.005"
+            data-add-debugging-tools="false"
             style="position: relative;">
         </div>
+        <h2>with menus, skybox, and a plane</h2>
+        <div class="vv" data-model-path="/models/brass_goblets_1k.glb"
+            data-hdri-path="/hdris/vestibule_2k.hdr, /hdris/safari_sunset_2k.hdr"
+            data-skybox="true"
+            data-plane="false"
+            data-material-roughness="0" 
+            data-material-metalness="1" 
+            data-antialiasing="true" 
+            data-light-strength="1" 
+            data-camera-min-distance="1" 
+            data-camera-max-distance="10" 
+            data-model-scale="2.5" 
+            data-ui-hdri="true" 
+            data-ui-rotate="true" 
+            data-ui-wireframe="true" 
+            data-ui-skybox="true"
+            data-rotation-speed="0.005"
+            data-add-debugging-tools="false"
+            style="position: relative;">
+        </div>
+        <h2>with menus, skybox, a plane, and debugging tools</h2>
         <div class="vv" data-model-path="/models/barrel_stove_1k.glb"
             data-hdri-path="/hdris/safari_sunset_2k.hdr, /hdris/vestibule_2k.hdr"
-            data-material-roughness="1" data-material-metalness="0.25" data-antialiasing="true" data-light-strength="1" data-light-position-x="2" data-light-position-y="10"
-            data-light-position-z="5" data-camera-min-distance="1.1"
-            data-camera-max-distance="10" data-model-scale="1" style="position: relative;">
+            data-skybox="true"
+            data-plane="true"
+            data-material-roughness="1" 
+            data-material-metalness="0.25" 
+            data-antialiasing="true" 
+            data-light-strength="1" 
+            data-light-position-x="2" 
+            data-light-position-y="10"
+            data-light-position-z="5" 
+            data-camera-min-distance="1.1"
+            data-camera-max-distance="10" 
+            data-model-scale="1" 
+            data-ui-hdri="true" 
+            data-ui-rotate="true" 
+            data-ui-wireframe="true"
+            data-ui-skybox="true"
+            data-add-debugging-tools="true"
+            style="position: relative;">
         </div>
     </main>
     <script id="vanityviewer" type="module" src="vanityviewer.js"></script>
