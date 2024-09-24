@@ -17,7 +17,6 @@ const DISABLE_COLOR_CORRECTION = false; // Set this to true to disable toneMappi
 const ENABLE_INTERFACE = true; // Set this to true to enable the user interface
 
 // DEBUGGING TOOLS
-const ADD_DEBUGGING_TOOLS = false; // Set this to true to add a debugging tools to the scene
 // Notes
 // If set to true, a yellow arrow helper will be added to visualize the light direction.
 // If set to true, a performance monitor will be added to the scene.
@@ -32,7 +31,6 @@ export {
     ADD_PLANE_TO_THE_SCENE,
     SHADOW_TYPE,
     SHADOW_MAP_SIZE,
-    DISABLE_COLOR_CORRECTION,
-    ADD_DEBUGGING_TOOLS
+    DISABLE_COLOR_CORRECTION
 };
 
