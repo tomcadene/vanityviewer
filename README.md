@@ -11,15 +11,15 @@ With debugging tools
 ![vv_3](https://github.com/user-attachments/assets/4ab3dca5-28fa-47a2-ba73-5a9d8444c06c)
 
 ## What makes it accessible
-- 📄 **Accessible customizable Settings:** Allows customization of lighting, shadow, background, and other display settings to enhance the viewing experience using HTML data attributes, with all processing handled using JavaScript.
-- 📚 **No dependencies:** The three.js library is alreary present in the repo.
+- **Accessible customizable Settings:** Allows customization of lighting, shadow, background, and other display settings to enhance the viewing experience using HTML data attributes, with all processing handled using JavaScript.
+- **No dependencies:** The three.js library is alreary present in the repo.
 
 ## Use cases
-- 🛍️ **Online Store:** Retailers can use 3D models to enhance product listings, boosting engagement and sales.
-- 🖥️ **Artist Portfolio:** Artists can embed 3D models in their websites for a detailed, interactive showcase.
-- 🔧 **Virtual Prototyping:** Designers can share interactive models for feedback before manufacturing.
-- 🏫 **Education:** Educators can teach complex subjects with interactive 3D models.
-- 🎮 **VR/AR Development:** Developers can preview 3D models to ensure optimal assets for their projects.
+- **Online Store:** Retailers can use 3D models to enhance product listings, boosting engagement and sales.
+- **Artist Portfolio:** Artists can embed 3D models in their websites for a detailed, interactive showcase.
+- **Virtual Prototyping:** Designers can share interactive models for feedback before manufacturing.
+- **Education:** Educators can teach complex subjects with interactive 3D models.
+- **VR/AR Development:** Developers can preview 3D models to ensure optimal assets for their projects.
 
 ## Key Features:
 - **Interactive Viewing:** Tools to rotate, zoom, pan models to view them from any angle, change the skybox and equirectangular mapping on the fly.
