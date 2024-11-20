@@ -11,6 +11,7 @@ With debugging tools
 ![vv_3](https://github.com/user-attachments/assets/4ab3dca5-28fa-47a2-ba73-5a9d8444c06c)
 
 ## What makes it accessible
+- **Lightning fast integration:** clone the repositories, add the folder in your project, include the css (/styles/styles.css) and script (vanityviewer.js) elements, add `class="vv"` to a div, and you now have a 3d viewer in your website.
 - **Accessible customizable Settings:** Allows customization of lighting, shadow, background, and other display settings to enhance the viewing experience using HTML data attributes, with all processing handled using JavaScript.
 - **No dependencies:** The three.js library is alreary present in the repo.
 
