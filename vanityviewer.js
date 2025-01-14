@@ -74,7 +74,7 @@ function initViewer(container,
 
   container.appendChild(renderer.domElement);
 
-  renderer.domElement.style.borderRadius = '1rem';
+  renderer.domElement.style.borderRadius = '0rem';
 
   function onWindowResize() {
     const width = container.clientWidth;
